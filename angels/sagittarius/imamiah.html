@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Imamiah - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="imamiah-עמם"><a class="header" href="#imamiah-עמם">Imamiah (עמם)</a></h1>
+<p>"Eu admito meus erros."</p>
+<h2 id="atributos"><a class="header" href="#atributos">Atributos</a></h2>
+<ul>
+<li>Número: 52</li>
+<li>Anjo Regente: PRINCIPADO</li>
+<li>Posição: GEBURAH EM NETZACH</li>
+<li>Nome Divino: AYIN-MEM-MEM</li>
+<li>Atributo Divino: Deus sobre todas as coisas</li>
+<li>Virtudes e Poderes: Liberdade, Viagens, Estudos, Superação de Obstáculos</li>
+<li>Trigrama (Gematria): OMM - Aumem (150)</li>
+<li>Nome (Gematria): OMMIH - Aumemiah (165)</li>
+<li>Sefiroth/Planetas: Geburah/Marte (O) e Netzach/Vênus (♀)</li>
+<li>Zodíaco: 255-259°59 Lua em Sagitário 15-19°59</li>
+<li>Período de Invocação: 17:00-17:20</li>
+<li>Coro Angélico/Príncipe: Os Principados/Haniel</li>
+<li>Anjo Assistente: Sagen</li>
+<li>Elementos Alquímicos: Fogo/Mercúrio (X)</li>
+<li>Cor: Vermelho, Verde e Azul</li>
+</ul>
+<h2 id="descrição"><a class="header" href="#descrição">Descrição</a></h2>
+<p>Imamiah é o Anjo que nos ajuda a reconhecer os nossos erros, a reparar os nossos karmas com coragem, ardor e bravura. Ele nos ajuda a sair de uma situação difícil e a fazer as pazes com nossos inimigos internos e externos.</p>
+<p>Imamiah também compartilha seu magnetismo e força, o que leva ao desenvolvimento de uma liderança forte.</p>
+<p>Imamiah é invocado para superar dificuldades, especialmente aquelas relacionadas a prisões de qualquer tipo, seja física, emocional ou espiritual. Este anjo ajuda a encontrar a liberdade através do perdão, da redenção e da transformação pessoal. Imamiah é um guia para a superação de obstáculos e para a busca da verdadeira liberdade interior.</p>
+<h2 id="atribuições"><a class="header" href="#atribuições">Atribuições</a></h2>
+<p>Protege as viagens e os ganhos financeiros provenientes do trabalho honesto. Combate os inimigos que humilham os mais fracos, e ajuda quem precisa de auxílio em situações de emergência. Luta contra as injustiças. Confere força e coragem para enfrentar todos os obstáculos, inspirando o desejo de liberdade e independência.</p>
+<h2 id="demônio"><a class="header" href="#demônio">Demônio</a></h2>
+<p>ALLOCES - estimula os erros repetidos, a fraqueza diante dos obstáculos, a submissão, o uso de drogas pesadas, a grosseria, a insensibilidade, o orgulho, as brigas e a vulgaridade. A pessoa sob sua influência tem dificuldade em pedir ajuda aos outros.</p>
+<h2 id="principais-características"><a class="header" href="#principais-características">Principais Características</a></h2>
+<ol>
+<li>
+<p>Superação de Dificuldades: Imamiah oferece sua assistência para superar desafios e dificuldades, fortalecendo a resiliência e a determinação dos seus protegidos.</p>
+</li>
+<li>
+<p>Libertação de Prisões: Este anjo é especialmente invocado por aqueles que buscam libertação de prisões físicas, emocionais ou espirituais, promovendo a liberdade e a redenção.</p>
+</li>
+<li>
+<p>Perdão e Redenção: Encoraja o perdão e a redenção, ajudando as pessoas a se libertarem de ressentimentos e culpas que restringem sua liberdade e crescimento pessoal.</p>
+</li>
+<li>
+<p>Transformação Pessoal: Imamiah guia seus protegidos em jornadas de transformação pessoal, incentivando mudanças positivas que alinham a vida com propósitos mais elevados.</p>
+</li>
+<li>
+<p>Paciência e Compreensão: Este anjo inspira paciência e compreensão, especialmente em situações adversas, ensinando a importância de encarar provações como oportunidades de aprendizado e crescimento.</p>
+</li>
+<li>
+<p>Coragem para Enfrentar Desafios: Oferece coragem para enfrentar desafios, superando medos e incertezas para avançar com confiança em direção aos objetivos.</p>
+</li>
+<li>
+<p>Harmonia e Equilíbrio: Trabalha para restaurar a harmonia e o equilíbrio na vida dos indivíduos, promovendo a paz interior e a satisfação pessoal.</p>
+</li>
+<li>
+<p>Proteção em Viagens: Imamiah também é conhecido por oferecer proteção durante viagens, especialmente para aqueles que buscam novos começos ou estão em jornadas de autoconhecimento.</p>
+</li>
+<li>
+<p>Capacidade de Reconciliação: Promove a capacidade de reconciliação, melhorando relações e resolvendo conflitos através do diálogo e da compreensão mútua.</p>
+</li>
+<li>
+<p>Liberdade Interior: Inspira a busca pela verdadeira liberdade interior, levando à compreensão de que a maior liberdade é a liberdade de ser quem verdadeiramente somos, livres de amarras e limitações autoimpostas.</p>
+</li>
+</ol>
+<p>Imamiah simboliza a força que vem da superação de adversidades e a liberdade que se alcança através da transformação pessoal e do perdão. Invocar este anjo é buscar apoio para libertar-se de todo tipo de prisão, promovendo uma vida mais livre, equilibrada e alinhada com a verdadeira essência de cada ser.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../angels/sagittarius/vehuel.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../angels/sagittarius/hahasiah.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../angels/sagittarius/vehuel.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../angels/sagittarius/hahasiah.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>

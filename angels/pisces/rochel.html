@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rochel - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="transcription-of-rochel_1jpg"><a class="header" href="#transcription-of-rochel_1jpg">Transcription of rochel_1.jpg</a></h1>
+<pre><code>69
+ROCHEL
+ANJO
+TIFERET EM YESOD
+RESH - ALEPH - HEH
+"Estou voltando ao que é essencial: o desenvolvimento de qualidades"
+Este anjo ajuda a encontrar os objetos desaparecidos e mostrar quem os escondeu ou roubou. Influencia na obtenção de renome, fortuna e sucesso na economia, política e justiça.
+"SENHOR, minha bênção e meu cálice, a minha sorte está nas tuas mãos." (Sl 16(15):5)
+
+Atributo Divino: Deus que vê tudo
+Virtudes e Poderes: Clareza de Visão, Propósito Espiritual, Integridade, Encontro com o Eu Superior
+Trigrama (Gematria)/Nome (Gematria): RAH - Raah (206) RAHAL - Rahael (237)
+Sefirot/Planetas: Tiferet/Sol () e Yesod/Lua ()
+Zodiac: 340-344°/Júpiter em Peixes 10°14'59
+Período de Invocação: 22:40 - 23:00
+Coro Angélico/Príncipe: Os Anjos/Gabriel
+Anjo Assistente: Chontare
+Elementos Alquímicos: Água/Mercúrio
+Cor: Amarelo, Roxo e Magenta
+Atributos: estimula justiça e a defesa contra os pobres e oprimidos, e tem grande influência em heranças e legados. Concede magnetismo, intuição, carisma, personalidade forte, inteligência rápida, poder de inovação, energia e criatividade, além de facilidade de adaptação em qualquer situação.
+Demônio: DECARABIA - estimula as despesas inúteis, a teimosia, os processos intermitentes, o egoísmo, as fraudes internacionais, a discórdia na partilha de bens, o cansaço, a falta de generosidade e de compreensão com os outros. Afeta o clima nas sociedades internacionais e inclina ao roubo e ao furto.
+
+DESCRIÇÃO
+Rochel é o Anjo da Restituição. Ele nos ajuda a encontrar objetos, ideias ou sentimentos perdidos ou roubados e nos ajuda a aprender a dar e receber com novos tratos com outras pessoas de maneira saudável e equilibrada. Ele nos ajuda a recuperar o potencial perdido.
+Segundo a bíblia, todas as crianças nascidas sob a orientação do anjo Rochel terão, um dia ou outro, a missão de ajudar a humanidade, de estender a mão ao próximo.
+Rochel é invocado para a recuperação de objetos perdidos, a revelação de segredos ocultos e a administração da justiça. Além disso, também promove a clareza de visão, tanto literal quanto espiritual, ajudando a encontrar o que foi perdido, seja material ou espiritual, e a entender as verdades escondidas por trás das aparências.
+
+PRINCIPAIS CARACTERÍSTICAS
+- Recuperação de Objetos Perdidos: Rochel auxilia na recuperação de objetos perdidos, guiando seus protegidos até eles revelando informações que ajudam a encontrá-los.
+- Revelação de Segredos Ocultos: Este anjo ilumina o caminho para a descoberta de segredos e verdades ocultos, proporcionando entendimento e clareza em situações confusas.
+- Administração da Justiça: Rochel é invocado para a administração da justiça divina, ajudando a restaurar a equidade e a ordem quando falha.
+- Clareza de Visão: Promove a clareza de visão, tanto nos aspectos físicos quanto nos espirituais, permitindo perceber melhor as situações. 
+- Proteção contra Roubo: Oferece proteção.
+</code></pre>
+<h1 id="transcription-of-rochel_2jpg"><a class="header" href="#transcription-of-rochel_2jpg">Transcription of rochel_2.jpg</a></h1>
+<pre><code>contrar roubo e perda, guardando os bens materiais e espirituais de seus protegidos.
+ 
+✦ Compreensão do Propósito Espiritual: Ajuda a entender o propósito espiritual e a missão de vida, guardando seus protegidos na realização de seus destinos divinos.
+ 
+✦ Restauração de Direitos: Rochel trabalha pela restauração de direitos e pela correção de erros, assegurando que a verdade e a justiça prevaleçam.
+ 
+✦ Fortalecimento da Integridade: Este anjo fortalece a integridade moral e ética, incentivando a viver de acordo com os mais altos padrões de honra e verdade.
+ 
+✦ Promoção da Honestidade: Encoraja a honestidade e a transparência nas relações e em todas as áreas da vida, promovendo relações confiáveis e autênticas.
+ 
+✦ Encontro com o Eu Superior: Rochel guia seus protegidos no encontro com seu Eu Superior, facilitando a jornada de autoconhecimento e a conexão com a sabedoria interior.
+ 
+Rochel simboliza a luz divina que ilumina o caminho para a verdade, a justiça e a recuperação do que é precioso e significativo. Invocar este anjo é buscar orientação para desvendar mistérios, recuperar o que foi perdido e avançar no caminho espiritual com integridade e clareza. A influência de Rochel encoraja a manter a fé na justiça divina e a capacidade de superar obstáculos e desafios com a ajuda da orientação celestial.
+
+69
+ראֵה
+155
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../angels/pisces/mumiah.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../angels/pisces/yabamiah.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../angels/pisces/mumiah.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../angels/pisces/yabamiah.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>

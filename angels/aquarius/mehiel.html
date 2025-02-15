@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mehiel - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="transcription-of-mehiel_1jpg"><a class="header" href="#transcription-of-mehiel_1jpg">Transcription of mehiel_1.jpg</a></h1>
+<p>64<br />
+Mehiel<br />
+Arcanjo<br />
+Yesod em Hod<br />
+Mem - Cheth - Yod</p>
+<p>"Eh posso me tornar esta fonte inesgotável de vida."</p>
+<p>Este anjo protege contra a raiva, as inimizades e os acidentes causados por pessoas inescrupulosas e desatentas no trânsito. Favorece todos que buscam sabedoria, os professores, os autores e oradores. Influencia aqueles que amam a leitura, as livrarias e todos que comercializam nesta área.</p>
+<p>“Os olhos do SENHOR vejam pelos seus fiéis, por aqueles que esperam na sua bondade.” (Sl 33(32):18)</p>
+<p>Atributo Divino: Deus que vivifica todas as coisas<br />
+Virtudes e Poderes: Eloquência, Proteção a Escritores, Leitura, Clareza de Pensamentos<br />
+Trigrama (Gematria)/Nome (Gematria): MChI - Machi (58) MChIAL - Machiel (98)<br />
+Sefiroth/Planetas: Hod/Mercúrio e Yesod/Lua<br />
+Zodiac: 315-319°59 - Mercúrio em Aquário 15°19'59<br />
+Período de Invocação: 21:00 - 21:20<br />
+Coro Angélico/Príncipe: Os Arcanjos/Michael<br />
+Anjo Assistente: Astral<br />
+Elementos Alquímicos: Ar/Sal (♅)<br />
+Cor: Laranja, Roxo e Violeta<br />
+Atributos: alerta contra as falsas amizades, traídos e pessoas aproveitadoras, rancorosas ou sem caráter. Protege contra a raiva, as inimizades e acidentes de trânsito. Domina os sábios, os cientistas, jornalistas e radialistas, além de inspirar as pessoas célebres que trabalham em benefício da humanidade.<br />
+Demonio: FLAUROS - estimula o rancor, a irresponsabilidade, a mágoa, a indecisão no amor, o convencimento exagerado e a falta de vontade de aprender coisas novas. A pessoa sob sua influência pode ser roubada ou assaltada. Influencia os falsos pregadores e os pseudo artistas.</p>
+<p>DESCRIÇÃO</p>
+<p>Mehiel é o anjo da inspiração e da vivificação. Ele nos ajuda a avivar nossa imaginação e criatividade para encontrar soluções inteligentes. Ele nos ajuda a transformar a hiperatividade e a falta de energia.</p>
+<p>Ele dirige uma das disciplinas da escola medieval, gramática. Este anjo simboliza inspiração e proteção. Ele proporciona uma facilidade natural para escrever e evita que aqueles que estão sob sua proteção sejam convidados ou plagiarados.</p>
+<p>Mehiel é invocado para estimular a inteligência, a criatividade e a eloquência. Este anjo é um protetor dos escritores, dos oradores e de todos aqueles que utilizam a arte das palavras, oferecendo inspiração e clareza de expressão.</p>
+<p>PRINCIPAIS CARACTERÍSTICAS</p>
+<p>✦ Estímulo à Inteligência: Mehiel ajuda a estimular a inteligência, ampliando a capacidade de compreensão, análise e solução de problemas.<br />
+✦ Promoção da Criatividade: Este anjo incentiva a criatividade, especialmente nas áreas da escrita, do ensino e da comunicação, permitindo que novas ideias e conceitos fluam livremente.<br />
+✦ Eloquência na Comunicação: Mehiel promove a eloquência, auxiliando seus protegidos a se expressarem de maneira clara e persuasiva, tanto na fala quanto na escrita.<br />
+✦ Proteção para Escritores e Oradores: Oferece proteção e inspiração para escritores, oradores e aqueles que utilizam a palavra como ferramenta de trabalho ou atuação criativa.</p>
+<h1 id="transcription-of-mehiel_2jpg"><a class="header" href="#transcription-of-mehiel_2jpg">Transcription of mehiel_2.jpg</a></h1>
+<p>Claroza de Pensamento: Este anjo ajuda a alcançar clareza de pensamento, facilitando a organização de ideias e a comunicação eficaz de conceitos complexos.<br />
+Aprendizado e Estudo: Encoraja o aprendizado e o estudo, tornando o processo educativo mais agradável e produtivo para estudantes e acadêmicos.<br />
+Dissipação de Dúvidas e Confusões: Mehile auxilia na dissipação de dúvidas e confusões, oferecendo orientação e discernimento em momentos de indecisão.<br />
+Incentivo à Leitura: Este anjo também incentiva o amor pela leitura, enriquecendo a vida intelectual e espiritual de seus protegidos com o conhecimento adquirido através dos livros.<br />
+Superar Bloqueios Criativos: Ajuda a superar bloqueios criativos, proporcionando inspiração e novas perspectivas para projetos artísticos e intelectuais.<br />
+Defesa contra a Desinformação: Mehile defende contra a desinformação, ajudando a discernir a verdade em meio a um mar de informações equivocadas e enganosas.</p>
+<p>Mehile simboliza a força da palavra e do intelecto, guiando aqueles que buscam expressar suas ideias e conhecimentos de forma criativa e impactante. Invocar este anjo é buscar inspiração para a comunicação, o estudo e a criação artística, promovendo o desenvolvimento intelectual e a capacidade de influenciar positivamente através da expressão verbal e escrita.</p>
+<p>כּוּתִי</p>
+<p>64</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../angels/aquarius/manakel.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../angels/aquarius/umabel.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../angels/aquarius/manakel.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../angels/aquarius/umabel.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>

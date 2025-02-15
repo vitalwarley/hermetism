@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Nanael - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="nanael-ננא"><a class="header" href="#nanael-ננא">Nanael (ננא)</a></h1>
+<p>"Faça perguntas à vida e ela lhe responderá."</p>
+<h2 id="atributos"><a class="header" href="#atributos">Atributos</a></h2>
+<ul>
+<li>Número: 53</li>
+<li>Anjo Regente: PRINCIPADO</li>
+<li>Posição: TIFERET EM NETZACH</li>
+<li>Nome Divino: NUN-NUN-ALEPH</li>
+<li>Atributo Divino: Deus que humilha os orgulhosos</li>
+<li>Virtudes e Poderes: Altas Ciências, Filosofias, Paz, Meditação</li>
+<li>Trigrama (Gematria): NNA - Nena (101)</li>
+<li>Nome (Gematria): NNAAL - Nenael (132)</li>
+<li>Sefiroth/Planetas: Tiferet/Sol (O) e Netzach/Venus (♀)</li>
+<li>Zodíaco: 260-264°59 Saturno em Sagitário 20-24°59</li>
+<li>Período de Invocação: 17:20-17:40</li>
+<li>Coro Angélico/Príncipe: Os Principados/Haniel</li>
+<li>Anjo Assistente: Chomine</li>
+<li>Elementos Alquímicos: Fogo/Mercúrio (X) e Terra/Enxofre (VB)</li>
+<li>Cor: Amarelo, Verde, Azul e Roxo</li>
+</ul>
+<h2 id="descrição"><a class="header" href="#descrição">Descrição</a></h2>
+<p>Nanael é o anjo da comunicação espiritual. Ele permite-nos comunicar melhor com os outros, de forma simples e benevolente, mas também entrar em contacto com a inteligência do universo, ao compreender que a vida nos fala e nos comunica a cada momento se soubermos ouvir e decodificá-la.</p>
+<p>Como anjo da meditação, ele nos encoraja a introduzir mais espiritualidade em nossa vida diária e a nos afastar dos tormentos do ego.</p>
+<p>Nanael é invocado para a obtenção de sabedoria e conhecimento, especialmente nos campos da filosofia, da teologia e das ciências ocultas. Este anjo promove a introspecção e a meditação profunda, auxiliando aqueles que buscam compreender os mistérios divinos.</p>
+<h2 id="atribuições"><a class="header" href="#atribuições">Atribuições</a></h2>
+<p>Inspira o gosto pela solidão, paz, tranquilidade, calma e serenidade, mesmo nas horas mais difíceis, ajudando a pensar antes de agir. Concede prudência, responsabilidade, dignidade, muita sabedoria e religiosidade.</p>
+<h2 id="demônio"><a class="header" href="#demônio">Demônio</a></h2>
+<p>CAIN - estimula a tristeza, a melancolia, a preguiça, a culpa, a autopunição, a imprudência, os maus pensamentos, as brigas entre casais, o desequilíbrio e a irresponsabilidade. Domina todos os defeitos do corpo e da alma, as agitações e o desemprego.</p>
+<h2 id="principais-características"><a class="header" href="#principais-características">Principais Características</a></h2>
+<ol>
+<li>
+<p>Promoção da Sabedoria: Nanael inspira a busca pela sabedoria, ajudando seus protegidos a aprofundar seu entendimento em áreas de conhecimento elevado.</p>
+</li>
+<li>
+<p>Inspiração e Criatividade: Inspira criatividade e novas ideias, especialmente em campos que requerem um profundo entendimento teórico e conceitual.</p>
+</li>
+<li>
+<p>Introspecção e Meditação: Encoraja a introspecção e a prática da meditação como meios de alcançar a paz interior e a compreensão espiritual.</p>
+</li>
+<li>
+<p>Compreensão dos Mistérios Divinos: Auxilia na compreensão dos mistérios divinos e na conexão com o sagrado, facilitando o acesso a revelações espirituais.</p>
+</li>
+<li>
+<p>Elevação Espiritual: Promove a elevação espiritual, incentivando o crescimento pessoal e o desenvolvimento de virtudes superiores.</p>
+</li>
+<li>
+<p>Estudo da Filosofia e Teologia: Este anjo é particularmente benéfico para estudantes e pesquisadores da filosofia, da teologia e das ciências ocultas, fornecendo ideias e insights profundos.</p>
+</li>
+<li>
+<p>Paz e Serenidade: Nanael traz paz e serenidade à vida dos seus protegidos, ajudando-os a encontrar equilíbrio e harmonia em suas jornadas.</p>
+</li>
+<li>
+<p>Capacidade de Concentração: Este anjo melhora a capacidade de concentração, especialmente útil para o estudo e a pesquisa em áreas complexas do saber.</p>
+</li>
+<li>
+<p>Comunicação com o Divino: Facilita a comunicação com o divino, abrindo canais para a oração e meditação profunda se tornarem mais efetivas.</p>
+</li>
+<li>
+<p>Alívio da Solidão: Nanael também oferece conforto para aqueles que se sentem sozinhos em sua busca espiritual, lembrando-os da presença constante do divino.</p>
+</li>
+</ol>
+<p>Nanael simboliza a luz do conhecimento e a profundidade da compreensão espiritual, guiando os seres humanos em sua busca por sabedoria e iluminação. Invocar este anjo é buscar apoio para aprofundar o entendimento dos grandes mistérios da vida, promovendo o crescimento intelectual e espiritual. A influência de Nanael encoraja a dedicação ao estudo e à meditação como caminhos para uma compreensão mais profunda do universo e do papel do indivíduo dentro dele.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../angels/sagittarius/daniel.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../angels/sagittarius/nithael.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../angels/sagittarius/daniel.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../angels/sagittarius/nithael.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>

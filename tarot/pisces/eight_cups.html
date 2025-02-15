@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Eight of Cups - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="transcription-of-eight_cups_1jpg"><a class="header" href="#transcription-of-eight_cups_1jpg">Transcription of eight_cups_1.jpg</a></h1>
+<p>OITO DE TAÇAS</p>
+<p>Hod na Árvore da Água<br />
+Ar em Água regido por Hod<br />
+Astrologia: Saturno em Peixes</p>
+<p>Todos os locais próximos já foram explorados pela Esfera de Hod. Está na hora de buscar novos conhecimentos em locais distantes.</p>
+<p>Descrição:<br />
+Após procurar pelo Santo Graal em todos os locais próximos, o Eremita percebe que terá de empreender uma jornada para distâncias mais longas se quiser realmente encontrar o Cálice Sagrado.</p>
+<p>Nomes de Deus:<br />
+67. Ayel: Deus, delícia das crianças e dos homens. Este anjo ajuda a ter consolação contra adversidades ou injustiças. Favorece a longevidade, a preservação e a solidificação de bens materiais adquiridos por trabalho. Influencia nos estudos, principalmente da filosofia, misticismo ou religião. Domina as mudanças.<br />
+"Procura no SENHOR a tua felicidade, e Ele satisfará os desejos do teu coração." (Sl 37(36):4)</p>
+<ol start="68">
+<li>Habuhiah: Deus que dá dom de liberalidade. Este anjo ajuda a conservar a paz, a eliminar forças maldosas e a curar os problemas de saúde. Exerce influência na agricultura, criação e fecundidade.<br />
+"Aleluia! Dai graças ao SENHOR, porque Ele é bom, porque o seu amor é eterno." (Sl 106(105):1)</li>
+</ol>
+<p>Conceitos-Chave:<br />
+A solução para o problema está em outro lugar. Procure uma auditoria para a situação de alguém que não esteja envolvido emocionalmente nela; Estagnação Emocional; Estar excessivamente cansado, esgotado e exausto; Há necessidade de um estudo ou disciplina para impor alguns limites à extensão em demais; Deixar o Conhecido e Ir em Direção ao Desconhecido; Abandonando os modos de vida desconhecidos; O Senhor da Indolência, Saturno em Peixes; O tempo e o prazer encobrem o prazer, e não a vida.</p>
+<h1 id="transcription-of-eight_cups_2jpg"><a class="header" href="#transcription-of-eight_cups_2jpg">Transcription of eight_cups_2.jpg</a></h1>
+<p>forças para reação; O próprio ápice do desagradável; Águas Paradas; Um estado de retiro que é necessário e bom neste momento para se tornar claro; Recarregar-se e renovar os pensamentos dentro de um espaço protegido; Momento de Avaliar Sentimentos; Refletir sobre os relacionamentos e o que se gosta ou não nos mesmos; A capacidade de ir ao interior profundo para regenerar as energias; Retirar-se das atividades para dentro de si mesmo; Retirada ou do outro tempo; Esgotamento de energias na busca pela solução sem mudar o que está fazendo; Autopiedade; Um tipo de mudança inconsciente ocorre em um nível de sentimento muito profundo; Abandono de conhecimento estável; É hora de ir adiante; Recusa de abandonar uma situação mesmo sabendo que é extrai tudo que tinha para dar; O fim de uma coisa a começo de outra; Deixar o passado para trás e abandonar uma situação por decepção ou desilusão; Aquele que busca não escolhe a não ser abandonar-se na busca do que é certo; Excitação; Cascata de Energia; O Cardume Nandando; O poder do movimento fluído; O fluxo infinito de potencialidades; Reprodução; A emoção do trabalho em formação; Busca por novos horizontes; A cooperação de diversas potencialidades traz junto; O declínio de um assunto, ou que um assunto já foi considerado importante, na verdade importa muito pouco, seja para um ou para; A tristeza inevitável ao abandonar algo que foi de valor na passagem para uma nova fase da vida; Estado emocional quando as coisas chegaram a um ponto estático ou de quietude; Progressão Emocional; Deixar para trás o conhecido pelo desconhecido e progredir em direção a sentimentos que são novos, diferentes e que de alguma forma mudaram.</p>
+<p>Outros Símbolos
+Psique indo até Hades para cumprir as tarefas que Afrodite de deu. Arthur Waite recomenda neste Arcano que se procure ajuda exterior, enquanto Crowley diz que um Mago não deveria recorrer a outras pessoas para resolver seus problemas.</p>
+<p>Uso Ritualístico
+Um Arcano usado em rituais de abertura de Jornada. Representa o intervalo entre o fim de um ciclo (Morte) e o começo de outro (Louco).
+O Oito de Taças no Tarô de Jean Noblet (1659); Tarô de Bologna (1740); Tarô de Dali (2003); Tarô da Lombardia (1810); Tarô Mitológico (1986); Tarô de Thoth (1947) e Tarô de Rider Waite (1910).</p>
+<p>419</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../tarot/aquarius/eight_of_swords.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../tarot/pisces/nine_cups.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../tarot/aquarius/eight_of_swords.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../tarot/pisces/nine_cups.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>
