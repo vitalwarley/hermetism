@@ -1,0 +1,10 @@
+[project]
+name = "hermetism"
+version = "0.1.0"
+description = "Hermetism research project"
+requires-python = "==3.13.*" 
+dependencies = [
+  "beautifulsoup4>=4.13.3",
+  "openai",
+  "requests>=2.32.3",
+]
