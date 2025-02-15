@@ -2,56 +2,33 @@
 
 Welcome to this comprehensive guide on Hermetism and its related esoteric practices. This GitBook explores the ancient wisdom traditions that have shaped spiritual and mystical thought throughout history.
 
-## Table of Contents
+## Content Overview
 
-1. [Introduction to Hermetism](#introduction-to-hermetism)
-   - Origins and History
-   - The Emerald Tablet
-   - Hermetic Principles
-   - As Above, So Below
+This repository contains a structured exploration of Hermetic wisdom through multiple interconnected disciplines:
 
-2. [Astrology in Hermetism](#astrology-in-hermetism)
-   - Planetary Correspondences
-   - Zodiacal Influences
-   - Celestial Mechanics
-   - Astrological Houses
+### Astrological Foundation
+The `astrology/` directory contains detailed analyses of zodiacal signs, with current focus on the winter signs (Sagittarius through Pisces). Each sign is examined both in its raw form (`raw/`) and through synthesized interpretations (`synthesis/`).
 
-3. [The Tarot Mystery School](#the-tarot-mystery-school)
-   - Major Arcana & Hermetic Symbolism
-   - Minor Arcana & Elements
-   - Court Cards & Personality Archetypes
-   - Reading Methods & Divination
+### Tarot Correspondences
+In the `tarot/` directory, you'll find detailed explorations of how Tarot cards correspond to astrological signs. Each zodiacal sign is associated with specific cards that reflect its energies and teachings:
+- Wands for Sagittarius
+- Pentacles for Capricorn
+- Swords for Aquarius
+- Cups for Pisces
 
-4. [Kabbalah & The Tree of Life](#kabbalah--the-tree-of-life)
-   - Sephiroth
-   - The Four Worlds
-   - Hebrew Letters & Sacred Names
-   - Pathworking
+### Angelic Influences
+The `angels/` directory documents the guardian angels associated with each zodiacal sign, with six angels corresponding to each sign. These angelic beings represent specific divine attributes and influences that can be invoked for spiritual development.
 
-5. [Practical Applications](#practical-applications)
-   - Meditation Techniques
-   - Ritual Work
-   - Symbol Integration
-   - Personal Development
+### Additional Resources
+- `scripts/`: Utility scripts for content management and generation
+- `prompts/`: Templates and guidelines for content creation
+- Supporting documentation in root directory (changes.md, introduction.md)
 
-6. [Advanced Studies](#advanced-studies)
-   - Alchemy
-   - Sacred Geometry
-   - Numerology
-   - Hermetic Magic
-
-## Introduction to Hermetism
+## About This Project
 
 Hermetism is a philosophical and spiritual tradition based on writings attributed to Hermes Trismegistus ("Thrice-Greatest Hermes"). This ancient wisdom tradition combines elements of Egyptian theology, Greek philosophy, and early astronomical knowledge into a comprehensive system of spiritual development.
 
-### Key Texts
-- The Corpus Hermeticum
-- The Emerald Tablet
-- The Kybalion
-
-## Contributing
-
-This is a living document. If you'd like to contribute, please feel free to submit pull requests or open issues for discussion.
+This guide focuses on the practical aspects of hermetic wisdom through the lens of astrology, tarot, and angelic correspondences, providing synthesis for each zodiacal sign.
 
 ## License
 
