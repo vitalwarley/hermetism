@@ -19,7 +19,7 @@ def aggregate_md_files(files: list[Path]) -> str:
 
 def process_sign_files(sign: str):
     """Process the main sign markdown files."""
-    sign_dir = Path('images') / sign / 'sign'
+    sign_dir = Path('images') / 'signs' / sign / 'sign'
     if not sign_dir.exists():
         print(f"Sign directory not found: {sign_dir}")
         return
@@ -34,7 +34,30 @@ def process_sign_files(sign: str):
     combined_content = aggregate_md_files(sign_files)
     
     # Create target directory and save
-    target_file = Path('src') / 'raw' / f'{sign}.md'
+    target_file = Path('src') / 'raw' / 'signs' / f'{sign}.md'
+    ensure_directory(target_file.parent)
+    with open(target_file, 'w') as f:
+        f.write(combined_content)
+    print(f"Created {target_file}")
+
+def process_planet_files(planet: str):
+    """Process the main planet markdown files."""
+    planet_dir = Path('images') / 'planets' / planet
+    if not planet_dir.exists():
+        print(f"Planet directory not found: {planet_dir}")
+        return
+    
+    # Get all markdown files for the planet
+    planet_files = list(planet_dir.glob('*.md'))
+    if not planet_files:
+        print(f"No markdown files found in {planet_dir}")
+        return
+    
+    # Combine all planet markdown files
+    combined_content = aggregate_md_files(planet_files)
+    
+    # Create target directory and save
+    target_file = Path('src') / 'raw' / 'planets' / f'{planet}.md'
     ensure_directory(target_file.parent)
     with open(target_file, 'w') as f:
         f.write(combined_content)
@@ -42,7 +65,7 @@ def process_sign_files(sign: str):
 
 def process_tarot_files(sign: str):
     """Process tarot card files."""
-    source_dir = Path('images') / sign / 'tarot'
+    source_dir = Path('images') / 'signs' / sign / 'tarot'
     if not source_dir.exists():
         print(f"Tarot directory not found: {source_dir}")
         return
@@ -84,7 +107,7 @@ def process_tarot_files(sign: str):
 
 def process_angel_files(sign: str):
     """Process angel files."""
-    source_dir = Path('images') / sign / 'angels'
+    source_dir = Path('images') / 'signs' / sign / 'angels'
     if not source_dir.exists():
         print(f"Angels directory not found: {source_dir}")
         return
@@ -118,19 +141,24 @@ def process_angel_files(sign: str):
 
 def main():
     parser = argparse.ArgumentParser(description='Organize and aggregate markdown files from images to src directory')
-    parser.add_argument('sign', help='Zodiac sign to process (e.g., aquarius)')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--sign', help='Zodiac sign to process (e.g., aquarius)')
+    group.add_argument('--planet', help='Planet to process (e.g., moon, sun)')
     args = parser.parse_args()
     
-    sign = args.sign.lower()
-    
-    # Process main sign files
-    process_sign_files(sign)
-    
-    # Process angels and tarot
-    process_angel_files(sign)
-    process_tarot_files(sign)
-    
-    print(f"Finished processing files for {sign}")
+    if args.sign:
+        sign = args.sign.lower()
+        # Process main sign files
+        process_sign_files(sign)
+        # Process angels and tarot
+        process_angel_files(sign)
+        process_tarot_files(sign)
+        print(f"Finished processing files for sign {sign}")
+    else:
+        planet = args.planet.lower()
+        # Process planet files
+        process_planet_files(planet)
+        print(f"Finished processing files for planet {planet}")
 
 if __name__ == "__main__":
     main() 
