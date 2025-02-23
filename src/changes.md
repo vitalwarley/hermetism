@@ -33,3 +33,9 @@
 
 - Adicionar README.md com instruções para rodar os scripts.
 - Enumarar os anjos e cartas do tarot de acordo (e.g., 0_rochel_1.jpg para peixes)
+
+## 23/02/2025
+
+### TODO [next week]
+
+- Integrar cartas do tarot. Pegar do esoteric meanings.

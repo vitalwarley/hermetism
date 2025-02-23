@@ -8,6 +8,10 @@
     - [Capricorn](astrology/raw/capricorn.md)
     - [Aquarius](astrology/raw/aquarius.md)
     - [Pisces](astrology/raw/pisces.md)
+- [Planets]()
+    - [Sun](raw/planets/sun.md)
+    - [Moon](raw/planets/moon.md)
+
 # Tarot
 - [Sign Correspondences]()
     - [Sagittarius]()
@@ -63,12 +67,17 @@
     - [Yabamiah](angels/pisces/yabamiah.md)
 
 # Synthesis
-- [Libra](astrology/synthesis/libra.md)
-- [Scorpio](astrology/synthesis/scorpio.md)
-- [Capricorn](astrology/synthesis/capricorn.md)
-- [Sagittarius](astrology/synthesis/sagittarius.md)
-- [Aquarius](astrology/synthesis/aquarius.md)
-- [Pisces](astrology/synthesis/pisces.md)
+- [Signs]()
+    - [Aries](astrology/synthesis/aries.md)
+    - [Libra](astrology/synthesis/libra.md)
+    - [Scorpio](astrology/synthesis/scorpio.md)
+    - [Sagittarius](astrology/synthesis/sagittarius.md)
+    - [Capricorn](astrology/synthesis/capricorn.md)
+    - [Aquarius](astrology/synthesis/aquarius.md)
+    - [Pisces](astrology/synthesis/pisces.md)
+- [Planets]()
+    - [Sun](synthesis/planets/sun.md)
+    - [Moon](synthesis/planets/moon.md)
 
 <!-- ## Core Concepts
 * [Introduction to Hermetism](introduction.md)
