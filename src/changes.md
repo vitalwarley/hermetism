@@ -36,6 +36,9 @@
 
 ## 23/02/2025
 
-### TODO [next week]
-
 - Integrar cartas do tarot. Pegar do esoteric meanings.
+
+## 03/03/2025
+
+- Em vez de itens, escrever em forma de parágrafo e citar as propriedades astrológicas do signo antes e depois do planeta. Podemos manter os itens, mas também trazer uma sintetização dos fatos.
+- Para os arcanos maiores, enfatizar o arquétipo do arcano. Explorar simbolismo. Videos do esoteric meanings.

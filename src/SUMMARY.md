@@ -11,6 +11,10 @@
 - [Planets]()
     - [Sun](raw/planets/sun.md)
     - [Moon](raw/planets/moon.md)
+    - [Mercury](raw/planets/mercury.md)
+    - [Venus](raw/planets/venus.md)
+    - [Mars](raw/planets/mars.md)
+    - [Jupiter](raw/planets/jupiter.md)
 
 # Tarot
 - [Sign Correspondences]()
@@ -78,6 +82,10 @@
 - [Planets]()
     - [Sun](synthesis/planets/sun.md)
     - [Moon](synthesis/planets/moon.md)
+    - [Mercury](synthesis/planets/mercury.md)
+    - [Venus](synthesis/planets/venus.md)
+    - [Mars](synthesis/planets/mars.md)
+    - [Jupiter](synthesis/planets/jupiter.md)
 
 <!-- ## Core Concepts
 * [Introduction to Hermetism](introduction.md)
