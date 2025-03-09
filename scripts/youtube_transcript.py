@@ -4,18 +4,18 @@ YouTube Transcript Downloader
 
 This script downloads transcripts from YouTube videos and saves them to a specified folder.
 Usage:
-    python youtube_transcript.py --video_id VIDEO_ID --output_folder OUTPUT_FOLDER [--language LANGUAGE]
+    python youtube_transcript.py --video_id VIDEO_ID --output_folder OUTPUT_FOLDER [--language LANGUAGE] [--filename FILENAME]
 
 Arguments:
     --video_id: The YouTube video ID (the part after v= in the URL)
     --output_folder: The folder where the transcript will be saved
     --language: Optional. The language code for the transcript (default: en)
+    --filename: Optional. Custom name for the output text file (without extension)
 """
 
 import argparse
 import os
 import sys
-import json
 from datetime import datetime
 try:
     from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
@@ -30,6 +30,7 @@ def parse_arguments():
     parser.add_argument("--video_id", required=True, help="YouTube video ID (the part after v= in the URL)")
     parser.add_argument("--output_folder", required=True, help="Folder to save the transcript")
     parser.add_argument("--language", default="en", help="Language code for the transcript (default: en)")
+    parser.add_argument("--filename", help="Custom name for the output text file (without extension)")
     return parser.parse_args()
 
 def get_video_transcript(video_id, language="en"):
@@ -62,7 +63,7 @@ def get_video_transcript(video_id, language="en"):
         print(f"Error retrieving transcript: {str(e)}")
         return None
 
-def save_transcript(transcript, video_id, output_folder, language):
+def save_transcript(transcript, video_id, output_folder, language, custom_filename=None):
     """
     Save the transcript to a file.
     
@@ -71,6 +72,7 @@ def save_transcript(transcript, video_id, output_folder, language):
         video_id (str): The YouTube video ID
         output_folder (str): The folder to save the transcript
         language (str): The language code of the transcript
+        custom_filename (str, optional): Custom name for the output file
         
     Returns:
         str: The path to the saved file
@@ -78,9 +80,13 @@ def save_transcript(transcript, video_id, output_folder, language):
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
     
-    # Create filename with timestamp
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{video_id}_{language}_{timestamp}.txt"
+    # Create filename with timestamp or use custom filename
+    if custom_filename:
+        filename = f"{custom_filename}.txt"
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"{video_id}_{language}_{timestamp}.txt"
+    
     filepath = os.path.join(output_folder, filename)
     
     # Save as plain text
@@ -88,11 +94,6 @@ def save_transcript(transcript, video_id, output_folder, language):
         for segment in transcript:
             start_time = format_time(segment['start'])
             f.write(f"[{start_time}] {segment['text']}\n")
-    
-    # Also save the raw JSON data for potential future use
-    json_filepath = os.path.join(output_folder, f"{video_id}_{language}_{timestamp}.json")
-    with open(json_filepath, "w", encoding="utf-8") as f:
-        json.dump(transcript, f, ensure_ascii=False, indent=2)
     
     return filepath
 
@@ -118,9 +119,8 @@ def main():
     transcript = get_video_transcript(args.video_id, args.language)
     
     if transcript:
-        filepath = save_transcript(transcript, args.video_id, args.output_folder, args.language)
+        filepath = save_transcript(transcript, args.video_id, args.output_folder, args.language, args.filename)
         print(f"Transcript saved to: {filepath}")
-        print(f"JSON data also saved in the same directory.")
     else:
         print("Failed to download transcript.")
         sys.exit(1)

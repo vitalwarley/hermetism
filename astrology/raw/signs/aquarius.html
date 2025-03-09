@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Aquarius - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="transcription-of-aquarius_0jpg"><a class="header" href="#transcription-of-aquarius_0jpg">Transcription of aquarius_0.jpg</a></h1>
+<p>I'm sorry, but I can't transcribe any text from the image.</p>
+<h1 id="transcription-of-aquarius_1jpg"><a class="header" href="#transcription-of-aquarius_1jpg">Transcription of aquarius_1.jpg</a></h1>
+<p>AQUÁRIO<br />
+Polaridade: Yang<br />
+Elemento: Ar<br />
+Qualidade: Fixo</p>
+<p>Aquário, o décimo primeiro signo do zodíaco, é regido por Urano (e tradicionalmente por Saturno) e simboliza a inovação, a originalidade e o humanitarismo. Na Astrologia, Aquário está associado à qualidade Fixo, refletindo sua natureza estável mas também sua inclinação para mudanças radicais e reformas. Embora a Alquimia não trate especificamente dos signos zodiacais, as qualidades de Aquário podem ser interpretadas como princípios de renovação e transmutação, promovendo o evolução tanto no plano material quanto espiritual.</p>
+<p>CORRESPONDÊNCIAS<br />
+Pedras: aquamarina, ametista, granada, hematita, turmalina azul, lápis lazuli, fluorita e âmbar.<br />
+Metal: chumbo/platina<br />
+Animais: pavão, pássaros grandes<br />
+Alimentos: alimentos inovadores e saudáveis, como brócolis, ervilhas, milho, nozes, sementes, cereais, peras e frutas cítricas.<br />
+Ervas: orquídea, eléboro, passiflora, erva de São João, urtiga, absinto, lavanda e anis estrelado.<br />
+Planeta: Saturno/Urano<br />
+Casa Zodiacal: Décima-primeira<br />
+Planeta Exaltado: nenhum<br />
+Planeta em Queda: nenhum/Netuno<br />
+Planeta em Detrimento: Sol</p>
+<p>CONCEITOS-CHAVE<br />
+Inovação: Aquário é sinônimo de inovação, sempre buscando novas maneiras de abordar problemas e situações, similar ao impulso alquímico de explorar novos métodos e ideias na transformação da matéria e do espírito.</p>
+<p>Originalidade: Este signo valoriza a originalidade, refletindo a busca alquímica por expressões únicas e autênticas da verdade e do conhecimento.</p>
+<p>Humanitarismo: Aquário possui um forte senso de humanitarismo e desejo de melhorar a sociedade, paralelo ao objetivo alquímico de trabalhar para o bem maior e a elevação da humanidade.</p>
+<p>Independência: A independência de Aquário é marcante, semelhante à jornada solitária do alquimista que segue sua própria trilha em busca da iluminação.</p>
+<p>Visão de Futuro: Este signo tem uma visão de futuro e uma capacidade de antever tendências, refletindo a visão alquímica que transcende o tempo e o espaço para alcançar a sabedoria eterna.</p>
+<p>Intelectualidade: Aquário aborda a vida com uma forte inclinação intelectual, buscando compreender os princípios universais, de forma semelhante ao estudo alquímico das leis naturais e metafísicas.</p>
+<p>Reforma: Este signo é motivado por reformas e mudanças sociais, ecoando o processo alquímico de transmutação que busca a purificação e a renovação.</p>
+<p>Desapego: Aquário pode ser emocionalmente desapego, uma qualidade que reflete a neutralidade alquímica necessária para observar objetivamente os processos de transformação.</p>
+<p>Amizade: Aquário valoriza a amizade e as conexões sociais, paralelo ao compartilhamento alquímico de conhecimentos e experiências com uma comunidade de mentes semelhantes.</p>
+<p>Excentricidade: A excentricidade de Aquário mostra sua disposição para desafiar normas e convenções, semelhante à abordagem alquímica que frequentemente desafia as visões ortodoxas da realidade.</p>
+<p>Aquário, portanto, simboliza a quebra de paradigmas, a inovação e a visão progressista. Na Astrologia, ensina-nos sobre a importância da individualidade, da liberdade de expressão e do compromisso com o coletivo. Na Alquimia, as qualidades de Aquário podem ser interpretadas como a busca constante pela evolução e pela transformação, visando não apenas a transmutação pessoal mas também a contribuição para a ascensão coletiva.</p>
+<h1 id="transcription-of-aquarius_2jpg"><a class="header" href="#transcription-of-aquarius_2jpg">Transcription of aquarius_2.jpg</a></h1>
+<p>PRIMEIRO DECANATO DE AQUÁRIO<br />
+(0º a 9º59') - Regido por Vênus<br />
+O primeiro decanato de Aquário, regido por Vênus, enfatiza a busca por harmonia, beleza e conexões sociais. Esta influência de Vênus traz um apreço pela arte, pela estética e pelo prazer, suavizando a tendência aquariana para o distanciamento com uma maior necessidade de relacionamentos e parcerias harmoniosos. Indivíduos nascidos sob este decanato podem ter um olhar mais idealista para o amor e as relações, buscando criar laços que reflitam seus ideais e valores elevados.</p>
+<p>SEGUNDO DECANATO DE AQUÁRIO<br />
+(10º a 19º59') - Regido por Mercúrio<br />
+O segundo decanato de Aquário é influenciado por Mercúrio, fortalecendo as habilidades comunicativas, a curiosidade intelectual e a capacidade de inovação. A regência de Mercúrio acrescenta uma agilidade mental notável, tornando esses nativos excelentes em expressar ideias originais e em encontrar soluções inovadoras para problemas complexos. Eles podem ter um interesse particular por ciências, tecnologias e tudo o que é vanguarda, utilizando a comunicação como uma ferramenta para promover mudanças sociais.</p>
+<p>TERCEIRO DECANATO DE AQUÁRIO<br />
+(20º a 29º59') - Regido pela Lua<br />
+O terceiro decanato de Aquário, sob a regência da Lua, introduziu uma camada de sensibilidade emocional e intuição à natureza inventiva e progressista de Aquário. Esta influência lunar destaca a necessidade de entender e cuidar das emoções coletivas, levando indivíduos a serem particularmente sensíveis às necessidades da sociedade e à conexão emocional com a comunidade. Pode haver uma forte inclinação para usar sua compreensão intuitiva em prol de causas humanitárias ou movimentos sociais, equilibrando o intelecto aquariano com uma compaixão profunda.</p>
+<p>surpresa, inovação, futurismo, humanitarianismo, desafio, comunidade, coletividade, espiritualidade, universidade, humanitários, conformismo, simbiose, independência, excentricidade, rebeldia, cultura, compromisso, originalidade, rebelde, tolerante, síntese, visão, intuição, imposição, abertura, espaço, eclético, perspectiva, transcendência, mudança, revolução, altruísmo, intelecto, progressista, revolucionário, inovador, original, independente, flexibilidade, networking, imprevisibilidade, liberdade de expressão, sustentabilidade, eletricidade, social, multiculturalismo, fraternidade, atividade, criatividade, distanciamento, ecletismo, análise, humanidade, reconhecimento, desejo.</p>
+<h1 id="transcription-of-aquarius_3jpg"><a class="header" href="#transcription-of-aquarius_3jpg">Transcription of aquarius_3.jpg</a></h1>
+<p>61 - UMABEL<br />
+(0º a 4'59’)</p>
+<p>Umabel é invocado para fortalecer amizades e promover a compreensão entre as pessoas. Este anjo ajuda a encontrar almas gêmeas e a cultivar relações baseadas na empatia e no respeito mútuo. Umabel estimula o interesse por assuntos como astrologia, física e outras ciências que buscam compreender os mistérios do universo, incentivando a partilha de conhecimentos e experiências que enriquecem o espírito e fortalecem os laços de amizade.</p>
+<p>62 - JAH-HEL<br />
+(5º a 9'59’)</p>
+<p>Jah-Hel é o anjo da sabedoria e da iluminação intelectual, oferecendo inspiração para a busca pelo conhecimento e pela verdade. Este anjo encoraja a reflexão profunda e o desenvolvimento da intuição, ajudando os protegidos a encontrar respostas para suas questões mais profundas. Jah-Hel promove o amor pela leitura, pelo estudo e pela aprendizagem contínua, guiando os indivíduos pelo caminho do autoconhecimento e da compreensão do mundo ao seu redor.</p>
+<p>63 - ANAUEL<br />
+(10º a 14'59’)</p>
+<p>Anauel é associado à prosperidade e à proteção nos negócios, trazendo bênçãos e sucesso financeiro. Este anjo ajuda a superar dificuldades econômicas e a tomar decisões sábias que levam à estabilidade e ao crescimento. Anauel incentiva a generosidade e o uso consciente dos recursos, promovendo um equilíbrio entre a prosperidade material e o bem-estar espiritual, guiando os protegidos para agir com integridade e responsabilidade em todas as transações.</p>
+<p>64 - MEHIEL<br />
+(15º a 19'59’)</p>
+<p>Mehiel é o anjo da expressão e da proteção contra as forças negativas. Este anjo concede eloquência e a capacidade de comunicar ideias de forma clara e persuasiva, seja oralmente ou por escrito. Mehiel inspira criatividade e originalidade, protegendo os protegidos de ataques verbais e físicos, e incentivando a utilização das palavras como ferramenta para o entendimento, a cura e a promoção da paz.</p>
+<p>65 - DAMABIAH<br />
+(20º a 24'59’)</p>
+<p>Damabiah, no contexto cabalístico, oferece proteção durante as viagens e empreendimentos marítimos, além de promover a compreensão dos mistérios ocultos e a conexão com o divino através da água. Este anjo é invocado para obter sabedoria espiritual, purificação e renovação emocional. Damabiah ajuda a navegar pelas emoções com graça e profundidade, incentivando a introspecção e o desenvolvimento de uma sensibilidade refinada às energias sutis da vida.</p>
+<p>66 - MANAKEL<br />
+(25º a 29'59’)</p>
+<p>Manakel é conhecido por sua capacidade de trazer calma e sonhos pacíficos, aliviando o estresse e promovendo a harmonia interior. Este anjo ajuda a entender e interpretar mensagens transmitidas através dos sonhos, guiando os protegidos para a cura emocional e o equilíbrio. Manakel incentiva a conexão com a natureza e o desenvolvimento de uma consciência ambiental, promovendo a paz de espírito e um profundo respeito por todas as formas de vida.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../astrology/raw/signs/capricorn.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../astrology/raw/signs/pisces.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../astrology/raw/signs/capricorn.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../astrology/raw/signs/pisces.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>

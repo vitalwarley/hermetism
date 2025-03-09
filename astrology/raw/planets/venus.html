@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Venus - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="transcription-of-img_20250301_130604235jpg"><a class="header" href="#transcription-of-img_20250301_130604235jpg">Transcription of IMG_20250301_130604235.jpg</a></h1>
+<p>Vênus</p>
+<p>Vênus é o planeta do amor, da beleza, da harmonia, dos relacionamentos, da arte, do prazer e dos valores pessoais. Representa o modo como expressamos nosso afeto, como apreciamos a beleza ao nosso redor, e como buscamos prazer e satisfação na vida. Vênus influencia nossas relações sociais, nossos gostos e aversões, e a maneira como interagimos com o mundo de forma a trazer equilíbrio e contentamento.</p>
+<p>REGÊNCIA: TOURO ♉ e LIBRA ♎</p>
+<p>Vênus rege dois signos do zodíaco: Touro e Libra. Em Touro, Vênus enfatiza o amor pelos prazeres sensoriais, a apreciação pela beleza natural e material, e a busca por segurança emocional e financeira. Em Libra, o foco está nas relações interpessoais, na harmonia, na justiça e no equilíbrio, refletindo a natureza diplomática e social de Vênus.</p>
+<p>Conceitos-chave</p>
+<p>Amor e Atração: Vênus simboliza o amor em todas as suas formas, incluindo o amor romântico, a atração física e emocional, e a capacidade de criar e manter relações harmoniosas.</p>
+<p>Sensualidade: Vênus está ligado à sensualidade e à expressão dos desejos físicos, influenciando a forma como experimentamos e expressamos a sexualidade.</p>
+<p>Beleza e Estética: Este planeta está associado à beleza, à estética e à apreciação das artes. Vênus influencia nossos gostos, o senso de estilo e a maneira como encontramos beleza no nosso redor.</p>
+<p>Finanças e Recursos: Associado aos recursos materiais e financeiros, Vênus influencia nossa capacidade de atrair riqueza e a maneira como lidamos com o dinheiro, especialmente em relação ao gasto em luxos e conforto.</p>
+<p>Harmonia e Paz: Vênus busca harmonia e equilíbrio nas relações e no ambiente, promovendo a paz, a cooperação e a resolução pacífica de conflitos.</p>
+<p>Prazer e Conforto: Governando o prazer, Vênus está relacionado à busca por conforto, luxo e gratificação dos sentidos, incluindo prazeres materiais e sensoriais.</p>
+<p>Valores Pessoais: Este planeta reflete nossos valores pessoais, o que consideramos importante e valioso, influenciando nossas escolhas e prioridades na vida.</p>
+<p>Relações Sociais: Vênus também governa as relações sociais, a sociabilidade e a forma como nos relacionamos com os outros, buscando beleza e harmonia nas interações.</p>
+<p>Arte e Criatividade: Este planeta promove a criatividade e a expressão artística, incentivando envolvimento com a música, as artes visuais, a literatura e outras formas de expressão criativa.</p>
+<p>Compromisso e Parceria: Influencia a busca por compromisso e parceria estável, refletindo a importância das relações duradouras e do companheirismo.</p>
+<p>A posição de Vênus no mapa astral oferece insights valiosos sobre como expressamos amor e afeto, o que buscamos em parceiras, nossas inclinações estéticas e como valorizamos e gerimos nossos recursos pessoais. Vênus desempenha um papel crucial na compreensão da nossa capacidade de dar e receber amor, bem como na nossa busca por beleza e harmonia na vida.</p>
+<p>Domicílio: Touro ♉ e Libra ♎</p>
+<p>Touro: Quando Vênus está em Touro, sua expressão é poderosa e confortável, realçando o amor pelos prazeres sensoriais, a necessidade de segurança emocional e financeira, e uma forte conexão com o mundo natural. Indivíduos com Vênus em Touro valorizam a estabilidade nas relações e possuem uma grande apreciação pela beleza e conforto.</p>
+<p>Libra: Em Libra, Vênus enfatiza a busca por harmonia, equilíbrio e justiça nas relações interpessoais. Aqui, Vênus promove a diplomacia, a cortesía e forte sensibilidade estética. Pessoas com Vênus em Libra buscam parcerias igualitárias e valorizam a beleza nas suas diversas formas.</p>
+<h1 id="transcription-of-img_20250301_130613395_hdrjpg"><a class="header" href="#transcription-of-img_20250301_130613395_hdrjpg">Transcription of IMG_20250301_130613395_HDR.jpg</a></h1>
+<p>EXALTAÇÃO: PEIXES (♓)</p>
+<p>A exaltação de Vênus em Peixes amplifica a capacidade de amar de forma incondicional, a sensibilidade emocional e a compaixão. Neste signo, Vênus expressa sua natureza mais idealista e romântica, buscando uma conexão espiritual e transcendental no amor. Indivíduos com Vênus em Peixes são frequentemente empáticos, criativos e dispostos a fazer sacrifícios pelos outros.</p>
+<p>QUEDA: VIRGEM (♍)</p>
+<p>Vênus encontra sua queda em Virgem, onde a natureza crítica e perfeccionista do signo pode reprimir a expressão livre de amor e beleza que Vênus busca promover. A tendência de Vênus em Virgem para análise detalhada pode levar a uma excessiva preocupação com as imperfeições, tanto nas relações quanto na apreciação da arte e do prazer, desacelerando a capacidade de Vênus de apreciar a beleza na simplicidade.</p>
+<p>EXÍLIO: ÁRIES (♈) E ESCORPIÃO (♏)</p>
+<p>Áries: Em Áries, Vênus está em exílio, pois a natureza impulsiva e assertiva do signo contrasta com a busca de Vênus por harmonia e cooperação. Vênus em Áries pode manifestar um desejo ardente e uma abordagem direta ao amor, por vezes negligenciando a necessidade de compromisso e entendimento mútuo.</p>
+<p>Escorpião: Também em exílio em Escorpião, Vênus aqui enfrenta a intensidade emocional e os desejos profundos que podem complicar as relações e a busca por prazer. A paixão de Escorpião pode intensificar a experiência amorosa, mas também trazer desafios relacionados a ciúmes, possessividade e transformações profundas nas relações.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../astrology/raw/planets/mercury.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../astrology/raw/planets/mars.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../astrology/raw/planets/mercury.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../astrology/raw/planets/mars.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>

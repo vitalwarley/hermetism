@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sun - Hermetism</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive guide to Hermetic knowledge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../theme/custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hermetism</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/warleydev/hermetism" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="transcription-of-img_20250223_152331123jpg"><a class="header" href="#transcription-of-img_20250223_152331123jpg">Transcription of IMG_20250223_152331123.jpg</a></h1>
+<p>SOL</p>
+<p>O Sol é considerado o centro do mapa astral, simbolizando a essência do ser, a vontade de viver e a força vital que impulsiona a existência. Representa a identidade pessoal, o ego, a consciência do “eu” e o caminho de vida que se busca seguir.</p>
+<p>O Sol destaca qualidades como criatividade, orgulho, dignidade e o poder de realização. Sua posição no mapa natal revela muito sobre a personalidade, os talentos naturais, as ambições e o potencial de sucesso de uma pessoa.</p>
+<p>REGÊNCIA: LEÃO ♌</p>
+<p>O Sol rege o signo de Leão, influenciando os nascidos sob este signo com traços de liderança, generosidade, honra e um forte desejo de expressão pessoal. Leão está associado ao coração, tanto no sentido físico quanto no simbólico, refletindo a importância do Sol como fonte de vida e energia.</p>
+<p>CONCEITOS-CHAVE</p>
+<p>Essência e Identidade: O Sol representa a essência central de quem somos, nossa identidade básica e o núcleo de nosso ser. Ele reflete nossa verdadeira natureza e o que nos torna únicos.</p>
+<p>Vitalidade e Energia: Associado à vitalidade e à energia vital, o Sol influi nossa força física, nossa saúde geral e a energia que temos para enfrentar a vida.</p>
+<p>Vontade e Propósito: O Sol simboliza a vontade de viver, a motivação e o propósito de vida. Ele orienta nossos anseios, nossas escolhas e a direção que buscamos seguir.</p>
+<p>Expressão do Eu: Representa a maneira como nos expressamos no mundo, nossa personalidade e como brilhamos e nos destacamos entre os outros.</p>
+<p>Criatividade: O Sol está relacionado à criatividade e à autoexpressão através de várias formas de arte, hobbies e atividades que nos permitem mostrar quem realmente somos.</p>
+<p>Liderança: Este planeta influencia qualidades de liderança, autoridade e o desejo de assumir o controle de nossa própria vida, às vezes, de liderar o outros.</p>
+<p>Autoconfiança: O Sol está associado à autoconfiança, ao orgulho próprio e à capacidade de reconhecer e utilizar nossos próprios talentos e habilidades.</p>
+<p>Realização e Sucesso: Simboliza a busca por realização, sucesso e reconhecimento em nossa carreira e outros aspectos da vida onde queremos brilhar.</p>
+<p>Consciência e Clareza: Influencia a consciência de si mesmo, a clareza de pensamento e a capacidade de discernir o certo do errado, guiando-nos em nossa jornada de vida.</p>
+<p>Generosidade e Calor: O Sol também representa generosidade, calor humano e a capacidade de iluminar a vida dos outros, compartilhando nossa luz interior e positividade.</p>
+<p>O Sol no mapa astral é um dos fatores mais significativos a serem considerados, pois fornece insights sobre a natureza fundamental de uma pessoa, sua força de caráter e como ela busca cumprir seu destino. Ele é o símbolo da força que impulsiona para o crescimento, a expressão criativa e a realização pessoal.</p>
+<p>DOMICÍLIO: LEÃO ♌</p>
+<p>O Sol em Leão brilha com confiança, criatividade e dignidade. Indivíduos com essa colocação tendem a ter um forte noção de si mesmos, um desejo ardente de expressar sua individualidade e uma característica natural de liderança.</p>
+<p>EXALTAÇÃO: ÁRIES ♈</p>
+<p>Na sua exaltação em Áries, o Sol expressa suas qualidades de liderança, coragem e iniciativa de maneira mais elevada. A energia de Áries complementa o Sol, incentivando a ação direta, a assertividade e a vontade de enfrentar novos desafios. Indivíduos com o Sol em Áries são frequentemente vistos como pioneiros, dispostos a abrir caminhos e defender suas crenças com paixão e entusiasmo.</p>
+<h1 id="transcription-of-img_20250223_152334620jpg"><a class="header" href="#transcription-of-img_20250223_152334620jpg">Transcription of IMG_20250223_152334620.jpg</a></h1>
+<p>QUEDA: LIRA (♎)</p>
+<p>O Sol encontra sua queda em Libra, um signo que enfatiza o equilíbrio, a harmonia e as relações. Aqui, a expressão solar é desafiada e se comprometer a considerar as necessidades dos outros, o que pode diluir sua força e foco individual. Pessoas com o Sol em Libra buscam a aprovação e o reconhecimento através das relações e podem ter dificuldades em tomar decisões ou em afirmar sua vontade diante da necessidade de manter a paz e a harmonia.</p>
+<p>EXÍLIO: AQUÁRIO (♒)</p>
+<p>O Sol está em exílio em Aquário, um signo que valoriza a independência, a inovação e o bem coletivo. Neste ambiente, a expressão do Sol é menos confortável,</p>
+<p>INFLUÊNCIA VITAL</p>
+<p>O Sol é um dos astros mais importantes no mapa astral, influenciando profundamente a personalidade, os objetivos de vida e a maneira como interagimos com o mundo. Ele simboliza a luz que guia o caminho, ajudando a revelar o propósito de vida e a buscar a auto-realização.</p>
+<p>lucidez
+poder
+vitalidade
+realização
+sucesso
+autonomia
+sinceridade
+leão
+atividade
+individualidade
+inovação
+espontaneidade
+heroísmo
+autoafirmação
+individualismo
+independência
+autoridade
+caráter
+autenticidade
+criatividade
+liderança
+generosidade
+convicção
+coragem
+fama
+dádiva
+entusiasmo
+expressividade
+presença
+espírito
+magnanimidade
+desejo
+vida
+autoconhecimento
+egocentelha
+calor
+paixão
+exaltação
+nobrezas
+orgulho
+brilho
+clareza
+liberdade
+realização
+masculinidade
+energia
+inspiração
+reconhecimento
+dinamismo
+ambição
+majestade
+benignidade
+exuberância
+conquista
+glória
+esplendor
+pessoal
+otimismo
+natural
+radiância
+projeto
+honra
+identidade
+visibilidade
+ilustre
+originalidade
+firmeza
+determinação
+domínio
+vontade
+luz
+autorrealização
+protagonismo
+força
+renovação
+direção
+iluminação
+pai
+mágnetismo</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../astrology/raw/signs/pisces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../astrology/raw/planets/moon.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../astrology/raw/signs/pisces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../astrology/raw/planets/moon.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../theme/custom.js"></script>
+
+
+    </div>
+    </body>
+</html>
