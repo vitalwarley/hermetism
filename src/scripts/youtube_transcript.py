@@ -92,8 +92,10 @@ def save_transcript(transcript, video_id, output_folder, language, custom_filena
     # Save as plain text
     with open(filepath, "w", encoding="utf-8") as f:
         for segment in transcript:
-            start_time = format_time(segment['start'])
-            f.write(f"[{start_time}] {segment['text']}\n")
+            # Access attributes using dot notation or get method for compatibility
+            start_time = format_time(segment.start if hasattr(segment, 'start') else segment.get('start'))
+            text = segment.text if hasattr(segment, 'text') else segment.get('text')
+            f.write(f"[{start_time}] {text}\n")
     
     return filepath
 

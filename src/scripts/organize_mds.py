@@ -34,7 +34,7 @@ def process_sign_files(sign: str):
     combined_content = aggregate_md_files(sign_files)
     
     # Create target directory and save
-    target_file = Path('src') / 'raw' / 'signs' / f'{sign}.md'
+    target_file = Path('src') / 'astrology/raw' / 'signs' / f'{sign}.md'
     ensure_directory(target_file.parent)
     with open(target_file, 'w') as f:
         f.write(combined_content)
@@ -42,7 +42,7 @@ def process_sign_files(sign: str):
 
 def process_planet_files(planet: str):
     """Process the main planet markdown files."""
-    planet_dir = Path('images') / 'planets' / planet
+    planet_dir = Path('data/images') / 'planets' / planet
     if not planet_dir.exists():
         print(f"Planet directory not found: {planet_dir}")
         return
@@ -57,7 +57,7 @@ def process_planet_files(planet: str):
     combined_content = aggregate_md_files(planet_files)
     
     # Create target directory and save
-    target_file = Path('src') / 'raw' / 'planets' / f'{planet}.md'
+    target_file = Path('src') / 'astrology/raw' / 'planets' / f'{planet}.md'
     ensure_directory(target_file.parent)
     with open(target_file, 'w') as f:
         f.write(combined_content)
