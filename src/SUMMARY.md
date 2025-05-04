@@ -107,6 +107,12 @@
     - [Uranus](astrology/synthesis/planets/uranus.md)
     - [Neptune](astrology/synthesis/planets/neptune.md)
     - [Pluto](astrology/synthesis/planets/pluto.md)
+    - [Ascendant](astrology/synthesis/planets/others/ascendant.md)
+    - [Descendant](astrology/synthesis/planets/others/descendant.md)
+    - [North Node](astrology/synthesis/planets/others/north_node.md)
+    - [South Node](astrology/synthesis/planets/others/south_node.md)
+    - [Midheaven](astrology/synthesis/planets/others/midheaven.md)
+    - [Imum Coeli](astrology/synthesis/planets/others/imum_coeli.md)
 
 <!-- ## Core Concepts
 * [Introduction to Hermetism](introduction.md)
