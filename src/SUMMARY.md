@@ -27,6 +27,20 @@
     - [Uranus](astrology/raw/planets/uranus.md)
     - [Neptune](astrology/raw/planets/neptune.md)
     - [Pluto](astrology/raw/planets/pluto.md)
+- [Houses]()
+    - [All](astrology/raw/houses/00.md)
+    - [First House](astrology/raw/houses/01.md)
+    - [Second House](astrology/raw/houses/02.md)
+    - [Third House](astrology/raw/houses/03.md)
+    - [Fourth House](astrology/raw/houses/04.md)
+    - [Fifth House](astrology/raw/houses/05.md)
+    - [Sixth House](astrology/raw/houses/06.md)
+    - [Seventh House](astrology/raw/houses/07.md)
+    - [Eighth House](astrology/raw/houses/08.md)
+    - [Ninth House](astrology/raw/houses/09.md)
+    - [Tenth House](astrology/raw/houses/10.md)
+    - [Eleventh House](astrology/raw/houses/11.md)
+    - [Twelfth House](astrology/raw/houses/12.md)
 
 # Tarot
 - [Sign Correspondences]()
@@ -113,6 +127,8 @@
     - [South Node](astrology/synthesis/planets/others/south_node.md)
     - [Midheaven](astrology/synthesis/planets/others/midheaven.md)
     - [Imum Coeli](astrology/synthesis/planets/others/imum_coeli.md)
+- [Houses]()
+    - [All](astrology/synthesis/houses/houses.md)
 
 <!-- ## Core Concepts
 * [Introduction to Hermetism](introduction.md)
