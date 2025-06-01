@@ -129,6 +129,8 @@
     - [Imum Coeli](astrology/synthesis/planets/others/imum_coeli.md)
 - [Houses]()
     - [All](astrology/synthesis/houses/houses.md)
+- [Planets and Zodiac Signs]()
+    - [Sun in Aries](astrology/synthesis/planets_and_zodiac_signs/sun_in_aries.md)
 
 <!-- ## Core Concepts
 * [Introduction to Hermetism](introduction.md)
