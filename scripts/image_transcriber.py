@@ -282,7 +282,7 @@ def main():
             
             # Create markdown file paths
             md_file = str(Path(image_path).with_suffix('.md'))
-            raw_md_file = str(Path(image_path).with_suffix('_raw.md'))
+            raw_md_file = str(Path(image_path).parent / f"{Path(image_path).stem}_raw.md")
             
             # Step 2: Process the transcription if not raw mode
             if args.raw:
