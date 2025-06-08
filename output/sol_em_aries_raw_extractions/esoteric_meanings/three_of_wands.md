@@ -1,0 +1,154 @@
+# Raw Extraction: three_of_wands
+
+Three of Wands Thoth Tarot Card Tutorial - Esoteric Meanings
+Skip to content
+Esoteric Meanings
+Many Voices One Truth
+Menu
+Home
+Rider Waite Tarot
+Rider Waite Minor Arcana
+Tarot Articles
+Thoth Tarot
+Thoth Tarot Foundations
+Thoth Tarot Major Arcana Tutorials
+Thoth Tarot Minor Arcana
+Thoth Tarot Court Cards
+Tarot Readings
+Lifewave Organisation
+Spiritual Philosophy
+Krishna
+Mystic Bible
+Dr Randolph Stone
+Old Testament
+New Testament
+Revelations
+Lost Gospels
+Misc Bible Articles
+Buddha
+Natal Astrology
+Biblical Astrology
+Further Studies
+Links
+Contact
+Three of Wands Thoth Tarot Card Tutorial
+(i) Three of Wands YouTube Video
+My in-depth  Video on the Three of Wands is part of a Tarot Series on my Youtube Channel ‘Thoth Tarot Videos’  & the presentation for this card can be viewed by clicking on the image below:
+(ii) Thoth Three of Wands
+The three wands are crossed in the centre and have lotus blossoms that are opened and receptive.There are 10 straight and 10 curved flames in the background.
+Wikipedia states : Virtue (Latin: virtus, Ancient Greek: ἀρετή “arete”) is moral excellence. A virtue is a positive trait or quality deemed to be morally good and thus is valued as a foundation of principle and good moral being. Other synonmys are:
+kindness
+morality
+incorruptibility
+honor, integrity
+purity
+trustworthiness
+(iii) Rider Waite Three of Wands
+(iv) Numerology and the Three of Wands
+The symbol of three (TRIAD) is the triangle, the first geometrical figure and is two dimensional:
+Threes occur in many aspects of life:
+There are 3 phases to the moon.
+Beginning, a middle and an end.
+Three is birth, life, death.
+Holy Trinity: Father, Son, Holy Ghost also represented by the Supernal Triangle of the Tree of Life
+In Tarot we have
+1.The Empress (Atu III), with the child being the third in the relationship.
+2. Three of Swords (Sorrow) = love triangle or third person causing emotional pain as a possible interpretation.
+3. Thoth Princes = associated with the third letter of the tetragrammaton VAU and are the product of the union of the Knight and Queen.
+Hegel (1770 – 1831)  was a German Philosopher who was known for his Dialectic Theory:
+Hegelian dialectic:
+1.  Thesis, giving rise to its reaction,
+2. Antithesis, which contradicts or negates the thesis;
+3. Synthesis = a blending, or harand the tension between the two being resolved by means of a .
+In more simplistic terms, one can consider it thus: problem → reaction → solution.
+This can be applied to the Three of Wands in which we have the Ace of Wands (Inspiration- PROBLEM), Two of Wands (Our Plan based on our Inspiration-REACTION and the resultant Manifestation-SOLUTION:
+With respect to the three of Wands, manifestation refers to Initial achievement of goals, growth, creativity, abundance, expression, communication and friendships based on virtuous actions.
+(v) The Three of Wands, The Tree of Life and The 4 Worlds
+(a) The Tree of Life
+The 3 of Wands is associated with Binah, the 3rd Sephiroth highlighted in yellow, ruled by SATURN
+(b) The Four Worlds
+Binah in Atlizuth.  Binah is feminine and gives birth to FORM, shaping the outpouring of energy from Chockmah. It is associated with the supernal triangle in the first world so it is very close to its spiritual source in Kether. This purity is reflected in the name of the card as being Virtue, and implied in its meaning: striving to be the purest and best expression of who we can be in the world.
+Crowley calls the card ‘Virtue’ and one reason is perhaps  due to the three of Wands being accociated with the sephiroth Binah in Aziluth, the latter being the highest (and purest) of the four worlds and so our thoughts and actions have to be for the highest good to accuratly represent the energy of this card.
+Binah has both Light and Dark aspects. Light in that she is the giver of life but Dark in that intrinsic to Life is Death. She is often given the title of The Great Sea, water representing consciousness typically in relgious books such as the Bible. We see this pictorally in the 3 of Disks as the wavy lines around the 3-d shape:
+Binah is allocated the planet SATURN – the ruler of TIME and associated with restrictions/discipline. It thus gives rise to the shape of form (creation) and its change (birth-life-death) over time.
+(vi) Astrology of The Three of Wands
+Sun in Aries
+Sun in Aries = Spring time, renewal, birth,creation
+The Sun is exhaled (strengthened) in Aries and so this placement is very favourable. This plays out in the Three of Wands in that the energy, enthusiasm and magnetism of the Sun pours through the active, optimistic and enterprising Aries leading to great buisness and life opportunities if we are connected to our highest good.
+Decan:   2nd decan of Aries (11 – 20 degrees)
+(vii) Symbolism of the Three of Wands
+Consider the 3 of Wands in context with the Ace and Two of Wands in terms of the flames seen in each:
+6 White Straight Flames = 6 is the influence of the SUN, the sun ruling the 6th sephiroth TIPHARETH
+4 straight remaining flames = energy of the Dorjes in the 2 of wands. The flames are identical as shown in the 2 of wands picture below :
+Golden Shafts of Wands = also represent the sun
+10 curvy flames = those in the Ace of wands :
+Lotus Wand = associated with ISIS = power of CREATION ( initial fruition of our buisness plans for example)
+9 petals on Lotus Wand = linking them with creative Yesod (9th sephiroth ruled by the moon).
+3 wands = unity of mind & heart with your actions which together with the newness represented by Sun in Aries = virtuous actions.
+Sun in Aries = Spring time, renewal, birth,creation
+So from the above we have themes of BIRTH & CREATION.
+(viii) Two of Wands to Three of Wands Transition
+Plans made in the 2 of Wands are followed through with the 3 of Wands.
+The third wand in ‘Virtue’ equally divides the 2 Wands in ‘Dominion’
+The initiative of the Ace is combined with the duality of the Two to to give the action of the 3 of Wands (Virtue).   Progress is now happening in your life after some frustration in the past trying to make sense with what direction your life was going in (2 of Wands).
+The 3 Wands forms a triangle and when upright is the symbol for the element of Fire:
+Unrestricted Firedesires to grow upwards and outwards  seeking to travel and expand its territory symbolising the growth that occurs in your life with this card. It may not be a life long happiness (Fires have a finite nature), but it points to a sense of contentment with what we are doing with our life at the moment.
+(ix) Three of Wands and the I-Ching
+Crowley relates the 3 of Wands to the 11th Hexagram T’AI meaning ‘HARMONY’. This association is made as this Hexagram is also ruled by the Sun in Aries.
+T’ai relates to peace and harmony and life should currently be going well. Don’t take it for granted though. Examine all the aspects of your life and see how that harmony came about and how acting in your highest good might maintain that.  T’ai indicates a successful time of life. For further details use the link: James DeKorne
+(x) Shemhamphorasch Angels & the Three of Wands
+Hachashiah: Esoteric wisdom, medicine and healing. Goodness and understanding. Can abuse the good faith of others.
+Imamiah: Ease in recognizing one’s errors. Easy execution of difficult work. Ardor, strength, vigor. Patience and courage, humility and simplicity. Can be rebellious, prideful, or blasphemous.
+(xi) Divinatory Meanings of the Three of Wands
+Wikipedia states : Virtue (Latin: virtus, Ancient Greek: ἀρετή “arete”) is moral excellence. A virtue is a positive trait or quality deemed to be morally good and thus is valued as a foundation of principle and good moral being. Other synonmys are:
+kindness
+morality
+incorruptibility
+honor, integrity
+purity
+trustworthiness
+With Virtue, we have the direction in which the two of wands needs to be applied in order for her to be the best she can be and be of service to the world.Open lotus blossoms mean following what has meaning for us and following something from the heart. We have an understanding of our ‘virtues’ .. what we have to offer to the world in a useful way as well as being in tune with our highest principles.
+Angel Paths says : “Virtue is about excellence – ethically and personally. It is about developing and maintaining high standards of behaviour, and then learning to have the confidence, self belief and strength of character to live out those standards through our every act.”
+Three of Wands Upright
+1.It is important for you to operate from a place of integrity before making decisions at the moment and make sure that you have clarity in mind and heart before acting in order to bring the best results. Unless you have clarity at this time, then do not act ! So if we have clarity – a great time to put our ideas into plan !
+2.If we are having difficulty moving forward with a plan for your life, make a list of your virtues (positive traits). Open your heart (like the lotus blosoms in the card) and see what you connect with.
+3.Using our skills constructively in the world that are a reflection of our highest good. This may relate to work in terms of our day job,hobbies, charity work, community work, spiritual studies/teaching or with respect to our friendships.
+4.Behaving openly and honest with others , being a good listener and giving advice where appropriate from our highest perspective.
+5.  Recent success of a project after some initial difficulties or creation of a new buisness project for example
+Three of Wands Reversed
+1.Lack of clarity therefore put all plans on hold otherwise your actions may not bear a positive outcome.
+2.Actions which have been negative, ill thought out and now there are consequences.We have not been acting to our highest standards. The need to go and assess whats distracting us from being the best we can be.
+3.Our work and daily life are not fulfilling us because we are not demonstrating our highest potential and so we feel restless and uninspired. We need to create space to reconnect with what we really want out of life that will make us feel useful and fulfilled.
+4.Not being honest in our friendships our our heart may be closed (lotus blossoms pointing downwards)
+(xii) Three of Wands in a Celtic Cross Spread
+Card 1: (Heart of Your Situation) – connecting with what inspires you and makes you feel valued.
+Card 2: (Obstacles/Challenges) – work & daily life are not fulfilling. We may have made poor choices in the past. Make a list of your virtues and see how they may best be used.
+Card 3: (Subconscious Influences) – that feeling that your life could be so much more rewarding if you could find the right vocation. Perhaps you have always wanted to work for yourself, start your own buisness for example.
+Card 4: (Your Recent Past) – charity work, helping others
+Card 5: (Your Hopes & Goals) – to spend more of your time doing things that truely inspire you and bring the best out of you.
+Card 6: (Your Immediate Future) – a career opportunity that will bring the best out of you is just around the corner.
+Card 7: (Your Internal Self at this Time) – feeling inspired in what you are doing, open heartedness and contentment.
+Card 8: (Your External Environment) – being a good listener, empathy towards others, giving sound advise
+Card 9: (Guidance and Warning) – if you dont connect with what truely inspires you, you will continue to feel unfulfilled in your life and or career.
+Card 10: (Your Overall Outcome) – work that you find motivated to do in that it expresses your best talents and is supportive to others in the process.
+(xiii) Associated Video Links
+Paul Hughes Barlow
+Marveena Meek
+(xiv) Further Links
+The Spiritual Hierarchy
+Light and Sound Meditation
+Three of Wands Thoth Tarot Card Tutorial
+Social Sharing:
+20
+Tagged on: binah in atziluth    Hegels dialectic    i ching hexagram 11    pythagoras numbers system    sun in aries    tarot lessons thoth    thoth minor arcana    three of wands tarot card meaning    tree of life binah    virtue
+David Hill
+01/09/201827/10/2018 Thoth Minor Arcana, Thoth Tarot, Thoth Wands
+No Comments
+← Two of Wands Thoth Tarot Card Tutorial
+Four of Wands Thoth Tarot Card Tutorial →
+Leave a Reply Cancel replyYour email address will not be published. Required fields are marked *Comment * Name *
+Email *
+Website
+Δ
+Visitor counterVisits since 29 Feb 2020
+Copyright © 2025 Esoteric Meanings. All rights reserved. Theme Spacious by ThemeGrill. Powered by: WordPress.

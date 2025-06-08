@@ -1,29 +1,36 @@
 # Raw Extraction: 06_lehahel_02
 
-**Kabbalistic Angel Information Extraction**
+### Kabbalistic Angel Information Extraction
 
-- **Name**: Lehael (לֵהָאֵל)
-  
-- **Correspondences**:
-  - **Amor e Beleza**: Promotes universal love and appreciation for beauty in all its forms.
-  - **Desenvolvimento Pessoal**: Aids in personal development, inspiring individuals to grow and improve continually.
-  - **Prosperidade**: Associated with the attraction of prosperity, both material and spiritual.
-  - **Proteção contra Negatividade**: Offers protection against negative influences and malevolent energies.
-  - **Conexão com o Divino**: Facilitates a deep connection with the divine, encouraging spiritual practice and greater understanding of divine purpose.
+#### Name:
+- **Lelahel (ללהל)**
 
-- **Sphere Associations**: Not explicitly stated in the text.
+#### Correspondences:
+- **Amor e Beleza**: Promotes universal love and appreciation of beauty in all forms, helping individuals cultivate more loving and harmonious relations.
+- **Desenvolvimento Pessoal**: Assists in personal development, inspiring individuals to grow and strive for excellence.
+- **Prosperidade**: Associated with the attraction of prosperity, both material and spiritual, guiding individuals towards success and abundance in their lives.
+- **Proteção contra Negatividade**: Offers protection against negative influences and harmful energies, keeping those protected safe from malicious forces.
+- **Conexão com o Divino**: Facilitates a deep connection with the divine, encouraging spiritual practice and a greater understanding of divine presence.
 
-- **Time Periods**: Not explicitly stated in the text.
+#### Sphere Associations:
+- Not explicitly mentioned, but implied associations include benevolent and protective influences related to spiritual and material success.
 
-- **Spiritual Attributes**:
-  - Symbolizes divine light that guides and inspires.
-  - Invokes the angel's essence to inspire beauty in creation and aid in healing.
-  - Encourages the search for truth, the development of gifts and talents, and enhances harmonious living.
+#### Time Periods:
+- Not directly indicated in the text.
 
-**Visual Elements Analysis**:
-1. **Sigils and Symbols**:
-   - The first symbol appears to be a representation related to Lehael, possibly a unique sigil.
-   - The Hebrew text at the bottom relates to Lehael's name, reinforcing the connection to the angel’s energy and attributes.
-   - The circular symbols may represent protective or spiritual sigils associated with his attributes.
+#### Spiritual Attributes:
+- Represents divine light that guides, heals, and inspires.
+- Invokes the angel's assistance in creativity and the healing potential associated with it.
+- Encourages the pursuit of truth, the development of gifts and talents, and the promotion of a brighter, beautiful, and harmonious world.
 
-This analysis captures the essential information while respecting the provided visual content. If further details are needed, please specify!
+### Visual Elements Analysis
+1. **Symbols and Sigils**:
+   - The symbols above the Hebrew text appear to be related to the angel’s name or might represent aspects of Lelahel's power, such as protection or prosperity.
+   
+2. **Hebrew Text**:
+   - The Hebrew word "ללהל" refers directly to the angel's name. 
+
+3. **Illustrations**:
+   - The figure depicted alongside the text likely symbolizes the angel Lelahel, possibly illustrating attributes such as strength, beauty, and protective qualities. The armor and red garments may signify power and divinity.
+
+Overall, the image captures the essence of Lelahel as a guiding and protective figure associated with love, prosperity, and personal growth.

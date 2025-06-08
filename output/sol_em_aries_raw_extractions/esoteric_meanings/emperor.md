@@ -1,0 +1,137 @@
+# Raw Extraction: emperor
+
+Thoth Emperor Tarot Card Tutorial - Esoteric Meanings
+Skip to content
+Esoteric Meanings
+Many Voices One Truth
+Menu
+Home
+Rider Waite Tarot
+Rider Waite Minor Arcana
+Tarot Articles
+Thoth Tarot
+Thoth Tarot Foundations
+Thoth Tarot Major Arcana Tutorials
+Thoth Tarot Minor Arcana
+Thoth Tarot Court Cards
+Tarot Readings
+Lifewave Organisation
+Spiritual Philosophy
+Krishna
+Mystic Bible
+Dr Randolph Stone
+Old Testament
+New Testament
+Revelations
+Lost Gospels
+Misc Bible Articles
+Buddha
+Natal Astrology
+Biblical Astrology
+Further Studies
+Links
+Contact
+Thoth Emperor Tarot Card Tutorial
+Thoth Emperor Tarot Card Tutorial
+My new YouTube channel is : Thoth Tarot Videos. The Thoth Emperor Video can be viewed clicking the image link below:
+(ii) Thoth Emperor
+The word Emperor means “he who sets in order”  and the Thoth Emperor looks towards the Empress. The Empress stands for the universal, the totality and the LOVE that binds creation. The Emperor is Lord of his personal Universe (Kingdom) and yet in his rulership over others has to learn that self sacrifice is necessary to be a great ruler.
+The Emperors body forms the shape of a Triangle on a Cross as in the image below. This is also the symbol for SULPHUR. and dominant red colour of the card represents the astrological association of Mars in Aries.
+(iii) Thoth Emperor Mythology
+He is consort to the Empress and faces her. She is Venus (Aphrodite) and he is the God Mars. Venus, the Goddess of Love has a passionate affair with Mars, the God of War:
+The Emperor being a ruler understands what can and cannot be controlled or changed. His success is based on his ability to know the difference between the two and make wise choices. To remain in power he must meet the needs of others as well as his own. He is Atu 4 which represents stability and security.
+The lesson of the Emperor is that in order to conquer you must also serve and you must also father any offspring. This latter statement relates both to actions in the world (which have consequences) and well as in creating a family through the Empress. We need to make sure that what we create is of the highest virtue possible. Christ sacrificed himself for the higher good, and so the Emperor must learn that true gain comes through surrender.
+(iii) Rider Waite Emperor
+The Rider Waite Emperor sits upon a large stone throne, with four rams’ heads carved into it (symbolic of his connection with Aries and the planet Mars). In his right hand, the Emperor holds an ankh, the Egyptian symbol of life, and in his left is an orb representing the world over which he has dominion.
+Thoth Emperor & The Tree of Life
+Path 28: The Path of Natural Intelligence
+Natural relating to those ‘vital’ or life forces which exist in Yesod and Netzach which will be expanded upon below.
+In the Book of Thoth the explanation is that the white light in the far right corner represents the wisdom of Chokmah, which is the Emperors authority, and this is directed upon Tiphareth, the heart of man. This is traditionally the path of the Emperor on the Tree of Life, however as we see in the next section he later swaps the position of the Emperor with the Star !
+So updated,  the Emperor sits on the path between Netzach and Yesod.
+Netzach = ruled by Venus which links him the Empress. This relates to the emotions, enjoyment, pleasure, bliss.
+Yesod = the final FILTER through which the forces of the Tree of Life are organised before being manifested in the final sephiroth MALKUTH. Yesod is also associated with ASTRAL LIGHT which is what the occult magicians manipulate. Its corresponding chakra is the root chakra which is associated with sexuality and drive as see below:
+From this we can conclude that the Emperor regulates his emotions and desires and redirects his sexual energy to manipulate what he wants to happen in the world. This is similar to the Yogi who awakens the Kundalini through redirection of his sexual energies. This is another example of the ‘sacrifice’ the Emperor makes for the greater good, which can happen from the physical to the spiritual levels.
+Thoth Emperor Hebrew Attribution and Astrology
+The Hebrew alphabet was originally written in PICTOGRAPH script. The pictograph for Tzaddi is a drawing of a man on his side:
+Tzaddi = subsequently got defined as ‘fish hook’ which resembles its shape when Hebrew letters were defined:
+However the word ‘fishing’ can be used as a metaphor in daily life for ‘searching for information’, often into the unknown. This describes the act of meditation in which we are searching for answers into our spiritual nature in the depths of the waters of the divine, and so this is how the Hebrew association is linked to this cards meaning.
+Thoth Emperor Symbolism
+A summary of the main symbolic elements to this card is given in the image below:
+Triangle above cross = domination of spirit over matter. Also sulphur is the fiery element of the universe according to Crowley. Can be volatile and fiery. Active personality, not passive.
+Crown = has 4 points representing Chesed. The jewels also have 4 facets to them. His Gold Crown is symbolic of the sun which is behind him and this is relevant as the Emperor is associated astrologically to Aries. The sun is exalted in Aries.
+Number Four = seen by the shape of the Emperors legs. This stands for Chesed, the fourth sephiroth on the Tree of Life.
+This strong association with Chesed is also represented by the image of the Thoth Emperor himself. The archetypal image of Chesed is as below. The sephiroth Chesed is ruled by Jupiter:
+Orb with Maltese Cross above = this is in his left hand and is over the naval chakra or pro creative area. This symbolises his creative energy and ability to govern.
+Bees on garment = energy, industriousness. Bees are also very organised and so this represents his ability to govern others. A leader.
+Looping lines terminating in arrowheads = directed energy and activity to specific tasks. The Emperor does not waste energy but directs it to gets things accomplished.
+Star Disk on throne = these are on each arm of the throne. There are 16 points on each star and this is the atomic number of sulphur:
+Sixteen = is also the gematria of CHACH, hook, which is the meaning of Tzaddi and is the number of points on the stars adorning the Emperors throne:
+Fleur-de-lis = a symbol of rulership from the French monarchy thus emphasising the theme of rulership in this card.
+Alchemical Attributes of the Emperor
+Alchemically the Emperor is SULPHUR which is one of the three forms of alchemical energy with Mercury and SALT being the other two. SULFHUR is seen as the active part of Nature that stimulates Salt, maintaining the equilibrium of the Universe. Sulphur is masculine, active, and fiery and a vehicle for the manifestation of energy into form, hence the links with Chesed in this card.
+Sceptre with Rams Head = held so it receives light from the right side of the card and this is channelled down to the shield. Rams head represents Aries.
+Shield = red tincture representing purified sulphur analogous to Gold and the Sun compared to Silver and the Moon in the shield of the Thoth Empress. So both cards have contrasting energies.
+Golden Eagle with 2 Heads = similar to the phoenix and has regenerative powers. The red disk behind them
+Lamb and Flag = (Agnus Dei) = the Lamb of God. The lamb was often a blood sacrifice in the Old Testament and is a Christian symbol for Christs Sacrifice for others. This represents the old Aeon of Osiris which was referenced in my article on the Three Aeons of Thelema. The lamb here is tamed and subservient to the Emperor. It has lost its independence and drive.
+So we can say that alchemy rules in this card because looking at the brightness, the left corner of the shield in much brighter than the darker right corner. This emphasises Crowley’s vision of alchemy being the foundation of the tarot and the New Aeon of Horus, rather than the traditional association with the Ram, Aries and religion. This process is summed up in the image below:
+The Empress to Emperor Transition
+The Thoth Emperor symbolises leadership, responsibility, self control, discipline and focus. Once we have set out our spiritual path goals with the Magus and connected with the soul in the Priestess, tasted the LOVE inside with the Empress, we must take responsibility for our life and actions in the Emperor stage. The Emperor is not about shrinking violets, and the same goes with any spiritual path. We must stand for something and live our lives accordingly or we stand for nothing. And yet, like the Emperor we must understand the importance of self sacrifice for the greater good. In the same way we must sacrifice our individuality or soul Atman, into the great Oneness (Brahman)
+This stage also involves fostering a discipline on our spiritual journal. There are potentially many distractions in the world and we learn self discipline and focus in this stage. We must take up personal responsibility for our spiritual journey.
+Thoth Emperor Divinatory Meanings
+Emperor Upright Meanings
+You may be taking on responsibility for others, perhaps with family members who rely on you for their security.
+A natural leader and organiser working from a point of fairness with others. You prefer to be your own boss or a leader of others rather than a follower.
+If you are currently have life problems, the Emperor encourages you to take responsibility, breaking problems down into smaller manageable chunks and work systematically through them.
+He also symbolises someone who has lived through many life lessons and can now use that knowledge and life experience to help others.
+Success through self discipline and application, thinking logically/ rationally.
+Learning to sacrifice yourself for a greater cause. Only by surrender do we gain spiritually.
+Emperor Reversed Meanings
+Perhaps you are not sticking to your goals and have not applied the necessary focus and discipline to see them through.
+Being under the influence of an overly dominant figure who stifles your creativity. Your partner may be overbearing and possessive.
+Poor relationship with your father. Over intellectualizing a situation. Lack of ambition and direction.
+Wanting to break free from a situation which has you tied to rules and regulations. You might like to express yourself more openly, perhaps becoming self employed if it is work situation.
+Looking at your spiritual path from the point of view of what you can get rather than what you can give.
+Over controlling and dominant. Cruel, violent or insecure. Suppressing your feminine/softer side.
+Thoth Emperor in the Celtic Cross Spread
+1: Heart of the Situation = have you got control over your life and the direction it is heading ?
+2: Possible obstacle = not structuring your time and goals well enough so life becomes chaotic. If in a spiritual context, you need to give and sacrifice yourself more, as this is the true nature of the spiritual journey.
+3: Unconscious Influences = Feel protective over others and often take on the ‘parenting’ role in order to help them.
+4: Recent Past = a period of discipline and hard work.
+5: Hopes and goals = to be your own boss, self employed. Free from the negative influences of others. Wishing to become a parent.
+6: Short Term Future = need to focus on a task and organize your time effectively to achieve it. If a situation seems too big to handle, break it down into manageable tasks.
+7: Our Self Image = organised, efficient, leader, business like, goal orientated.
+8: How others see you (reversed) = controlling, overly dominant.
+9: Guidance & Warning = need to be balanced whilst working to your goals otherwise your life will become barren like the background of the Rider Waite card.  Dont over intellectualize things. Learn to sacrifice your time for the benefit of others and make sure what you create is potentially for the benefit of all (Karma).
+10: Overall Outcome = material security, stability, achieving your goals through hard work and focussed effort. Learning to surrender in meditation and by giving we receive far more.
+(xi) Emperor Links
+Paul Hughes Barlow
+MarVeena Meek
+Angel Paths
+Thoth Emperor Tarot Card Tutorial
+Social Sharing:
+20
+Tagged on: fish hook    fools journey major arcana    Path 18: The Path of Natural Intelligence    Thoth Emperor & The Tree of Life    Thoth Emperor Divinatory Meanings    Thoth Emperor in the Celtic Cross Spread    Thoth Emperor Symbolism    Thoth Emperor Tarot Card Meaning    tzaddi
+David Hill
+21/03/201921/02/2021 Thoth Major Arcana, Thoth Tarot
+3 Comments
+← Thoth Empress Tarot Card Tutorial
+Nine of Wands Thoth Tarot Card Tutorial →
+3 thoughts on “Thoth Emperor Tarot Card Tutorial”
+Johnny ji12/12/2020 at 10:44 amPermalink
+I really enjoyed reading this page!!
+So much information and detail. I greatly appreciate the amount of work that this kind of undertaking involves. Please accept my sincere thanks.
+Reply
+lizzy08/02/2021 at 6:23 amPermalink
+thank you so much for your help, you have done a fantastic amount of research for this i really appreciate your time and effort, lizzy xx
+Reply
+Pierce20/02/2021 at 10:35 pmPermalink
+Hello, let me first day that this site and videos is my favorite resource for the Thoth.
+This has the tree of life path as 18 instead of 28 though.
+Thanks for all you do
+Reply
+Leave a Reply Cancel replyYour email address will not be published. Required fields are marked *Comment * Name *
+Email *
+Website
+Δ
+Visitor counterVisits since 29 Feb 2020
+Copyright © 2025 Esoteric Meanings. All rights reserved. Theme Spacious by ThemeGrill. Powered by: WordPress.

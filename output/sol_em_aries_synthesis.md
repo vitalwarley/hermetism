@@ -1,31 +1,19 @@
 <!--
 ╔════════════════════════════════════════════════════════════════════════╗
-║  TEMPLATE GENÉRICO – SÍNTESE HERMÉTICA (Sol em Áries)                ║
-║  • Texto 100 % em português; nomes angelicais em hebraico             ║
-║  • Cada decanato possui 2 cartas menores + 2 anjos correspondentes    ║
-║  • 1 Carta da Corte "primária" abrange os dois primeiros decanatos    ║
-║  • 1 Carta da Corte "secundária" abrange o terceiro decanato          ║
+║ SÍNTESE HERMÉTICA COMPLETA – SOL EM ÁRIES (ASTROLOGIA + CABALA + TARÔ)║
 ╚════════════════════════════════════════════════════════════════════════╝
 -->
-
-## 0 Instruções de Uso
-1. **Integração total** – discuta astrologia + Cabala + Tarô em conjunto.  
-2. **Personalize** – troque `Sol`, `Áries`, anjos, cartas e graus conforme necessário.  
-3. **Âncoras de realidade** – justifique cada associação (cor, elemento, símbolo).  
-4. **Objetivo** – compreender **como** anjos e cartas refletem o arquétipo `Sol-Áries` e **inspiram** soluções para desafios cotidianos (sem instruções rituais).
-
----
 
 ## 1 Fundamentos Astrológicos
 
 ### 1.1 O Signo de Áries
-Áries, regido por Marte, é o primeiro signo do zodíaco. De polaridade Yang e elemento Fogo, expressa o impulso primordial da vida, simbolizando início, liderança, energia vital, coragem, independência e espírito competitivo. Sua qualidade Cardinal denota capacidade de iniciar processos e abrir caminhos. O símbolo dos chifres do carneiro manifesta iniciativa e força elétrica. Na alquimia, Áries representa o enxofre (fogo), ponto de partida das grandes transformações.
+Áries inaugura o zodíaco e simboliza o impulso primordial, como uma fagulha de fogo sutil que irrompe do Nada. Elemento: Fogo (dinâmico, criador). Modalidade: Cardinal (iniciador). Mitologia: Carneiro, o pioneiro e o desbravador. Palavras-chave herméticas: vontade ativa, coragem, iniciativa, liderança, ação, renovação, desafio, pura energia original.
 
 ### 1.2 O Planeta Sol
-O Sol é o coração do sistema astrológico: representa identidade, brilho pessoal, autoconsciência, vontade criadora e busca pelo propósito de vida (Tiferet na Árvore da Vida). É fonte de vitalidade, criatividade e liderança, guiando o “eu” rumo à autorrealização. Quando exaltado, como ocorre em Áries, sua energia é particularmente exuberante, irradiando confiança e potencial de conquista.
+O Sol representa essência, autoconsciência, vitalidade, clareza, identidade e vontade criadora. É o núcleo do ser, princípio organizador e centro do ego saudável. Traz liderança, brilho, direção clara, propósito, capacidade de se destacar e influenciar positivamente o meio.
 
 ### 1.3 Sol em Áries
-Quem nasce com Sol em Áries exibe entusiasmo, vigor, iniciativa e coragem. Tem sede de novos começos e aversão à passividade. O desafio está em equilibrar impulsividade, impaciência e tendência ao individualismo. O arquétipo Sol-Áries pede canalizar energia para metas construtivas, unir franqueza e diplomacia, além de transformar espírito aventureiro em força de superação.
+Sol em Áries se exalta: a vitalidade solar encontra no fogo cardinal ariano o terreno ideal para expressão direta e abrasadora. O indivíduo adquire liderança espontânea, coragem para inovar, sede de iniciar e abrir caminhos próprios. Desafios: impetuosidade, dificuldade em manter constância, necessidade de aprendizado sobre autocontrole e o uso construtivo da agressividade. A exuberância da vontade encontra no arquétipo ariano o “restart” para todo novo ciclo.
 
 ---
 
@@ -33,37 +21,63 @@ Quem nasce com Sol em Áries exibe entusiasmo, vigor, iniciativa e coragem. Tem 
 
 ### 2.1 Cartas Menores e Anjos (6 entradas)
 
-| Decanato          | Sub-posição | Graus        | Anjo (hebraico) | Carta Menor         | Virtudes / Domínios                                 | Salmo        | Cor                       | Perfume / Incenso         | Manifestação na Vida                                                                              |
-|-------------------|-------------|--------------|-----------------|---------------------|-----------------------------------------------------|--------------|----------------------------|---------------------------|---------------------------------------------------------------------------------------------------|
-| **1º**            | **1A**      | 0°–4°59'     | וְהוּיָה (Vehuiah)  | Dois de Bastões     | Iniciativa, liderança, superação de obstáculos       | Salmo 3      | Vermelho, branco, magenta  | Alecrim, pimenta          | Estimula iniciativa para superar desafios inéditos e dar o primeiro passo em projetos audaciosos. |
-|                   | **1B**      | 5°–9°59'     | יֵלִיֵל (Jeliel)    | Três de Bastões     | Paz nas relações, harmonia, visão expandida          | Salmo 21     | Branco, rosa, vermelho     | Coentro, mostarda         | Favorece reconciliação e construção de parcerias pelo respeito mútuo, abrindo horizontes afetivos. |
-| **2º**            | **2A**      | 10°–14°59'   | סִיטָאֵל (Sitael)   | Quatro de Bastões   | Realização, proteção, estabilidade, construção       | Salmo 91     | Branco, azul, vermelho     | Jaspe vermelho, alecrim   | Promove a materialização de sonhos através de perseverança, celebrando cada conquista coletiva.   |
-|                   | **2B**      | 15°–19°59'   | אֵלֶמִיָּה (Elemiah) | Cinco de Bastões*   | Superação de desafios, clareza, coragem em mudanças  | Salmo 6      | Branco, vermelho           | Espinafre, alho           | Ajuda a vencer obstáculos no trabalho, favorecendo novos caminhos e autossuperação criativa.      |
-| **3º**            | **3A**      | 20°–24°59'   | מַהֲשִׁיָּה (Mahasiah)| Seis de Bastões*   | Harmonia, retificação, paz e celebração dos acertos  | Salmo 33     | Branco, amarelo, laranja   | Granadas, manjericão      | Favorece aprendizado com os erros, promovendo harmonia após ações ousadas e conquistas individuais.|
-|                   | **3B**      | 25°–29°59'   | לֵהָאֵל (Lelahel)   | Sete de Bastões*    | Iluminação, cura, expressão criativa e liderança     | Salmo 9      | Branco, verde, vermelho    | Hematita, aloe vera       | Inspira criatividade para liderar soluções inovadoras e práticas de cura pessoal e coletiva.      |
+| Decanato | Sub-posição | Graus (aprox.) | Anjo (hebraico) | Carta Menor | Virtudes / Domínios | Perfume / Incenso | Manifestação na Vida* |
+|---------|-------------|-------|---------------------|--------------------------|----------------------------------------------|---------------------|-------------------------------------------------------|
+| **1º** | **1A** | 0°–5° | וְהוּיָה (Vehuiah) | Dois de Paus | Poderosa vontade transformadora, protagonismo, sagacidade, iluminação, superação da cólera | Mirra, estoraque, louro | Estimula iniciativa para vencer crises, dar o primeiro passo nos desafios e abrir estradas inéditas. |
+| | **1B** | 5°–10° | יֵלִֵאֵל (Jeliel) | Dois de Paus | Fecundidade, paz, fidelidade, suavização de conflitos, harmonia conjugal e social | Cravo, âmbar, aloe vera | Favorece coragem afetiva, promove reconciliação e restaura confiança nos relacionamentos e equipes. |
+| **2º** | **2A** | 10°–15° | סִִתְאֵל (Sitael) | Três de Paus | Esperança, proteção, superação de adversidades, palavra cumprida, fiel no compromisso | Mirra, gengibre, enxofre | Concede força diante de obstáculos, garante sucesso mediante integridade e consolida projetos de longo prazo. |
+| | **2B** | 15°–20° | עֵלֵמִיָה (Elemiah) | Três de Paus | Trabalho oculto, sucesso profissional, discernimento, descoberta útil, revelação de traidores | Café, noz-moscada, cravo | Favorece visão estratégica, discrição e identifica alianças sinceras, evitando sabotagens e erros de julgamento. |
+| **3º** | **3A** | 20°–25° | מַהֲשִׁיָּה (Mahasiah) | Quatro de Paus | Retificação dos erros, paz universal, facilidade de aprendizado, autoconhecimento, beleza | Sândalo, pimenta, cipreste | Oferece resiliência para aprender com falhas, resolve conflitos e gera harmonia verdadeira. |
+| | **3B** | 25°–30° | ללהל (Lelahel) | Quatro de Paus | Luz interior, cura, prosperidade, renome, equilíbrio, vontade harmonizadora | Mirra, estoraque, louro | Inspira criatividade e restauração, promovendo sucesso e cura tanto no corpo quanto no ambiente coletivo. |
 
-_*Observação: Usar Cinco, Seis e Sete de Bastões para progressão hermética conforme tradição simbólica, considerando cartas presentes no ciclo ariano (além das explicitamente listadas)._
+*Manifestação prática: como as virtudes de cada anjo + carta menor se revelam concretamente nos processos do ser e da vida cotidiana.
+
+---
+
+#### Explicação hermética aprofundada das virtudes/anjo-carta:
+
+**Vehuiah & 2 de Paus:** A vontade primordial, sutil e incansável, manifesta o verdadeiro “start” existencial — não só projetando, mas movimentando realidades. Na prática, permite a qualquer pessoa retomar as rédeas mesmo após derrotas, enfrentar um “muro” e ter o impulso de iniciar algo (novo negócio, vida pessoal, decisão corajosa). Vehuiah traz a coragem de romper a inércia, a lucidez para escapar do caos e a capacidade de iluminar o caminho para si mesmo e para outros. Em contextos difíceis, esse par é o motor que reativa a energia vital perdida.
+
+**Jeliel & 2 de Paus:** O potencial criador de Vehuiah ganha aqui o poder de harmonizar, nutrir e pacificar. Onde há tensão (conjugal, social, laboral), Jeliel instala uma paz ativa, baseada na confiança mútua. Concretamente, permite reconstruir alianças rompidas, promover fidelidade em equipes, restaurar amizades e apaziguar ambientes de conflito. Em projetos, inspirado por Jeliel, todas as partes são integradas, potencializando resultados duradouros. Esta energia também está ligada a sorte e abundância, favorecendo períodos férteis em todos os sentidos.
+
+**Sitael & 3 de Paus:** A força construtora que não apenas planeja, mas materializa. Sitael é o arquiteto, capaz de superar adversidades graves — desde crises existenciais até desafios materiais (falências, doenças, ameaças externas) — apoiando o indivíduo ou coletivo a restaurar estruturas, assumir papel de liderança madura e manter a palavra dada. Torna as relações de trabalho transparentes, elimina ingratidão e hipocrisia, e “fecha” contratos energéticos sólidos. Em empresas, permite reerguer-se após grandes perdas, em processos pessoais, devolve a esperança ativa para vencer ciclos negativos e conquistar objetivos.
+
+**Elemiah & 3 de Paus:** Trabalhar nos bastidores, discernir, descobrir o útil — aqui surgem as descobertas que revolucionam a trajetória (insights, invenções, parcerias estratégicas). Elemiah permite agir com discrição, evitando inveja, traição ou ataques velados, além de revelar potenciais sabotadores e facilitar decisões corretas. Ajuda o espírito empreendedor a criar soluções inovadoras, a “separar o sutil do espesso” institivamente — seja em negociações, projetos profissionais ou em situações emocionais complexas.
+
+**Mahasiah & 4 de Paus:** O poder de retificar, aprender e converter dificuldade em graça. Mahasiah auxilia no entendimento e integração dos erros; permite não apenas corrigir rotas, mas transformar falhas em fonte de sabedoria. Em ambientes de crise, oferece paz e reconciliação, favorecendo o surgimento de mestres e auxiliares que impulsionam o autoconhecimento. Traz harmonia interior e resolve disputas externas pela via da compaixão e do perdão ativo, além de estimular beleza e serenidade — inclusive física.
+
+**Lelahel & 4 de Paus:** Símbolo máximo da luz interna, cura e prosperidade. Lelahel brilha no palco de Tiphereth: proporciona autoconsciência luminosa, capacidade de curar não só doenças, mas feridas emocionais e bloqueios coletivos. Inspirador de artistas, cientistas, curadores e líderes justos, seu dom converge para oportunidades de sucesso e reconhecimento meritório. Nos lares e grupos, é o farol que orienta e harmoniza, dissipando ambição cega, cobiça, trapaças e restaurando o fluxo de abundância legítima.
 
 ---
 
 ### 2.2 Cartas da Corte
 
-| Escopo     | Carta da Corte                          | Decanatos Abrangidos | Papel Arquetípico                                                                                                                           | Observações                                                                                                           |
-|------------|----------------------------------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| **Primária**   | Rainha de Bastões (Queen of Wands)      | 1º & 2º              | Sintegra as virtudes do impulso criativo, autoconfiança, magnetismo e poder de motivação, orientando e guiando novos inícios                  | Atua como líder inspiradora, mediando o “fogo” dos quatro anjos e facilitando a expressão de liderança assertiva.     |
-| **Secundária** | O Imperador (The Emperor)               | 3º                   | Consolida estrutura, estabilidade e afirmação da identidade no mundo, através do domínio maduro sobre paixões e energia vital                 | Representa a culminância ariana – liderança sólida, disciplina e sabedoria aplicada; integra talentos e autoridade.   |
+| Escopo | Carta da Corte | Decanatos Abrangidos | Papel Arquetípico | Observações |
+|--------|---------------|---------------------|-------------------|-------------|
+| **Primária** | Rainha de Paus | 1º & 2º (0°–20°) | Mestre dos impulsos ígneos, síntese da liderança introspectiva, inovação, entusiasmo criador, capacidade de ensinar pelo exemplo | Atua como força diretiva e catalisadora da chama ariana; integra em si as virtudes do querer (Vehuiah) e do saber harmonizar (Jeliel, Sitael, Elemiah), personifica maturidade, superação dos instintos crús e inconstantes; promove o autoconhecimento por meio da expressão ativa criativa, mas exige vigilância contra o excesso de dominação. |
+| **Secundária** | Príncipe de Discos | 3º (20°–30°) | Estabilizador material; foco em resultados tangíveis; domínio sobre o mundo físico e prático | **ATENÇÃO:** Como carta do elemento Terra (Discos) para um signo de Fogo (Áries), evidencia o desafio de consolidar o impulso ativo em realizações concretas. Essa energia pode ser limitadora para a expressão plena ariana, sugerindo tendência a estagnação, materialismo ou apego excessivo ao resultado, inibindo a espontaneidade criativa característica do arquétipo. Príncipe de Discos, apesar de trazer persistência, é menos afim à força eruptiva do fogo cardinal, podendo indicar períodos de lentidão, excesso de cálculo ou bloqueios pela busca da perfeição material. |
+
+### 2.3 Carta Maior – O Imperador
+
+Arquetípico absoluto de Áries, o Imperador se relaciona diretamente à função solar exalada no signo: representa o poder de ordenar, estruturar, liderar e consolidar. Traz autoridade, disciplina, responsabilidade criadora, estrutura mental e física, capacidade de “governar a si mesmo” e ao ambiente.
 
 ---
 
 ## 3 Síntese Hermética Integrada
 
-O arquétipo Sol em Áries une o poder criador e iluminador do Sol à força bruta do impulso ariano, canalizando energia de novos começos para conquistar, liderar e inspirar. Cada decanato revela um aspecto dessa jornada: Vehuiah e Jeliel (Dois e Três de Bastões) estimulam o início ousado e a construção harmoniosa de parcerias, enquanto Sitael e Elemiah (Quatro e Cinco de Bastões) transformam impulso em realização coletiva e coragem frente a desafios. Finalmente, Mahasiah e Lelahel (Seis e Sete de Bastões) permitem celebrar aprendizados e afirmar a liderança plena através da expressão criativa e do autocuidado iluminado.
+Sol em Áries, do ponto de vista hermético, é a convergência do princípio solar com o impulso primordial do fogo. Essa união gera indivíduos—e situações—onde a vontade se ergue como força motriz, conduzindo o ser ao protagonismo, inovação e enfrentamento dos próprios limites. O trabalho dos seis anjos do ciclo ariano revela, fase a fase, a alquimia interna do herói solar: começa pelo “start” (Vehuiah), floresce na harmonia social e afetiva (Jeliel), edifica superando adversidade (Sitael), exerce discernimento e estratégia (Elemiah), aprende com os erros (Mahasiah) e, por fim, manifesta cura, luz e prosperidade (Lelahel).
 
-A Rainha de Bastões, carta-corte primária, condensa o entusiasmo pioneiro e a capacidade visionária de Áries, atuando como guia-mestra nos dois primeiros decanatos: ela inspira coragem, magnetiza seguidores e estimula soluções criativas para problemas cotidianos. Já O Imperador, presente no terceiro decanato, simboliza a estabilização do ideal: autoridade, disciplina e estrutura, integrando os passos dados pelas cartas e anjos anteriores, trazendo maturidade ao fogo ariano.
+A Rainha de Paus, aglutinando os dois primeiros decanatos, representa a fase mais autêntica dessa jornada: potencial máximo de liderança energética, criatividade dinâmica e magnetismo para inspirar outros, mas convocando o autodomínio sobre paixões, ciúmes e impaciência. Já o Príncipe de Discos, ligado ao último decanato, atua como advertência: é preciso aprender a transmutar a energia avassaladora do fogo em conquistas estáveis, sem, contudo, perder o fogo vital—caso contrário, surge o risco de estagnação, rigidez pragmática ou afastamento do propósito original.
 
-**Perguntas reflexivas para aplicar o arquétipo Sol-Áries:**
-- Em que área de sua vida você sente o convite para agir de forma pioneira, inspirando e liderando pelo exemplo?
-- Que desafios podem ser resolvidos ao se alinhar às virtudes específicas de cada anjo-arquetipo? Que dons ou excessos surgem nos decanatos de seu mapa natal?
-- Como equilibrar o impulso assertivo da Rainha de Bastões com a maturidade disciplinada do Imperador nos seus projetos e relações atuais?
+O Imperador selando esse ciclo confirma: a verdadeira vitória ariana está em construir, governar e consolidar uma ordem que respeite o impulso vital, mas que seja temperada pela sabedoria dos anjos – superando o egoísmo, a dispersão e a impulsividade destrutiva. O desafio hermético é justamente canalizar os excessos criativos — ou caóticos — do fogo primário para uma manifestação luminosa, ética e duradoura.
 
-Estas correspondências herméticas sugerem que o Sol em Áries é uma força de renovação – uma fagulha criadora e organizadora que, mediada por energia angélica e tarológica, inspira soluções práticas e crescimento constante em todos os níveis da experiência humana.
+**Perguntas reflexivas:**
+- Em quais áreas da sua vida o impulso de recomeçar (Vehuiah) está pedindo para ser canalizado de maneira construtiva e não destrutiva?
+- De que forma você pode permitir que a harmonia e a inteligência amorosa (Jeliel, Sitael) suavizem seus embates sem apagar sua autenticidade?
+- Quais estratégias práticas (Elemiah, Príncipe de Discos) lhe ajudariam a estabilizar seus projetos sem sufocar o entusiasmo ígneo?
+- Por fim: como sua liderança (Imperador, Rainha de Paus) pode se tornar mais inspiradora e curadora (Mahasiah, Lelahel), transformando não só seu próprio destino, mas o coletivo ao redor?
+
+---
+
+**Conclusão**:  
+Sol em Áries, em sua totalidade hermética, aponta que a verdadeira vitória não é apenas conquistar ou começar, mas deixar um legado (Lelahel), governar a si mesmo e aos outros com justiça e criatividade (Imperador/Rainha de Paus), aprender a cada passo (Mahasiah) e transmutar desafio em potência viva. Os anjos-guia dos decanatos arianos são forças operativas – internas e externas – para todos que desejam trilhar (ou iluminar) o caminho do autêntico “herói solar”.

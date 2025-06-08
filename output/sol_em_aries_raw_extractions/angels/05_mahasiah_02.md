@@ -1,28 +1,35 @@
 # Raw Extraction: 05_mahasiah_02
 
-### Extraction of Information on Mahasiah
+### Kabbalistic Angel Information
 
-**Name:** Mahasiah
+- **Name:** Mahasiah (מַהֲשִׁיָּה)
+  
+- **Correspondences:**
+  - Facilitator of Learning: Known for facilitating learning at all levels, making the process of knowledge acquisition more accessible.
+  - Promotion of Tolerance: Encourages tolerance and acceptance of differences, helping to overcome prejudices and cultivate respect for diverse perspectives and cultures.
+  - Support in Times of Change: Offers support and guidance during times of change, assisting in navigating life transitions with grace and confidence.
+  - Connection to the Divine: Facilitates a connection to the divine, encouraging the practice of prayer and meditation, and strengthening spiritual faith.
 
-**Correspondences:**
-- **Facilitator of Learning:** Known for facilitating learning on all levels and making the process of acquiring knowledge more accessible.
-- **Promotion of Tolerance:** Promotes tolerance and acceptance of differences, helping to overcome prejudices and cultivate respect for diverse perspectives and cultures.
-- **Support in Times of Change:** Offers support and guidance during times of change, aiding in navigating transitions in life with grace and confidence.
-- **Connection to the Divine:** Facilitates connection with the Divine, encouraging the practice of prayer, meditation, and other spiritual practices that strengthen faith and spirituality.
+- **Sphere Associations:** 
+  - Represents the beauty of harmony and perfection in all aspects of life.
+  
+- **Time Periods:** 
+  - Not explicitly mentioned in the text; further context would be needed for specific associations.
 
-**Sphere Associations:** Represents beauty, harmony, and perfection in various aspects of life.
-
-**Time Periods:** Not explicitly mentioned in the text, but generally associated with moments of transformation and spiritual growth.
-
-**Spiritual Attributes:**
-- Encourages correction of errors and continuous learning.
-- Represents a complete and compassionate character, leading to a meaningful and purposeful life.
-
-### Hebrew Text and Translations
-- **Hebrew Name:** מַהֲשִׁיָּה (Mahasiah)
-- The Hebrew text included suggests spiritual significance aligned with the attributes and roles mentioned above.
+- **Spiritual Attributes:**
+  - Embodies ideals of love, tolerance, and understanding.
+  - Encourages correction of mistakes, continuous learning, and the development of an integral and compassionate character.
+  - Aims for a peaceful and harmonious existence aligned with divine principles.
 
 ### Visual Elements Analysis
-The image contains various symbols and designs:
-- **Symbols**: The symbols appear to be Kabbalistic representations or sigils associated with Mahasiah. They may reflect specific spiritual energies or attributes connected with this angel’s influence.
-- **Illustrations**: The angelic figure likely embodies qualities of grace, harmony, and support, resonating with Mahasiah’s teachings. The artistic elements may enhance the spiritual themes suggested in the text, symbolizing clarity and divine connection.
+
+1. **Symbols:**
+   - The symbols presented include variations that seem to represent Mahasiah's unique sigils or glyphs, likely intended for magical or spiritual invocation.
+
+2. **Illustrations:**
+   - The angelic figure depicted suggests a connection to the divine, showcasing attributes such as beauty and harmony through posture and attire. The flowing garments may symbolize the fluidity of knowledge and learning.
+
+3. **Additional Symbolic Elements:**
+   - The circular and geometric designs underneath the angel reflect esoteric themes often found in Kabbalistic traditions, indicating deeper cosmic connections and spiritual principles at work.
+
+These elements, both textual and visual, combine to present a holistic view of Mahasiah as a facilitator of personal and spiritual growth.

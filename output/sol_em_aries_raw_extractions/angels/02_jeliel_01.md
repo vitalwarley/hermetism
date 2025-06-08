@@ -1,42 +1,42 @@
 # Raw Extraction: 02_jeliel_01
 
-Here is the extracted information about the Kabbalistic angel Jeliel from the image provided:
+Here's the extracted information about the Kabbalistic angel Jeliel:
 
-### Name: 
-**Jeliel**  
-Hebrew: יֵילִיֵל
+### Name:
+- **Jeliel** (יֵלִיאֵל)
 
 ### Correspondences:
-- **Divine Attribute**: God who helps.
-- **Virtues and Powers**: Development, intelligence, fertility, work.
+- **Virtues and Powers:** Development, Intelligence, Fertility, Work
+- **Trigram (Gematria/Name):** Yod-Lamed-Yod (יֵלִיאֵל)
+- **Sefirot/Planets:** Kether (כתר), Binah (בינה), Saturn (שבתאי)
 
 ### Sphere Associations:
-- **Sephiroth/Planets**: Kether (כתר) and Binah (בינה) / Saturn (שבתאי).
+- **Order:** Seraphim
+- **Zodiac:** Pisces (5:4-5:59)
 
 ### Time Periods:
-- **Period of Invocation**: 02:00 - 04:00.
+- **Invocation Period:** 02:00 - 00:40
 
-### Color and Elements:
-- **Assisting Angel**: Asican.
-- **Coral Angel**: Seraphim / Metatron.
-- **Alchemical Elements**: Fire (Enxofre) and Water (Mercúrio).
-- **Colors**: White, Pink, Red, and Magenta.
+### Angelic Correlation/Principle:
+- **Ruling Angel:** Metatron (מֶתָטְרוֹן)
+- **Assistant Angel:** Ascan (אסקן)
+
+### Alchemical Elements:
+- **Elements:** Fire/Ensnare (אֵש/לַלְכּוּד) & Water/Mercury (מים/מרקיורי)
 
 ### Spiritual Attributes:
-- **Attributes**: Provides joy, happiness, luck concerning the opposite sex and marriage. Brings peace and harmony to couples and workplaces. Aids in judicial matters, intelligence, and quick thinking.
-  
-### Demons:
-- **Demon**: AGARES - represents selfishness, imbalance, insensitivity, bad habits, and negative traits among humans. Helps to provoke amorous passion.
+- **Divine Attribute:** God protects
+- **Attributes:** Provide joy, elegance, luck related to opposite sex and happy marriage. Brings peace and harmony to marital relationships.
 
 ### Description:
-- Jeliel is associated with the unification of our polarities, facilitating a profound understanding of marital life and creating a reconciliatory atmosphere. The angel also aids in transcending emotional wounds.
+- Jeliel aids in understanding deep meanings in marriage and relationships, serving as a bridge for reconciliation. He encourages living harmoniously and fosters development in personal and relational spheres.
 
-### Key Characteristics:
-- **Restoration of Harmony**: Jeliel frequently helps restore peace in marriages, particularly in conflict situations.
-- **Divine Love**: The angel aids in unconditional love and reconnecting to the essence of true relationships.
-- **Conjugal Fidelity**: Jeliel is known for enhancing marital fidelity and strengthening loving relationships.
-- **Justice and Truth**: Offers guidance and direction towards honesty and integrity.
-- **Conflict Resolution**: Assists in solving conflicts and promoting dialogue among involved parties.
+### Main Characteristics:
+- **Restoration of Harmony:** Frequently invoked for restoring peace in conflicts.
+- **Divine Love:** Helps individuals recognize unconditional love, facilitating deeper connections in their relationships.
+- **Marital Fidelity:** Known for strengthening marital fidelity and fostering enduring relationships.
+- **Justice & Truth:** Offers clarity and guidance in resolving issues and promotes integrity.
+- **Conflict Resolution:** Aids in resolving conflicts, encouraging mutual understanding.
 
-### Visual Elements Analysis:
-While the image features additional symbols, sigils, or illustrations, I am not able to analyze or describe these specific visual elements in detail. However, they may serve to further represent the characteristics and associations of the angel, enhancing the understanding of Jeliel’s attributes and influence.
+### Visual Elements:
+The image likely includes symbols or sigils related to the angelic properties and Kabbalistic teachings, possibly depicting elements associated with Jeliel's attributes (like the colors mentioned: white, red, and magenta). These symbols enhance the connection to the spiritual and mystical aspects of Jeliel, reinforcing his role as a mediator in relationships and harmony.

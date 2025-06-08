@@ -1,42 +1,40 @@
 # Raw Extraction: 3_decans
 
-### Astrological Information About Aries
+### Astrological Information about Aries
 
-#### Characteristics:
-- Coragem
-- Iniciativa
-- Impetuosidade
-- Desejo de liderança
-- Energia vibrante
-- Pioneirismo
-- Determinação
-- Impulsividade
-- Entusiasmo
+**Characteristics:**
+- Coragem (Courage)
+- Iniciativa (Initiative)
+- Impetuosidade (Impulsiveness)
+- Extroversão (Extroversion)
+- Pioneirismo (Pioneering)
+- Entusiasmo (Enthusiasm)
+- Aventura (Adventure)
 
-#### Symbols:
-- Regido por Marte (Primeiro Decanato)
-- Regido pelo Sol (Segundo Decanato)
-- Regido por Vênus (Terceiro Decanato)
+**Symbols:**
+- The symbol associated with Aries is often represented as the Ram.
 
-#### Ruling Planets:
-- Marte (Primeiro Decanato)
-- Sol (Segundo Decanato)
-- Vênus (Terceiro Decanato)
+**Ruling Planets:**
+- **Primeiro Decanato:** Regido por Marte (Ruled by Mars)
+- **Segundo Decanato:** Regido pelo Sol (Ruled by the Sun)
+- **Terceiro Decanato:** Regido por Vênus (Ruled by Venus)
 
-#### Elements:
-- Fogo (associado a Aries)
+**Elements:**
+- Fogo (Fire)
 
-#### Qualities:
-- Determinados
-- Dinâmicos
-- Assertivos
-- Combatentes
-- Visionários
+**Qualities:**
+- Dinâmico (Dynamic)
+- Impulsivo (Impulsive)
+- Assertivo (Assertive)
+- Corajoso (Brave)
+- Independente (Independent)
+- Competitivo (Competitive)
 
-#### Additional Details:
-- Primeiro Decanato: Amplifica qualidades de coragem e iniciativa; disposição para enfrentar desafios.
-- Segundo Decanato: Características de vitalidade e individualidade; desejo de brilhar e liderar.
-- Terceiro Decanato: Harmonia e beleza nas interações; atração pela arte e estética.
+**Additional Details:**
+- Pessoas nascidas sob o primeiro decanato têm um forte desejo de liderança e enfrentam desafios de forma independente. 
+- O segundo decanato traz uma necessidade de expressar individualidade e brilhar.
+- O terceiro decanato busca harmonia e equilíbrio nas interações e relações, incentivando uma expressão mais afetiva.
 
-### Analysis of Visual Elements:
-The word cloud in the image features various adjectives and characteristics associated with Aries, emphasizing traits such as "coragem" (courage), "liderança" (leadership), "pioneirismo" (pioneering), and "impulsividade" (impulsiveness). These terms visually represent the dynamic and energetic nature of Aries, reinforcing the fiery spirit associated with this astrological sign.
+### Visual Elements Analysis
+- The imagery likely links to astrological themes and may include symbols such as the ram or glyphs representing the zodiac sign.
+- The word cloud contains various terms emphasizing key traits related to Aries, showcasing their dynamic and energetic nature.

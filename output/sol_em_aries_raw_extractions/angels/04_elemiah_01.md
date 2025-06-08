@@ -1,19 +1,20 @@
 # Raw Extraction: 04_elemiah_01
 
-### Extraction of Kabbalistic Angel Information
+### Kabbalistic Angel Information
 
 **Name:** Eleiah  
 **Order:** Seraphim  
-**Sphere Association:** Geburah in Kether  
+**Sphere Association:** Geburah em Kether  
 **Hebrew Letters:** Ayin - Lamed - Mem
 
-**Quote:** "Com grandes poderes vem grandes responsabilidades."  
-Translation: “With great powers come great responsibilities.”
+**Quote:**  
+> "Com grandes poderes vem grandes responsabilidades."
 
-**Invocation Period:** 01:00 - 01:20
+**Invocation Purpose:**  
+Invoked when the spirit is distressed or when the reconsideration of actions is necessary. This angel governs travel, maritime expeditions, or psychological aspects, aiding in the resolution of psychological problems. It influences useful discoveries and helps identify traitors.
 
-**Divine Attribute:** Deus oculto (Hidden God)  
-**Virtues and Powers:** 
+**Divine Attribute:** Deus oculto  
+**Virtues and Powers:**
 - Dinheiro (Money)
 - Desenvolvimento (Development)
 - Inteligência (Intelligence)
@@ -21,32 +22,36 @@ Translation: “With great powers come great responsibilities.”
 - Trabalho (Work)
 
 **Trigram (Gematria):**  
-- Name: OLM  
-- Values: Aulem (140), OLMH (Aulemih 155)
+- OLM = Aulem (140)  
+- OLMIH = Aulemih (155)
 
-**Sefirot/Planets:**
-- Kether / Neptune (♆)
-- Geburah / Mars (♈)
+**Sefirot/Planets:**  
+- Kether/Netuno (Neptune) 🌑  
+- Geburah/Marte (Mars) ♈️
 
-**Zodiac Association:** 
-- 15° - 19°59' Sun in Aries (♈)
+**Zodiac:**  
+- 15°-19° Sol em Áries (Sun in Aries) 15°-19°  
+**Period of Invocation:** 01:00 - 01:20  
+**Angelic Choir/Prince:** Os Serafins/Metraton  
+**Adept Angel:** Senacher  
+**Demon:** Samginah – stimulates malicious ideas and the use of creativity for evil, causing weakness in others.
 
-**Angelic Crown/Prince:** Os Serafins / Metatron  
-**Associated Demon:** Senacher  
+**Colors:**  
+- Branco (White)  
+- Vermelho (Red)
 
-**Alchemy Elements:** Fogo / Enxofre (Fire / Sulfur)  
-**Colors:** Branco e Vermelho (White and Red)  
+### Description
+Eleiah is the Angel of Inner Power, teaching how to harness the angelic potential within to build a balanced destiny. Attributes of success, courage, and leadership are significant for Eleiah. This angel symbolizes success and protection, aiding both professional aspirations and personal relationships. 
 
-**Spiritual Attributes:**
-- Brings protection in travel and entrepreneurial spirit 
-- Aids in overcoming psychological issues and resolves intimate problems 
-- Helps detect false and deceitful individuals
-
-**Character Traits:**
-- Protection against traitors
-- Clarity and discernment regarding hidden foes
-- Facilitates new beginnings and renewals in life
-- Encourages determination to overcome major obstacles, particularly in work-related issues
+### Key Characteristics
+- **Proteção contra Traições:** Eleiah provides clarity and discernment to reveal hidden traits and enemies, protecting its charges from harm and deception.
+- **Viagens Seguras:** Known for ensuring safe travels, guiding those protected along paths of light.
+- **Renovação e Início:** Encourages renewal and the start of new projects, bestowing positive energy.
+- **Superar Obstáculos:** Offers determination to overcome major challenges, particularly those hindering progress in work and personal fulfillment.
+- **Descoberta do Propósito Divino:** Assists in discovering and understanding one’s divine purpose.
 
 ### Visual Elements Analysis
-The surrounding symbols, sigils, or illustrations likely serve as meditative or protective symbols associated with the angel's attributes and powers. These may include representations of the planets, elements, or specific sigils tied to Eleiah's divine profile, reinforcing the themes of strength, guidance, and discernment in overcoming challenges and discovering one’s divine purpose.
+- **Symbols/Illustrations:** If present, they likely reflect the themes of protection, guidance, and spiritual empowerment associated with Eleiah.
+- **Color Palette:** The use of white and red could symbolize purity and courage, reinforcing the attributes tied to Eleiah's power and mission.
+
+This structured extraction provides an overview of the Kabbalistic angel Eleiah, preserving the original Hebrew text and translations where applicable.

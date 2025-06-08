@@ -1,0 +1,107 @@
+# Raw Extraction: prince_of_disks
+
+Prince of Disks Thoth Tarot Card Tutorial - Esoteric Meanings
+Skip to content
+Esoteric Meanings
+Many Voices One Truth
+Menu
+Home
+Rider Waite Tarot
+Rider Waite Minor Arcana
+Tarot Articles
+Thoth Tarot
+Thoth Tarot Foundations
+Thoth Tarot Major Arcana Tutorials
+Thoth Tarot Minor Arcana
+Thoth Tarot Court Cards
+Tarot Readings
+Lifewave Organisation
+Spiritual Philosophy
+Krishna
+Mystic Bible
+Dr Randolph Stone
+Old Testament
+New Testament
+Revelations
+Lost Gospels
+Misc Bible Articles
+Buddha
+Natal Astrology
+Biblical Astrology
+Further Studies
+Links
+Contact
+Prince of Disks Thoth Tarot Card Tutorial
+Prince of Disks Thoth Tarot Card Tutorial
+My new YouTube channel is : Thoth Tarot Videos. The Court Card videos are yet to be remade.
+(ii) Thoth Prince of Disks
+The prince of Disks is seen sitting in a metal chariot carrying a sceptre crowned with an orb, in the right hand and a globe in the left. The chariot is being pulled by a determined looking bull.
+(iii) Prince of Disks:Sub Elements
+The sub elements of the Prince of Disks are air and earth. According to elemental dignity rules air and earth are enemies and WEAKEN each other so we would expect some inherent conflict within his make up based on this.
+(iv) Tetragrammaton and the Prince of  Disks
+The Princes represent the Vau part of the tetragrammaton and are the product of the union of Yodh and He Primal or the Knight and Queen respectively. They are therefore shown to be a hybrid of the two, having both the stability of the Queen through the fixed chariot, and the activity and movement of the knight through the forces moving the chariot. His actions are therefore more enduring than the Knight but less so than the Queen.
+(v) Prince of Disks & The Tree of Life
+The Princes are found in the sixth sephiroth, Tiphareth in the middle of the Tree of Life which represents harmony and balance after we have had the experiences of the opposite forces of the Pillar of Severity and the Pillar of Mercy. Tiphareth is Kether but on a lower vibration and Yesod but on a higher vibration. It is the child emanating from Kether above, but from the lower planes it is like the ruler of the skies. This sephiroth is also associated with ‘beauty’. The Prince of Disks is found in the sixth sephiroth(Tiphareth) in the fourth world of Assiah.
+(vi) Astrology of the Prince of Disks
+The Prince of Disks rules from 21 degrees Aries to 20 degrees Taurus and rules three minor arcana cards; 4 of Wands, 5 of Disks & 6 of Disks.
+(vii) Prince of Disks Symbolism
+Winged Bulls Head Crest = Taurus, the kerubic attribution of this card. Taurus is responsible for his material, earthy down to earth and practical attributes.
+Black Chariot = the colour of Earth and Malkuth, the tenth sephira.
+Large Orb in left hand = symbol of the Sun and its role in agriculture.He holds it as if to show he has dominion over this process. Crowley says that the globe contains geometrical symbols ( a cross, a cube and 3 circles) representing the planning process of his work in agriculture.
+Orbed sceptre in left hand = surmounted by a cross. This is a symbol of the Great Work (Book of Thoth p.167), which is the ascent of the soul to God. The connection here is that food and diet are important in feeding the body which houses the soul, so all are connected.
+Meditative pose = contemplative nature of the Prince of Disks. Goes hand in hand with the planning implied by the geometries in the globe in the left hand.
+Background Tapestry =  consists of flowers and fruits (indicating abundance). Also present are globules of Nitrogen (according to Snuffin, p.103), with these two representing Earth and Air respectively, the two elements that make up the Prince of Cups
+(viii) Minor Arcana Cards Ruled by Prince of Disks
+The three minor arcana cards ruled by the Prince of Disks are; 4 of Wands, 5 of Disks & 6 of Disks.
+(i) Five of Disks (Worry)
+Gives the Prince an overall anxiety about achieving material ambitions and whether he can meet them. It may be perceived rather than actual. Does not really trust in the process of life but tries to control it too much through his actions in the world. Can also indicate anxiety about home environment. We need to calm down a miss directed Mars energy.
+(iii) Six of Disks (Success)
+This describes the Prince of Disks at his most productive. He uses his energy resources to apply to practical things in the world bringing material reward for his efforts. He has forged ahead like the bull to achieve his ambitions. Financial and material  matters are often positive for him.
+(iii) Four of Wands (Completion)
+Denotes the completion of a project or work situation. This implies what happens when he follows his plans through to their natural end. There is a sense of completion and fulfilment in his work. As this is his shadow aspect he must guard against complacency and keep his focus on the goal, but nevertheless, it’s a positive attribute.
+(ix) I Ching & The Prince of Disks
+The Prince of Disks is associated with the 53rd Hexagram called CHIEN and this means ‘DEVELOPING’. Its I Ching forms can be seen in the pictures below showing the hexagram and its associated trigrams.
+This Hexagram relates to events which are gradual and unfolding, a deliberate slow cultivation of a situation being the path to success rather than anything revolutionary. You need to develop calmness and persistence as well as being able to adapt to get what you want.
+In love refrain from rushing into things and lean towards the romantic cultivation of love  over time.
+Generally try to set a good example for others with traditional values, practising inner calm and a sense of duty.
+(x) Divinatory Meanings of the Prince of Disks
+Prince of Disks Upright
+Some of the qualities that represent the Prince of Disks are : competent, hard-working, focussed, materialistic, reliable, stubborn, and also lacking in emotional warmth.
+Can represent mastery of the body through sports and exercise.
+Interested in design and building things.
+A period of time in which you are taking more responsibility for your life and are becoming more focussed on things.
+Putting a lot of energy into practical things at the moment.
+Can appear insensitive and dull, lacks emotional warmth
+Not in touch with his spiritual  nature.
+7. A time when you are goal orientated and want to sort out the material side  of your life, health,career.. things that are tangible to you.
+Prince of Disks Reversed
+(xi) Celtic Cross Interpretation of the Prince of Disks
+1:Heart of the Situation = This is a situation involving sorting out your material and career goals and planning a route to achieve them. Practical matters are most important
+2:Possible obstacle = Practical situations are overwhelming or out of balance. No clear route ahead to sort them out and they are becoming an obstacle in your life
+3:Unconscious Influences = You are not satisfied with your material surroundings and your career. Things may need addressing. Niggling in the background
+4:Recent Past = Period of hard work over time and completing goals
+5: Hopes and goals = to become materially secure, and satisfied in your work
+6:Short Term Future = plenty of work to focus on and sorting out material things
+7:Our Self Image = practical, good at achieving things but not in touch with emotions
+8:Environment = partner hard-working, goal orientated, successful materially but maybe lacking in warmth and spirituality
+9:Guidance & Warning = need to balance outer success with being in touch with emotions and spirituality
+10:Overall Outcome = a success in practical/material affairs through steady persistent effort. Need to balance outer success with being in touch with emotions and spirituality
+(xii) Recommended  Links
+Paul Hughes-Barlow
+MarVeena Meek
+Angel Paths
+Prince of Disks Thoth Tarot Card Tutorial
+Social Sharing:
+20
+Tagged on: Prince of Disks    Thoth Tarot Card Tutorial
+David Hill
+02/02/201624/02/2019 Thoth Court Cards, Thoth Princes, Thoth Tarot
+No Comments
+← Prince of Swords Thoth Tarot Card Tutorial
+Lon Milo Duquette: Thoth Tarot Book Review →
+Leave a Reply Cancel replyYour email address will not be published. Required fields are marked *Comment * Name *
+Email *
+Website
+Δ
+Visitor counterVisits since 29 Feb 2020
+Copyright © 2025 Esoteric Meanings. All rights reserved. Theme Spacious by ThemeGrill. Powered by: WordPress.

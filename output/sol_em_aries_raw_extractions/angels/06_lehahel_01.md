@@ -1,56 +1,35 @@
 # Raw Extraction: 06_lehahel_01
 
-### Kabbalistic Angel: Lelahal
+### Extracted Information about the Kabbalistic Angel Lelahel
 
-**Name:** Lelahal  
-**Type:** Seraphim  
-**Sphere Association:** Netzach in Kether  
-**Hebrew (Gematria):** 
-- Lamed (ל) 
-- Lamed (ל) 
-- Heh (ה)  
-**Total Gematria Value:** 65 (LLH - Lelahal)  
-**Additional Gematria Value:** 96 (LLHL - Lahal)
-
-**Divine Attribute:** Deus Louvável (God to be Praised)  
-**Virtues and Powers:** 
-- Amor (Love)
-- Justiça (Justice)
-- Missão de Vida (Life Mission)
-- Saúde e Cura (Health and Healing)
-- Ciências e Artes (Sciences and Arts)
-
-**Time Periods:** 
-- Invocação: 01:40 - 02:00  
-- Zodiac: 25° 29' 59" Venus in Aries 25° 29' 59"
-
-**Angel Association:** 
-- Príncipe: Os Serafins/Metatron  
-- Anjo Assistente: Ascentcer
-
-**Alchemical Elements:** 
-- Fogo/Enxofre (Fire/Sulfur)
-- Terra/Sal (Earth/Salt)
-
-**Colors:** 
-- Branco (White)
-- Verde (Green)
-- Vermelho (Red)
-- Laranja-Escuro (Dark Orange)
-
-**Spiritual Attributes:** 
-- Ajuda seus protegidos a atingirem o sucesso (Helps its protegidos attain success)
-- Domina as artes, a fortuna, as ciências e o amor (Masters the arts, fortune, sciences, and love)
-- Protege contra pessoas maldosas (Protects against malicious people)
+- **Name:** Lelahel
+- **Order:** Seraphim
+- **Sphere Association:** Netzach in Kether
+- **Hebrew Text:** 
+  - **Spelling:** ללהל
+  - **Gematria:** LLH - Lelah (65), LLHL - Lalahel (96)
+- **Time Period of Invocation:** 01:40 - 02:00
+- **Angelic Aspect:** Ascentor
+- **Alchemical Elements:** Fire (Enxofre), Earth (Sal)
+- **Zodiac Association:** 
+  - **Sign:** Venus in Aries
+  - **Degrees:** 25°-29°59'
+- **Colors:** White, Green, Red, Dark Orange
+- **Divine Attribute:** God praised
+- **Virtues and Powers:** 
+  - Love, Justice, Mission of Life, Health, Arts, and Sciences
+- **Main Attributes:**
+  - Assists in achieving success and prosperity, happiness in love, and dominion over arts, fortune, and sciences. Protects against evil intentions.
+- **Demon:** Valefer - stimulates ambition, pride, corruption, variability, and illicit dealings in financial matters.
 
 ### Description:
-Lelahal is the angel of beauty, talent, and artistic expression, aiding individuals in expressing themselves clearly and understanding their surroundings. A being that influences those born under its guidance, Lelahal inspires generosity and eloquence. This angel is invoked for illumination, healing, and creativity, especially in artistic endeavors.
+Lelahel is described as an angel of beauty and artistic talent, aiding individuals in self-expression and understanding their emotions. This angel is also tied to healing and creativity, assisting those seeking clarity and wisdom.
 
 ### Principal Characteristics:
-1. **Iluminação e Sabedoria:** Provides the ability to illuminate paths and reveals the clarity for seekers of knowledge.
-2. **Cura:** Strong affinity for healing, especially for those who suffer.
-3. **Inspiração e Motivação:** Serves as a source of inspiration, instilling hope and enthusiasm.
-4. **Talento e Criatividade:** Encourages artistic expression and harmony through various forms of expression.
+- **Illumination and Wisdom:** Lelahel is known for illuminating paths and providing clarity to seekers.
+- **Healing:** Strong healing attributes.
+- **Inspiration and Motivation:** Source of inspiration and infuses enthusiasm.
+- **Talent and Creativity:** Encourages expression in arts, promoting beauty through artistic expression.
 
-### Visual Element Analysis:
-While I cannot analyze specific images, the reference to symbols or sigils often associated with angels and Kabbalistic practices may include astrological symbols, alchemical symbols, or other geometric representations. These typically convey the attributes and powers of the angel, emphasizing their spiritual significance and connection to elemental forces or celestial influences.
+### Visual Elements Analysis:
+The surrounding visual elements, including symbols, sigils, or illustrations (if present), could elaborate on the themes of divine providence associated with Lelahel, often emphasizing light, creativity, and spirituality. These designs may include artistic representations of the associated sphere or alchemical symbols that reflect the elemental attributes linked to Lelahel's influence on art and healing.

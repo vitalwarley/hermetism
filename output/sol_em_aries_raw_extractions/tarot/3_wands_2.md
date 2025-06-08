@@ -1,28 +1,31 @@
 # Raw Extraction: 3_wands_2
 
-Here's a summary based on the text from the image regarding a tarot card, specifically the Three of Wands:
+**Tarot Card Information Extraction**
 
-### General Information
-- **Name**: Three of Wands
+**Card Title**: Three of Wands (Três de Bastões)
 
-### Symbolism
-- The card symbolizes the establishment of the first spark of fire energy, indicating a readiness to project ideas outward into the world. It represents expansion, the visualization of possibilities, and the process of planning and communication.
+### Symbolism:
+- **Wands** represent creativity, action, and movement, often linked to the element of Fire.
+- The **Three of Wands** signifies exploration, expansion, and foresight in ventures.
 
-### Meanings
-- **Personal Growth**: Represents the birth of new opportunities and harmony, suggesting one should maintain activities and balance proposals.
-- **Business**: Indicates that any change may involve energy, time, and money, with potential for development in negotiations and new projects.
-- **Love**: Reflects a moment of growth in relationships and potential for evolving connections.
+### Meanings:
+- **General**: This card suggests the initiation of new projects, planning, and preparing for future success. It emphasizes the balance between ambition and foresight.
+- **In Business**: Represents new ventures where clarity and planning are crucial. Changes in strategy require energy and financial input.
+- **In Love**: Indicates a time of development or waiting for growth in relationships.
 
-### Elemental Associations
-- Associated with **Fire**: Connotes energy, ambition, and personal power.
-  
-### Interpretive Guidance
-- **Decision Making**: Can guide decisions by presenting the best opportunities and fostering growth.
-- **Ritual Use**: Recommended for rituals aimed at clarifying choices and exploring options.
+### Elemental Associations:
+- **Element**: Fire
+- **Qualities**: Energy, willpower, and growth. Represents creativity, ambition, and the potential for success.
 
-### Visual Elements Analysis
-- The included illustrations and symbols may show variations of the Three of Wands across different tarot decks. 
-- The image with crossed wands suggests unity and the convergence of energies, enhancing the themes of collaboration and collective strength.
-- Elements like the depiction of figures, backgrounds, and colors all contribute to the card's meanings of growth, exploration, and anticipation for future endeavors.
+### Interpretive Guidance:
+- **Decision-Making**: The card advises clarity in intentions and visualizing goals to bring them to reality.
+- **Communication**: Emphasizes the importance of clear expression and sharing ideas for successful outcomes.
+- **Ritual Use**: Can be used in rituals for decision-making and showing opportunities. It's intended to guide individuals in their choices.
 
-This extraction provides a comprehensive overview of the themes and aspects related to the Three of Wands tarot card.
+### Visual Elements Analysis:
+The depicted images in the text include various tarot card illustrations. Notably:
+- The presence of wands, often symbolized as stylized sticks or branches, correlates with the action and ambition theme of the card.
+- Cards reflecting other interpretations may show different artistic renderings that represent similar meanings through varied symbolisms—like clarity in paths or journeys.
+- The layering of these images contributes to the understanding of collective meanings in tarot interpretations, emphasizing different aspects of the same card’s influence.
+
+This combination of visual and textual elements reinforces the importance of foresight and action in the context of human experiences as interpreted through tarot.

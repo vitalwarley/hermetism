@@ -1,26 +1,27 @@
 # Raw Extraction: 03_sitael_02
 
-### Extraction of Information About the Kabbalistic Angel
+### Kabbalistic Angel Information
 
-**Name:** סִיטְאֵל (Sitæl)
+#### Name:
+- **Sitael** (Hebrew: סִתְאֵל)
 
-**Correspondences:**
-- **Protection Against Evil:** Offers divine protection against evil and adversities.
-- **Moral Courage:** Inspires moral courage and character strength.
-- **Renewal:** Aids in the process of renewal.
+#### Correspondences:
+- **Spiritual Attributes**:
+  - **Superação de Obstáculos**: This angel provides support to overcome obstacles and challenges, offering strength and courage.
+  - **Proteção Divina**: Sitael grants divine protection against evil and adversities, enveloping his protégés in a mantle of safety and peace.
+  - **Coragem Moral**: Inspires moral courage and character strength, enabling individuals to act with ethics and integrity.
+  - **Renovação**: Aids in the process of renewal, helping individuals let go of what no longer serves them and embrace new possibilities and perspectives.
 
-**Sphere Associations:** Not explicitly mentioned.
+#### Sphere Associations:
+- The specific spheres are not explicitly mentioned, but Sitael symbolizes the divine force that propels individuals to build, overcome, and evolve.
 
-**Time Periods:** Not explicitly mentioned.
-
-**Spiritual Attributes:**
-- Symbolizes divine energy that encourages construction, evolution, and overcoming challenges.
-- Invoking Sitæl promotes courage to face challenges and wisdom for building a more harmonious reality.
-- The influence of this angel reflects the ability to transform adversities into opportunities for growth.
+#### Time Periods:
+- The text does not provide specific time periods related to the angel.
 
 ### Visual Elements Analysis
-- **Hebrew Text:** The name "סִיטְאֵל" and its symbolic representation suggest a deep spiritual connection within Kabbalistic traditions. 
-- **Symbols:** The illustrations appear to represent various esoteric concepts, possibly related to protection, guidance, and transformation, although specific interpretations may vary based on context.
-- **Sigils:** The sigils likely represent spiritual energies associated with Sitæl and his attributes, showcasing connections to Kabbalistic practices. Each symbol may hold distinct meanings within the framework of spiritual workings. 
+- **Symbols**:
+  - The diagrams and sigils present in the image reflect Kabbalistic works, likely associated with Sitael or related concepts.
+  - The top symbol may represent the angel’s name or function in Kabbalistic tradition.
+  - The additional circular symbols below incorporate geometric shapes and additional sigils, which often signify various attributes or powers associated with the angel.
 
-The overall imagery complements the thematic elements of protection, renewal, and moral courage attributed to the angel Sitæl.
+If there are any specific elements in the images you would like clarified or more information about, please let me know!
