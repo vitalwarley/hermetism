@@ -10,6 +10,18 @@ from typing import Dict, List, Optional
 from dotenv import load_dotenv
 import time
 import argparse
+# Add new imports for PDF and web extraction
+try:
+    from PyPDF2 import PdfReader
+except ImportError:
+    logging.error("PyPDF2 is required for PDF extraction. Install with: pip install PyPDF2")
+    PdfReader = None
+
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    logging.error("BeautifulSoup is required for web extraction. Install with: pip install beautifulsoup4")
+    BeautifulSoup = None
 
 # Configure logging
 logging.basicConfig(
@@ -28,6 +40,15 @@ load_dotenv()
 MODEL_ID_VISION = 'openai/gpt-4o-mini'  # For vision tasks
 MODEL_ID_SYNTHESIS = 'openai/gpt-4.1'  # For synthesis
 REQUEST_TIMEOUT = 30
+
+# PDF page mappings for Crowley books
+BOOK_OF_THOTH_PAGES = {
+    "emperor": (49, 50),
+}
+
+LIBER_THETA_PAGES = {
+    "emperor": 35,
+}
 
 # Configuration for Sol em Áries
 CONFIG = {
@@ -58,6 +79,60 @@ CONFIG = {
             "path": "tarot/aries", 
             "type": "tarot",
             "prompt": "Extract all information about this tarot card, including symbolism, meanings, elemental associations, and interpretive guidance. If you see any related images interspersed in the input image (like card illustrations, symbols, or visual elements), add your analysis of these visual elements at the end of the raw extraction."
+        },
+        # New web extraction categories
+        "esoteric_meanings": {
+            "type": "web_tarot",
+            "sources": {
+                "emperor": "https://www.esotericmeanings.com/thoth-emperor-tarot-card-tutorial/",
+                "two_of_wands": "https://www.esotericmeanings.com/two-of-wands-thoth-tarot-card-tutorial/",
+                "three_of_wands": "https://www.esotericmeanings.com/three-of-wands-thoth-tarot-card-tutorial/",
+                "four_of_wands": "https://www.esotericmeanings.com/four-of-wands-thoth-tarot-card-tutorial/",
+                "prince_of_disks": "https://www.esotericmeanings.com/prince-of-disks-thoth-tarot-card-tutorial/",
+                "queen_of_wands": "https://www.esotericmeanings.com/queen-of-wands-thoth-tarot-card-tutorial/"
+            },
+            "save_path": "data/webpages/sun_in_aries"
+        },
+        "crowley_books": {
+            "type": "pdf_tarot",
+            "sources": {
+                "emperor": {
+                    "book_of_thoth": (49, 50),
+                    "liber_theta": 35
+                }
+            },
+            "save_path": "data/books/sun_in_aries",
+            "pdf_paths": {
+                "book_of_thoth": "src/scripts/tarot/data/Aleister Crowley - The book of Thoth.pdf",
+                "liber_theta": "src/scripts/tarot/data/Liber Theta - Tarot Symbolism & Divination.pdf"
+            }
+        },
+        "inacchio_base": {
+            "type": "web_base",
+            "sources": {
+                "schemhammephorasch": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/",
+                "os_72_anjos": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/6-os-72-anjos/"
+            },
+            "save_path": "data/webpages/inacchio/base"
+        },
+        "inacchio_angels": {
+            "type": "web_angels",
+            "sources": {
+                "vehuiah": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/1-1-1-vehuiah/",
+                "jeliel": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/2-1-2-jeliel/",
+                "sitael": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/3-1-3-sitael/",
+                "elemiah": "http://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/4-1-4-elemiah/",
+                "mahasiah": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/5-1-5-mahasiah/",
+                "lehahel": "https://inaciovacchiano.com/a-cabala-de-hakash-ba-hakash/a-cabala-de-hakash-ba-hakash-filosofia-metafisica-quantica-cabalistica-tomo-iii/6-1-6-lelahel/"
+            },
+            "save_path": "data/webpages/inacchio/sun_in_aries"
+        },
+        "local_docs": {
+            "type": "local_files",
+            "sources": {
+                "dignidades_planetarias": "data/custom/dignidades_planetárias.md"
+            },
+            "save_path": "data/local/astrology/base"
         }
     },
     "output": "output/sol_em_aries_synthesis.md",
@@ -141,6 +216,201 @@ def save_raw_extraction(category: str, filename: str, content: str):
     
     logging.info(f"Saved raw extraction to: {output_path}")
 
+def extract_text_from_pdf(pdf_path: str, start_page: int = None, end_page: int = None) -> Optional[str]:
+    """Extract text from a PDF file between specified pages."""
+    if PdfReader is None:
+        logging.error("PyPDF2 is not available. Cannot extract PDF content.")
+        return None
+        
+    logging.info(f"Extracting text from {pdf_path} (pages {start_page}-{end_page})")
+    try:
+        if not os.path.exists(pdf_path):
+            logging.error(f"PDF file not found: {pdf_path}")
+            return None
+
+        reader = PdfReader(pdf_path)
+        text = ""
+        
+        if start_page is not None and end_page is not None:
+            logging.debug(f"Extracting pages {start_page} to {end_page}")
+            for page_num in range(start_page - 1, end_page):
+                if page_num >= len(reader.pages):
+                    logging.warning(f"Page {page_num + 1} not found in PDF")
+                    continue
+                page_text = reader.pages[page_num].extract_text()
+                text += page_text
+        elif start_page is not None:
+            logging.debug(f"Extracting single page {start_page}")
+            if start_page - 1 >= len(reader.pages):
+                logging.warning(f"Page {start_page} not found in PDF")
+                return None
+            text = reader.pages[start_page - 1].extract_text()
+        
+        if not text.strip():
+            logging.warning("No text extracted from PDF")
+            return None
+            
+        logging.info(f"Successfully extracted text from PDF")
+        return text.strip()
+    except Exception as e:
+        logging.error(f"Error extracting text from PDF: {str(e)}")
+        return None
+
+def download_web_content(url: str, extract_text: bool = True) -> Optional[str]:
+    """Download content from a URL and return as text."""
+    if extract_text and BeautifulSoup is None:
+        logging.error("BeautifulSoup is not available. Cannot extract HTML content.")
+        return None
+        
+    logging.info(f"Downloading content from {url}")
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
+        }
+        
+        response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
+        response.raise_for_status()
+        
+        if extract_text:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            # Remove script and style elements
+            for script in soup(["script", "style"]):
+                script.decompose()
+            content = soup.get_text()
+            
+            # Clean up text
+            lines = (line.strip() for line in content.splitlines())
+            content = '\n'.join(line for line in lines if line)
+            return content
+        else:
+            return response.text
+            
+    except Exception as e:
+        logging.error(f"Error downloading content from {url}: {str(e)}")
+        return None
+
+def save_extracted_content(content: str, save_path: str, filename: str):
+    """Save extracted content to specified path."""
+    output_dir = Path(save_path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    output_file = output_dir / f"{filename}.txt"
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write(content)
+    
+    logging.info(f"Saved content to: {output_file}")
+
+def process_web_extraction(category_name: str, category_config: dict) -> Dict[str, str]:
+    """Process web content extraction for a category."""
+    logging.info(f"Processing web extraction for: {category_name}")
+    
+    extracted_content = {}
+    sources = category_config.get("sources", {})
+    save_path = category_config.get("save_path", "")
+    
+    for key, url in sources.items():
+        logging.info(f"Downloading {key} from {url}")
+        content = download_web_content(url)
+        
+        if content:
+            # Save to specified path
+            save_extracted_content(content, save_path, key)
+            
+            # Also save raw extraction
+            save_raw_extraction(category_name, key, content)
+            
+            extracted_content[key] = content
+        
+        # Add delay to avoid rate limiting
+        time.sleep(2)
+    
+    return extracted_content
+
+def process_pdf_extraction(category_name: str, category_config: dict) -> Dict[str, str]:
+    """Process PDF content extraction for a category."""
+    logging.info(f"Processing PDF extraction for: {category_name}")
+    
+    extracted_content = {}
+    sources = category_config.get("sources", {})
+    save_path = category_config.get("save_path", "")
+    pdf_paths = category_config.get("pdf_paths", {})
+    
+    for card_key, pdf_info in sources.items():
+        logging.info(f"Processing PDF content for: {card_key}")
+        
+        combined_content = []
+        
+        # Process Book of Thoth if specified
+        if "book_of_thoth" in pdf_info and "book_of_thoth" in pdf_paths:
+            pdf_path = pdf_paths["book_of_thoth"]
+            if isinstance(pdf_info["book_of_thoth"], tuple):
+                start_page, end_page = pdf_info["book_of_thoth"]
+                content = extract_text_from_pdf(pdf_path, start_page, end_page)
+            else:
+                page = pdf_info["book_of_thoth"]
+                content = extract_text_from_pdf(pdf_path, page, page)
+            
+            if content:
+                combined_content.append(f"## Book of Thoth\n\n{content}")
+        
+        # Process Liber Theta if specified
+        if "liber_theta" in pdf_info and "liber_theta" in pdf_paths:
+            pdf_path = pdf_paths["liber_theta"]
+            page = pdf_info["liber_theta"]
+            content = extract_text_from_pdf(pdf_path, page, page)
+            
+            if content:
+                combined_content.append(f"## Liber Theta\n\n{content}")
+        
+        if combined_content:
+            final_content = "\n\n".join(combined_content)
+            
+            # Save to specified path
+            save_extracted_content(final_content, save_path, card_key)
+            
+            # Also save raw extraction
+            save_raw_extraction(category_name, card_key, final_content)
+            
+            extracted_content[card_key] = final_content
+    
+    return extracted_content
+
+def process_local_files(category_name: str, category_config: dict) -> Dict[str, str]:
+    """Process local file reading for a category."""
+    logging.info(f"Processing local files for: {category_name}")
+    
+    extracted_content = {}
+    sources = category_config.get("sources", {})
+    save_path = category_config.get("save_path", "")
+    
+    for key, file_path in sources.items():
+        logging.info(f"Reading local file {key} from {file_path}")
+        
+        try:
+            if not os.path.exists(file_path):
+                logging.warning(f"File not found: {file_path}")
+                continue
+                
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            if content:
+                # Save to specified path
+                save_extracted_content(content, save_path, key)
+                
+                # Also save raw extraction
+                save_raw_extraction(category_name, key, content)
+                
+                extracted_content[key] = content
+                logging.info(f"Successfully read {key}: {len(content)} characters")
+            else:
+                logging.warning(f"Empty file: {file_path}")
+                
+        except Exception as e:
+            logging.error(f"Error reading file {file_path}: {str(e)}")
+    
+    return extracted_content
+
 def process_category(category_path: str, category_name: str, content_type: str, prompt: str) -> Dict[str, str]:
     """Process all images in a category directory."""
     logging.info(f"Processing category: {category_path}")
@@ -212,6 +482,46 @@ def combine_content(all_extractions: Dict[str, Dict[str, str]]) -> str:
             combined.append(content)
             combined.append("\n")
     
+    # Esoteric Meanings (web tarot content)
+    if "esoteric_meanings" in all_extractions and all_extractions["esoteric_meanings"]:
+        combined.append("\n## Interpretações Esotéricas - Cartas do Tarô\n")
+        for key, content in all_extractions["esoteric_meanings"].items():
+            combined.append(f"### {key.replace('_', ' ').title()}\n")
+            combined.append(content)
+            combined.append("\n")
+    
+    # Crowley Books (PDF content)
+    if "crowley_books" in all_extractions and all_extractions["crowley_books"]:
+        combined.append("\n## Textos de Crowley - Livros Originais\n")
+        for key, content in all_extractions["crowley_books"].items():
+            combined.append(f"### {key.replace('_', ' ').title()}\n")
+            combined.append(content)
+            combined.append("\n")
+    
+    # # Inacchio Base (fundamental concepts)
+    # if "inacchio_base" in all_extractions and all_extractions["inacchio_base"]:
+    #     combined.append("\n## Fundamentos Cabalísticos - Inácio Vacchiano\n")
+    #     for key, content in all_extractions["inacchio_base"].items():
+    #         combined.append(f"### {key.replace('_', ' ').title()}\n")
+    #         combined.append(content)
+    #         combined.append("\n")
+    
+    # Inacchio Angels (specific angels)
+    if "inacchio_angels" in all_extractions and all_extractions["inacchio_angels"]:
+        combined.append("\n## Anjos de Sol em Áries - Inácio Vacchiano\n")
+        for key, content in all_extractions["inacchio_angels"].items():
+            combined.append(f"### Anjo {key.title()}\n")
+            combined.append(content)
+            combined.append("\n")
+    
+    # Local Documents (custom documents)
+    if "local_docs" in all_extractions and all_extractions["local_docs"]:
+        combined.append("\n## Documentos Locais - Material de Referência\n")
+        for key, content in all_extractions["local_docs"].items():
+            combined.append(f"### {key.replace('_', ' ').title()}\n")
+            combined.append(content)
+            combined.append("\n")
+    
     return "\n".join(combined)
 
 def generate_synthesis(combined_content: str) -> Optional[str]:
@@ -223,6 +533,12 @@ def generate_synthesis(combined_content: str) -> Optional[str]:
         return None
     
     prompt = f"""Você é um especialista em astrologia hermética, cabala e tarô. Com base no conteúdo extraído abaixo, crie uma síntese hermética completa sobre Sol em Áries usando o template fornecido.
+
+ATENÇÃO: Ao elaborar a síntese, priorize fortemente (cerca de 80%) as informações sobre anjos (com ênfase especial no conteúdo de Inácio Vacchiano, focando apenas nas virtudes de cada anjo) e cartas do tarô (menores, corte e maiores). Os conteúdos sobre signo e planeta devem ser considerados secundários (cerca de 20%), servindo apenas como base contextual. Estruture a síntese de modo que a análise dos anjos e do tarô seja o foco central, justificando as correspondências e relações herméticas, enquanto as informações astrológicas gerais (signo/planeta) apenas contextualizam e fundamentam as associações principais.
+
+Na seção 2.1, remova as colunas Salmo e Cor da tabela. Após a tabela, escreva um texto discursivo aprofundando as virtudes e domínios de cada anjo/carta, explicando detalhadamente como essas virtudes se manifestam na vida prática e suas relações com as manifestações descritas. Seja analítico e relacione as virtudes com situações concretas.
+
+Na seção 2.2, ao tratar da carta da corte secundária (no caso, príncipe de discos), explique que sua energia não está totalmente alinhada ao elemento do signo de Áries (fogo), destacando que isso pode indicar desafios, limitações ou fraquezas específicas, e que a carta não é necessariamente positiva para o arquétipo analisado.
 
 CONTEÚDO EXTRAÍDO:
 {combined_content}
@@ -242,7 +558,7 @@ TEMPLATE A SEGUIR:
 ## 0 Instruções de Uso
 1. **Integração total** – discuta astrologia + Cabala + Tarô em conjunto.  
 2. **Personalize** – troque `Sol`, `Áries`, anjos, cartas e graus conforme necessário.  
-3. **Âncoras de realidade** – justifique cada associação (cor, elemento, símbolo).  
+3. **Âncoras de realidade** – justifique cada associação (elemento, símbolo, etc).  
 4. **Objetivo** – compreender **como** anjos e cartas refletem o arquétipo `Sol-Áries` e **inspiram** soluções para desafios cotidianos (sem instruções rituais).
 
 ---
@@ -264,16 +580,16 @@ TEMPLATE A SEGUIR:
 
 ### 2.1 Cartas Menores e Anjos (6 entradas)
 
-| Decanato | Sub-posição | Graus | Anjo (hebraico) | Carta Menor | Virtudes / Domínios | Salmo | Cor | Perfume / Incenso | Manifestação na Vida* |
-|---------|-------------|-------|-----------------|-------------|----------------------|-------|-----|-------------------|-----------------------|
-| **1º** | **1A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <SALMO> | <COR> | <PERFUME> | _Ex.: "Estimula iniciativa para superar obstáculos profissionais."_ |
-|  | **1B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <SALMO> | <COR> | <PERFUME> | _Ex.: "Favorece coragem emocional em novos relacionamentos."_ |
-| **2º** | **2A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <SALMO> | <COR> | <PERFUME> | _Ex.: "Promove visão estratégica em projetos de longo prazo."_ |
-|  | **2B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <SALMO> | <COR> | <PERFUME> | _Ex.: "Desperta diplomacia durante negociações difíceis."_ |
-| **3º** | **3A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <SALMO> | <COR> | <PERFUME> | _Ex.: "Apoia resiliência frente a mudanças inesperadas."_ |
-|  | **3B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <SALMO> | <COR> | <PERFUME> | _Ex.: "Inspira criatividade na solução de problemas complexos."_ |
+| Decanato | Sub-posição | Graus | Anjo (hebraico) | Carta Menor | Virtudes / Domínios | Perfume / Incenso | Manifestação na Vida* |
+|---------|-------------|-------|-----------------|-------------|----------------------|-------------------|-----------------------|
+| **1º** | **1A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Estimula iniciativa para superar obstáculos profissionais."_ |
+|  | **1B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Favorece coragem emocional em novos relacionamentos."_ |
+| **2º** | **2A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Promove visão estratégica em projetos de longo prazo."_ |
+|  | **2B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Desperta diplomacia durante negociações difíceis."_ |
+| **3º** | **3A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Apoia resiliência frente a mudanças inesperadas."_ |
+|  | **3B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Inspira criatividade na solução de problemas complexos."_ |
 
-*Forneça frases-modelo (1–2 linhas) mostrando **como** cada anjo + carta expressa o arquétipo `Sol-Áries` na vida diária.
+*Após a tabela, aprofunde discursivamente as virtudes e domínios de cada anjo/carta, explicando como se relacionam com as manifestações práticas da vida e situações concretas. Use exemplos e análise hermética.
 
 ---
 
@@ -282,14 +598,20 @@ TEMPLATE A SEGUIR:
 | Escopo | Carta da Corte | Decanatos Abrangidos | Papel Arquetípico | Observações |
 |--------|----------------|----------------------|-------------------|-------------|
 | **Primária** | <CARTA-CORTE-PRIMÁRIA> | 1º & 2º | Síntese das qualidades iniciais do signo (impulso, desenvolvimento) | _Ex.: "Atua como força motivadora que integra as virtudes dos quatro anjos iniciais."_ |
-| **Secundária** | <CARTA-CORTE-SECUNDÁRIA> | 3º | Culmina as qualidades finais (maturação, estabilização) | _Ex.: "Consolida sabedoria prática e resiliência do anjo do 3º decanato."_ |
+| **Secundária** | <CARTA-CORTE-SECUNDÁRIA> | 3º | Culmina as qualidades finais (maturação, estabilização) | _Ex.: "Consolida sabedoria prática e resiliência do anjo do 3º decanato. Atenção: como a carta pertence a um elemento diferente do signo (ex: príncipe de discos para Áries), pode indicar desafios, limitações ou fraquezas, e não é necessariamente positiva para o arquétipo analisado."_ |
+
+Para Áries, a carta da corte primária é a rainha de paus (20 grau de peixe até 20 grau de áries), e a secundária é o príncipe de discos (20 graus de áries, 20 graus de touro).
+
+### 2.3 Cartas Maiores
+
+Temos o imperador como arcano maior de áries.
 
 ---
 
 ## 3 Síntese Hermética Integrada
 <!--
 Escreva 1–2 parágrafos que:
-• Relacionem Sol, Áries, as 6 cartas menores, 6 anjos e as duas cartas da corte.
+• Relacionem Sol, Áries, as 3 cartas menores, 6 anjos e as duas cartas da corte, bem como o imperador.
 • Expliquem padrões de comportamento ou desafios de vida que emergem dessa teia simbólica.
 • Incluam 2–3 perguntas reflexivas para analisar o arquétipo no mapa natal ou em problemas concretos.
 -->
@@ -298,7 +620,7 @@ Escreva 1–2 parágrafos que:
 
 ---
 
-IMPORTANTE: Preencha TODOS os campos do template com informações precisas baseadas no conteúdo extraído. Use as informações sobre anjos, cartas e correspondências fornecidas. Mantenha o formato da tabela e a estrutura do template."""
+IMPORTANTE: Preencha TODOS os campos do template com informações precisas baseadas no conteúdo extraído. Use as informações sobre anjos (focando nas virtudes, especialmente do material de Inácio Vacchiano), cartas e correspondências fornecidas. Mantenha o formato da tabela e a estrutura do template."""
     
     try:
         headers = {
@@ -355,11 +677,54 @@ def load_combined_content(filepath: str) -> Optional[str]:
         logging.error(f"Error loading combined content: {str(e)}")
         return None
 
+def load_raw_extractions() -> Dict[str, Dict[str, str]]:
+    """Load all raw extractions from the filesystem."""
+    logging.info("Loading raw extractions from filesystem")
+    
+    raw_dir = Path(CONFIG["raw_extractions_dir"])
+    if not raw_dir.exists():
+        logging.error(f"Raw extractions directory not found: {raw_dir}")
+        return {}
+    
+    all_extractions = {}
+    
+    # Iterate through category directories
+    for category_dir in raw_dir.iterdir():
+        if not category_dir.is_dir():
+            continue
+            
+        category_name = category_dir.name
+        category_extractions = {}
+        
+        # Load all .md files in the category directory
+        for extraction_file in category_dir.glob("*.md"):
+            try:
+                with open(extraction_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                # Remove the header that was added during save_raw_extraction
+                if content.startswith(f"# Raw Extraction: {extraction_file.stem}\n\n"):
+                    content = content[len(f"# Raw Extraction: {extraction_file.stem}\n\n"):]
+                
+                category_extractions[extraction_file.stem] = content
+                logging.info(f"Loaded {extraction_file.stem} from {category_name}")
+                
+            except Exception as e:
+                logging.error(f"Error loading {extraction_file}: {str(e)}")
+        
+        if category_extractions:
+            all_extractions[category_name] = category_extractions
+            logging.info(f"Loaded {len(category_extractions)} extractions from {category_name}")
+    
+    return all_extractions
+
 def main():
     """Run the complete hermetic synthesis pipeline."""
     parser = argparse.ArgumentParser(description='Hermetic Synthesis Pipeline')
     parser.add_argument('--synthesis-only', action='store_true', 
                        help='Run only the synthesis step using existing combined content')
+    parser.add_argument('--from-raw', action='store_true',
+                       help='Load content from raw extractions and combine again (skip extraction)')
     args = parser.parse_args()
     
     logging.info("=== Starting Hermetic Synthesis Pipeline ===")
@@ -382,6 +747,22 @@ def main():
             return
             
         logging.info("Using existing combined content for synthesis")
+    elif args.from_raw:
+        # Load content from raw extractions and combine
+        logging.info("\n--- Loading Raw Extractions ---")
+        all_extractions = load_raw_extractions()
+        
+        if not all_extractions:
+            logging.error("No raw extractions found. Run extraction first.")
+            return
+        
+        # Combine all content
+        logging.info("\n--- Combining Content ---")
+        combined_content = combine_content(all_extractions)
+        
+        # Save intermediate combined content
+        intermediate_path = CONFIG["output"].replace(".md", "_combined.md")
+        save_output(combined_content, intermediate_path)
     else:
         # Run full pipeline
         all_extractions = {}
@@ -389,12 +770,25 @@ def main():
         for category_name, category_config in CONFIG["categories"].items():
             logging.info(f"\n--- Processing {category_name} ---")
             
-            extracted = process_category(
-                category_config["path"],
-                category_name,
-                category_config["type"],
-                category_config["prompt"]
-            )
+            category_type = category_config.get("type", "")
+            
+            if category_type in ["web_tarot", "web_base", "web_angels"]:
+                # Process web content
+                extracted = process_web_extraction(category_name, category_config)
+            elif category_type == "pdf_tarot":
+                # Process PDF content
+                extracted = process_pdf_extraction(category_name, category_config)
+            elif category_type == "local_files":
+                # Process local files
+                extracted = process_local_files(category_name, category_config)
+            else:
+                # Process image content (original functionality)
+                extracted = process_category(
+                    category_config["path"],
+                    category_name,
+                    category_config["type"],
+                    category_config["prompt"]
+                )
             
             if extracted:
                 all_extractions[category_name] = extracted
@@ -421,7 +815,7 @@ def main():
         logging.info(f"Final document saved to: {CONFIG['output']}")
     else:
         logging.error("Failed to generate final synthesis")
-        if not args.synthesis_only:
+        if not args.synthesis_only and not args.from_raw:
             # Save combined content as fallback
             save_output(combined_content, CONFIG["output"])
             logging.info("Saved combined content as fallback")
