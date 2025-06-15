@@ -404,7 +404,7 @@ def process_local_files(category_name: str, category_config: dict) -> Dict[str, 
                 extracted_content[key] = content
                 logging.info(f"Successfully read {key}: {len(content)} characters")
             else:
-                logging.warning(f"Empty file: {file_path}")
+                logging.warning(f"Empty file: {file_path}")Sol em Áries
                 
         except Exception as e:
             logging.error(f"Error reading file {file_path}: {str(e)}")
@@ -434,7 +434,7 @@ def process_category(category_path: str, category_name: str, content_type: str, 
         content = extract_content(str(image_file), content_type, prompt)
         if content:
             extracted_content[image_file.stem] = content
-            # Save raw extraction
+            # Save raw extractionSol em Áries
             save_raw_extraction(category_name, image_file.stem, content)
         # Add small delay to avoid rate limiting
         time.sleep(1)
@@ -466,12 +466,7 @@ def combine_content(all_extractions: Dict[str, Dict[str, str]]) -> str:
         combined.append("\n## Sol em Áries - Síntese Base\n")
         for key, content in all_extractions["synthesis"].items():
             combined.append(content)
-            combined.append("\n")
-    
-    # Angels content
-    if "angels" in all_extractions and all_extractions["angels"]:
-        combined.append("\n## Correspondências Angélicas\n")
-        for key, content in all_extractions["angels"].items():
+            combined.append("\n")Sol em Áries
             combined.append(content)
             combined.append("\n")
     
@@ -534,93 +529,28 @@ def generate_synthesis(combined_content: str) -> Optional[str]:
     
     prompt = f"""Você é um especialista em astrologia hermética, cabala e tarô. Com base no conteúdo extraído abaixo, crie uma síntese hermética completa sobre Sol em Áries usando o template fornecido.
 
-ATENÇÃO: Ao elaborar a síntese, priorize fortemente (cerca de 80%) as informações sobre anjos (com ênfase especial no conteúdo de Inácio Vacchiano, focando apenas nas virtudes de cada anjo) e cartas do tarô (menores, corte e maiores). Os conteúdos sobre signo e planeta devem ser considerados secundários (cerca de 20%), servindo apenas como base contextual. Estruture a síntese de modo que a análise dos anjos e do tarô seja o foco central, justificando as correspondências e relações herméticas, enquanto as informações astrológicas gerais (signo/planeta) apenas contextualizam e fundamentam as associações principais.
 
-Na seção 2.1, remova as colunas Salmo e Cor da tabela. Após a tabela, escreva um texto discursivo aprofundando as virtudes e domínios de cada anjo/carta, explicando detalhadamente como essas virtudes se manifestam na vida prática e suas relações com as manifestações descritas. Seja analítico e relacione as virtudes com situações concretas.
-
-Na seção 2.2, ao tratar da carta da corte secundária (no caso, príncipe de discos), explique que sua energia não está totalmente alinhada ao elemento do signo de Áries (fogo), destacando que isso pode indicar desafios, limitações ou fraquezas específicas, e que a carta não é necessariamente positiva para o arquétipo analisado.
+1. Fundamentos Astrológicos: Planeta e Signo
+2. Correspondências Angélicas 
+- Organize-os 2 a 2: cada anjo é meia carta do tarô, logo 2 anjos = 1 carta do tarô. Por exemplo, Vehuhiah e Eliel estão associados com a carta 2 de paus. Deve-se expor: o que os anjos tem a ver com a carta, as virtudes e domínios de cada anjo, e como essas virtudes se manifestam na vida prática.
+- Para cada decanato, traga também uma explicação sob a ótica dos dois anjos relacionados.
+- Tal exposição deve refletir os poderes concedidos de cada anjo. Esses poderes precisam ser modulados de acordo com questões e situações do planeta em específico. Por exemplo, em assuntos relacionados ao planeta Sol, Vehuhiah serve para que? E assim para os demais anjos.
+- Usar todo o arranjo dos anjos para elaborar sobre o arcano maior.
+3. Conclusão
+- Sumarize o que foi exposto sobre os anjos e as cartas do tarô.
 
 CONTEÚDO EXTRAÍDO:
 {combined_content}
 
-TEMPLATE A SEGUIR:
 
-<!--
-╔════════════════════════════════════════════════════════════════════════╗
-║  TEMPLATE GENÉRICO – SÍNTESE HERMÉTICA (Sol em Áries)                 ║
-║  • Texto 100 % em português; nomes angelicais em hebraico             ║
-║  • Cada decanato possui 2 cartas menores + 2 anjos correspondentes    ║
-║  • 1 Carta da Corte "primária" abrange os dois primeiros decanatos    ║
-║  • 1 Carta da Corte "secundária" abrange o terceiro decanato          ║
-╚════════════════════════════════════════════════════════════════════════╝
--->
+ATENÇÃO:
 
-## 0 Instruções de Uso
-1. **Integração total** – discuta astrologia + Cabala + Tarô em conjunto.  
-2. **Personalize** – troque `Sol`, `Áries`, anjos, cartas e graus conforme necessário.  
-3. **Âncoras de realidade** – justifique cada associação (elemento, símbolo, etc).  
-4. **Objetivo** – compreender **como** anjos e cartas refletem o arquétipo `Sol-Áries` e **inspiram** soluções para desafios cotidianos (sem instruções rituais).
+1. Quanto ao material do Inácio, use apenas os poderes concedidos de cada anjo. 
+2. Quanto ao restante do material, use-os integralmente.
+3. Ao elaborar a síntese, priorize fortemente (cerca de 80%) as informações sobre anjos (com ênfase especial no conteúdo de Inácio Vacchiano, focando apenas nos poderes concedidos de cada anjo) e cartas do tarô (menores, corte e maiores). Os conteúdos sobre signo e planeta devem ser considerados secundários (cerca de 20%), servindo apenas como base contextual. 
+4. Estruture a síntese de modo que a análise dos anjos e do tarô seja o foco central, justificando as correspondências e relações herméticas, enquanto as informações astrológicas gerais (signo/planeta) apenas contextualizam e fundamentam as associações principais.
 
----
-
-## 1 Fundamentos Astrológicos
-
-### 1.1 O Signo de Áries
-<!-- Elemento, modalidade, mitologia, palavras-chave -->
-
-### 1.2 O Planeta Sol
-<!-- Função arquetípica, esfera de experiência -->
-
-### 1.3 Sol em Áries
-<!-- Pontos fortes, desafios, expressão natal -->
-
----
-
-## 2 Correspondências Herméticas (Cabala & Tarô)
-
-### 2.1 Cartas Menores e Anjos (6 entradas)
-
-| Decanato | Sub-posição | Graus | Anjo (hebraico) | Carta Menor | Virtudes / Domínios | Perfume / Incenso | Manifestação na Vida* |
-|---------|-------------|-------|-----------------|-------------|----------------------|-------------------|-----------------------|
-| **1º** | **1A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Estimula iniciativa para superar obstáculos profissionais."_ |
-|  | **1B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Favorece coragem emocional em novos relacionamentos."_ |
-| **2º** | **2A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Promove visão estratégica em projetos de longo prazo."_ |
-|  | **2B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Desperta diplomacia durante negociações difíceis."_ |
-| **3º** | **3A** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Apoia resiliência frente a mudanças inesperadas."_ |
-|  | **3B** | <GRAUS> | <ANJO> | <CARTA-MENOR> | <VIRTUDES> | <PERFUME> | _Ex.: "Inspira criatividade na solução de problemas complexos."_ |
-
-*Após a tabela, aprofunde discursivamente as virtudes e domínios de cada anjo/carta, explicando como se relacionam com as manifestações práticas da vida e situações concretas. Use exemplos e análise hermética.
-
----
-
-### 2.2 Cartas da Corte
-
-| Escopo | Carta da Corte | Decanatos Abrangidos | Papel Arquetípico | Observações |
-|--------|----------------|----------------------|-------------------|-------------|
-| **Primária** | <CARTA-CORTE-PRIMÁRIA> | 1º & 2º | Síntese das qualidades iniciais do signo (impulso, desenvolvimento) | _Ex.: "Atua como força motivadora que integra as virtudes dos quatro anjos iniciais."_ |
-| **Secundária** | <CARTA-CORTE-SECUNDÁRIA> | 3º | Culmina as qualidades finais (maturação, estabilização) | _Ex.: "Consolida sabedoria prática e resiliência do anjo do 3º decanato. Atenção: como a carta pertence a um elemento diferente do signo (ex: príncipe de discos para Áries), pode indicar desafios, limitações ou fraquezas, e não é necessariamente positiva para o arquétipo analisado."_ |
-
-Para Áries, a carta da corte primária é a rainha de paus (20 grau de peixe até 20 grau de áries), e a secundária é o príncipe de discos (20 graus de áries, 20 graus de touro).
-
-### 2.3 Cartas Maiores
-
-Temos o imperador como arcano maior de áries.
-
----
-
-## 3 Síntese Hermética Integrada
-<!--
-Escreva 1–2 parágrafos que:
-• Relacionem Sol, Áries, as 3 cartas menores, 6 anjos e as duas cartas da corte, bem como o imperador.
-• Expliquem padrões de comportamento ou desafios de vida que emergem dessa teia simbólica.
-• Incluam 2–3 perguntas reflexivas para analisar o arquétipo no mapa natal ou em problemas concretos.
--->
-
-> _Exemplo de pergunta reflexiva:_ "Quais projetos atuais exigem a visão estratégica sintetizada pela carta da corte primária e seus anjos subjacentes?"
-
----
-
-IMPORTANTE: Preencha TODOS os campos do template com informações precisas baseadas no conteúdo extraído. Use as informações sobre anjos (focando nas virtudes, especialmente do material de Inácio Vacchiano), cartas e correspondências fornecidas. Mantenha o formato da tabela e a estrutura do template."""
+"""
     
     try:
         headers = {
