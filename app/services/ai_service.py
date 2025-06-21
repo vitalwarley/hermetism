@@ -58,6 +58,25 @@ class AIService:
             self.logger.error(f"LLM cleaning error: {str(e)}")
             return text  # Return original if cleaning fails
     
+    def summarize_text(self, text: str, context: str) -> str:
+        """Summarize text content using LLM."""
+        try:
+            prompt = f"""Create a comprehensive summary of this {context}.
+            Preserve all key information, concepts, and insights while making it more concise and structured.
+            Include main points, key takeaways, and important details.
+            
+            Content: {text[:MAX_SYNTHESIS_LENGTH]}"""
+            
+            response = self.client.chat.completions.create(
+                model=MODEL_SYNTHESIS,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            
+            return response.choices[0].message.content
+        except Exception as e:
+            self.logger.error(f"LLM summarization error: {str(e)}")
+            return text  # Return original if summarization fails
+    
     def synthesize_content(self, materials: dict, custom_prompt: str, material_placeholders: Optional[dict] = None) -> Optional[str]:
         """Generate synthesis from combined materials using custom prompt with placeholder support."""
         try:

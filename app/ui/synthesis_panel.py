@@ -32,8 +32,12 @@ def render_synthesis_panel(config: dict):
                         session_dir = session_service.save_session(
                             st.session_state.materials,
                             synthesis,
-                            custom_prompt_preview=custom_prompt[:100] + "..." if len(custom_prompt) > 100 else custom_prompt
+                            custom_prompt=custom_prompt
                         )
+                        
+                        # Store session ID for quality review
+                        st.session_state.current_session_id = session_dir.name
+                        
                         st.success(f"Session saved to: {session_dir}")
     
     # Display synthesis
@@ -65,6 +69,13 @@ def _render_export_options():
 def _render_quality_review():
     """Render quality review section."""
     with st.expander("📊 Quality Review"):
+        # Check if we have a current session to update
+        current_session_id = getattr(st.session_state, 'current_session_id', None)
+        
+        if not current_session_id:
+            st.warning("⚠️ No active session found. Generate a synthesis first to enable quality review.")
+            return
+        
         metrics = ["Accuracy", "Completeness", "Clarity", "Depth"]
         ratings = {}
         
@@ -73,6 +84,33 @@ def _render_quality_review():
             with cols[i]:
                 ratings[metric] = st.slider(metric, 1, 5, 3, key=f"rating_{metric}")
         
-        if st.button("Save Review"):
-            # Could extend to save ratings to session metadata
-            st.info("Review saved to session") 
+        # Optional review notes
+        review_notes = st.text_area(
+            "Review Notes (Optional)",
+            placeholder="Add any additional comments about the synthesis quality...",
+            key="review_notes"
+        )
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("💾 Save Review", type="primary"):
+                success = session_service.save_quality_review(
+                    current_session_id, 
+                    ratings, 
+                    review_notes
+                )
+                
+                if success:
+                    st.success("✅ Quality review saved and session updated!")
+                else:
+                    st.error("❌ Failed to save quality review")
+        
+        with col2:
+            if st.button("🔄 Reset Ratings"):
+                # Clear the slider values by reinitializing them
+                for metric in metrics:
+                    if f"rating_{metric}" in st.session_state:
+                        st.session_state[f"rating_{metric}"] = 3
+                if "review_notes" in st.session_state:
+                    st.session_state["review_notes"] = ""
+                st.rerun() 

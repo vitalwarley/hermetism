@@ -2,25 +2,139 @@ import streamlit as st
 from config.settings import SUPPORTED_FILE_TYPES
 from services.extraction import extraction_service
 from utils.helpers import format_file_size
+import re
 
 def render_input_panel():
     """Render the input materials panel."""
     st.header("📥 Input Materials")
     
-    # File uploader
-    uploaded_files = st.file_uploader(
-        "Drop your files here",
-        type=SUPPORTED_FILE_TYPES,
-        accept_multiple_files=True
-    )
+    # Create tabs for different input types
+    tab1, tab2, tab3 = st.tabs(["📁 Files", "🌐 URL", "📺 YouTube"])
     
-    # Process uploaded files
-    for uploaded_file in uploaded_files:
-        file_key = uploaded_file.name
+    with tab1:
+        # File uploader
+        uploaded_files = st.file_uploader(
+            "Drop your files here",
+            type=SUPPORTED_FILE_TYPES,
+            accept_multiple_files=True
+        )
         
-        if file_key not in st.session_state.materials:
-            _handle_file_upload(uploaded_file, file_key)
+        # Process uploaded files
+        for uploaded_file in uploaded_files:
+            file_key = uploaded_file.name
+            
+            if file_key not in st.session_state.materials:
+                _handle_file_upload(uploaded_file, file_key)
     
+    with tab2:
+        # URL input section
+        st.subheader("🌐 Web Page Scraping")
+        
+        url = st.text_input(
+            "Enter URL to scrape:",
+            placeholder="https://example.com/article",
+            help="Enter a web page URL to extract and process its content"
+        )
+        
+        if url:
+            # Validate URL format
+            url_pattern = re.compile(
+                r'^https?://'  # http:// or https://
+                r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
+                r'localhost|'  # localhost...
+                r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+                r'(?::\d+)?'  # optional port
+                r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+            
+            if url_pattern.match(url):
+                # URL processing options
+                col1, col2 = st.columns([2, 1])
+                
+                with col1:
+                    extract_option = st.selectbox(
+                        "Content extraction method:",
+                        ["main_content", "full_page", "custom_selector"],
+                        help="Choose how to extract content from the webpage"
+                    )
+                    
+                    if extract_option == "custom_selector":
+                        css_selector = st.text_input(
+                            "CSS selector:",
+                            placeholder="article, .content, #main",
+                            help="Enter CSS selector to target specific content"
+                        )
+                    else:
+                        css_selector = None
+                
+                with col2:
+                    clean_with_ai = st.checkbox(
+                        "🧹 Clean with AI",
+                        value=True,
+                        help="Use AI to clean and structure the extracted content"
+                    )
+                
+                # Generate a key for this URL
+                url_key = f"url_{hash(url) % 10000}"
+                
+                if st.button("🌐 Scrape URL", type="primary", use_container_width=True):
+                    if url_key not in st.session_state.materials:
+                        _handle_url_scraping(url, url_key, extract_option, css_selector, clean_with_ai)
+                    else:
+                        st.warning("This URL has already been processed. Remove it first to re-process.")
+            else:
+                st.error("Please enter a valid URL starting with http:// or https://")
+    
+    with tab3:
+        # YouTube input section
+        st.subheader("📺 YouTube Transcription")
+        
+        youtube_url = st.text_input(
+            "Enter YouTube URL:",
+            placeholder="https://www.youtube.com/watch?v=VIDEO_ID",
+            help="Enter a YouTube video URL to get its transcript"
+        )
+        
+        if youtube_url:
+            # Validate YouTube URL
+            youtube_pattern = re.compile(
+                r'(https?://)?(www\.)?(youtube\.com/(watch\?v=|embed/)|youtu\.be/)'
+                r'([a-zA-Z0-9_-]{11})', re.IGNORECASE)
+            
+            if youtube_pattern.match(youtube_url):
+                # YouTube processing options
+                col1, col2 = st.columns([2, 1])
+                
+                with col1:
+                    transcript_type = st.selectbox(
+                        "Transcript preference:",
+                        ["auto", "manual", "any"],
+                        help="Choose transcript type preference"
+                    )
+                    
+                    language = st.text_input(
+                        "Language code (optional):",
+                        placeholder="en, es, fr, etc.",
+                        help="Specify language code for transcript (leave empty for auto-detect)"
+                    )
+                
+                with col2:
+                    summarize = st.checkbox(
+                        "📝 Summarize",
+                        value=False,
+                        help="Create a summary of the transcript content"
+                    )
+                
+                # Generate a key for this YouTube video
+                yt_key = f"youtube_{hash(youtube_url) % 10000}"
+                
+                if st.button("📺 Get Transcript", type="primary", use_container_width=True):
+                    if yt_key not in st.session_state.materials:
+                        _handle_youtube_transcription(youtube_url, yt_key, transcript_type, language, summarize)
+                    else:
+                        st.warning("This YouTube video has already been processed. Remove it first to re-process.")
+            else:
+                st.error("Please enter a valid YouTube URL")
+
     # Display current materials
     if st.session_state.materials:
         st.subheader("📚 Loaded Materials")
@@ -306,4 +420,76 @@ def _process_text_file(uploaded_file, file_key: str):
     """Process text file."""
     text_content = extraction_service.extract_from_text_file(uploaded_file)
     if text_content:
-        st.session_state.materials[file_key] = text_content 
+        st.session_state.materials[file_key] = text_content
+
+def _handle_url_scraping(url: str, url_key: str, extract_option: str, css_selector: str, clean_with_ai: bool):
+    """Handle URL scraping with processing options."""
+    try:
+        with st.spinner(f"Scraping content from {url}..."):
+            # Extract content from URL
+            raw_content = extraction_service.extract_from_url(url, extract_option, css_selector)
+            
+            if raw_content:
+                if clean_with_ai:
+                    # Clean the content with AI
+                    cleaned_content = extraction_service.clean_extracted_text(raw_content, "web content")
+                    st.session_state.materials[url_key] = cleaned_content
+                    st.success(f"✅ URL content extracted and cleaned successfully!")
+                else:
+                    st.session_state.materials[url_key] = raw_content
+                    st.success(f"✅ URL content extracted successfully!")
+                
+                # Display content preview
+                with st.expander("Content Preview", expanded=False):
+                    preview_text = (cleaned_content if clean_with_ai else raw_content)[:500]
+                    st.text(preview_text + "..." if len(preview_text) == 500 else preview_text)
+            else:
+                st.error("❌ Failed to extract content from URL")
+                
+    except Exception as e:
+        st.error(f"❌ Error processing URL: {str(e)}")
+
+def _handle_youtube_transcription(youtube_url: str, yt_key: str, transcript_type: str, language: str, summarize: bool):
+    """Handle YouTube transcription with processing options."""
+    try:
+        with st.spinner(f"Getting transcript from YouTube video..."):
+            # Extract transcript from YouTube
+            transcript_content = extraction_service.extract_from_youtube(youtube_url, transcript_type, language)
+            
+            if transcript_content:
+                if summarize:
+                    # Summarize the transcript with AI
+                    summary = extraction_service.summarize_content(transcript_content, "YouTube video transcript")
+                    st.session_state.materials[yt_key] = summary
+                    st.success(f"✅ YouTube transcript extracted and summarized successfully!")
+                else:
+                    st.session_state.materials[yt_key] = transcript_content
+                    st.success(f"✅ YouTube transcript extracted successfully!")
+                
+                # Display content preview
+                with st.expander("Transcript Preview", expanded=False):
+                    preview_text = (summary if summarize else transcript_content)[:500]
+                    st.text(preview_text + "..." if len(preview_text) == 500 else preview_text)
+            else:
+                st.error("❌ Failed to get transcript from YouTube video")
+                
+    except Exception as e:
+        error_msg = str(e)
+        st.error(f"❌ Error processing YouTube video: {error_msg}")
+        
+        # Provide helpful error messages for common issues
+        if "No transcripts found" in error_msg or "TranscriptsDisabled" in error_msg:
+            st.info("💡 **Tip:** This video may not have transcripts available. Try a different video or check if the video has closed captions enabled.")
+        elif "VideoUnavailable" in error_msg:
+            st.info("💡 **Tip:** The video may be private, restricted, or deleted. Make sure the video is publicly accessible.")
+        elif "Invalid YouTube URL" in error_msg:
+            st.info("💡 **Tip:** Please check the YouTube URL format. It should look like: https://www.youtube.com/watch?v=VIDEO_ID")
+        elif "no element found" in error_msg:
+            st.info("💡 **Tip:** There might be an issue with the transcript format. Try with a different video or transcript type.")
+        
+        # Add debugging info
+        with st.expander("🔧 Debug Information", expanded=False):
+            st.code(f"Error: {error_msg}")
+            st.code(f"URL: {youtube_url}")
+            st.code(f"Transcript Type: {transcript_type}")
+            st.code(f"Language: {language or 'Auto-detect'}") 
