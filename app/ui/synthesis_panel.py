@@ -9,24 +9,32 @@ def render_synthesis_panel(config: dict):
     
     # Generate synthesis button
     if st.session_state.materials:
-        if st.button("🔮 Generate Synthesis", type="primary"):
-            with st.spinner("Consulting the cosmic wisdom..."):
-                synthesis = ai_service.synthesize_content(
-                    st.session_state.materials,
-                    config["artifact_type"],
-                    config["custom_prompt"]
-                )
-                
-                if synthesis:
-                    st.session_state.synthesis = synthesis
+        # Check if custom prompt is provided
+        custom_prompt = getattr(st.session_state, 'custom_prompt', '')
+        if not custom_prompt.strip():
+            st.warning("⚠️ Please enter a custom synthesis prompt in the Input Materials section before generating.")
+        else:
+            if st.button("🔮 Generate Synthesis", type="primary"):
+                with st.spinner("Consulting the cosmic wisdom..."):
+                    # Get material placeholders from session state
+                    material_placeholders = getattr(st.session_state, 'material_placeholders', {})
                     
-                    # Auto-save session
-                    session_dir = session_service.save_session(
+                    synthesis = ai_service.synthesize_content(
                         st.session_state.materials,
-                        synthesis,
-                        config["artifact_type"]
+                        custom_prompt=custom_prompt,
+                        material_placeholders=material_placeholders
                     )
-                    st.success(f"Session saved to: {session_dir}")
+                    
+                    if synthesis:
+                        st.session_state.synthesis = synthesis
+                        
+                        # Auto-save session
+                        session_dir = session_service.save_session(
+                            st.session_state.materials,
+                            synthesis,
+                            custom_prompt_preview=custom_prompt[:100] + "..." if len(custom_prompt) > 100 else custom_prompt
+                        )
+                        st.success(f"Session saved to: {session_dir}")
     
     # Display synthesis
     if st.session_state.synthesis:

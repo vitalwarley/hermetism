@@ -58,22 +58,22 @@ class AIService:
             self.logger.error(f"LLM cleaning error: {str(e)}")
             return text  # Return original if cleaning fails
     
-    def synthesize_content(self, materials: dict, artifact_type: str, custom_prompt: Optional[str] = None) -> Optional[str]:
-        """Generate synthesis from combined materials."""
+    def synthesize_content(self, materials: dict, custom_prompt: str, material_placeholders: Optional[dict] = None) -> Optional[str]:
+        """Generate synthesis from combined materials using custom prompt with placeholder support."""
         try:
-            # Combine all materials
-            combined = "\n\n---\n\n".join([
-                f"## {name}\n\n{content}" 
-                for name, content in materials.items()
-            ])
+            # Check if prompt contains placeholders
+            has_placeholders = material_placeholders and any(f"{{{placeholder}}}" in custom_prompt for placeholder in material_placeholders.values())
             
-            # Build prompt based on artifact type
-            if artifact_type in SYNTHESIS_PROMPTS:
-                base_prompt = SYNTHESIS_PROMPTS[artifact_type]
-            else:  # Custom
-                base_prompt = custom_prompt or "Synthesize these materials:"
-            
-            full_prompt = f"{base_prompt}\n\nMaterials:\n{combined[:MAX_SYNTHESIS_LENGTH]}"
+            if has_placeholders:
+                # Use placeholder substitution
+                full_prompt = self._substitute_placeholders(custom_prompt, materials, material_placeholders)
+            else:
+                # Fallback to original behavior - append all materials at the end
+                combined = "\n\n---\n\n".join([
+                    f"## {name}\n\n{content}" 
+                    for name, content in materials.items()
+                ])
+                full_prompt = f"{custom_prompt}\n\nMaterials:\n{combined[:MAX_SYNTHESIS_LENGTH]}"
             
             response = self.client.chat.completions.create(
                 model=MODEL_SYNTHESIS,
@@ -84,6 +84,34 @@ class AIService:
         except Exception as e:
             self.logger.error(f"Synthesis error: {str(e)}")
             return None
+    
+    def _substitute_placeholders(self, prompt: str, materials: dict, material_placeholders: dict) -> str:
+        """Substitute material placeholders in the prompt with actual content."""
+        full_prompt = prompt
+        
+        # Create reverse mapping from placeholder to material name
+        placeholder_to_material = {placeholder: material_name for material_name, placeholder in material_placeholders.items()}
+        
+        # Find all placeholders in the prompt and substitute them
+        import re
+        
+        # Find all {placeholder} patterns in the prompt
+        placeholder_pattern = r'\{([^}]+)\}'
+        placeholders_in_prompt = re.findall(placeholder_pattern, prompt)
+        
+        for placeholder in placeholders_in_prompt:
+            if placeholder in placeholder_to_material:
+                material_name = placeholder_to_material[placeholder]
+                material_content = materials.get(material_name, f"[Material '{material_name}' not found]")
+                # Limit content length per placeholder to avoid token overflow
+                content_limit = MAX_SYNTHESIS_LENGTH // len(placeholders_in_prompt) if len(placeholders_in_prompt) > 1 else MAX_SYNTHESIS_LENGTH
+                limited_content = material_content[:content_limit]
+                full_prompt = full_prompt.replace(f"{{{placeholder}}}", limited_content)
+            else:
+                # Keep unknown placeholders as-is or mark them
+                self.logger.warning(f"Unknown placeholder: {{{placeholder}}}")
+        
+        return full_prompt
 
 # Global instance
 ai_service = AIService() 

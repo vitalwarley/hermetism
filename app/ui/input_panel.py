@@ -30,6 +30,100 @@ def render_input_panel():
                 if st.button(f"Remove {name}", key=f"remove_{name}"):
                     del st.session_state.materials[name]
                     st.rerun()
+    
+    # Custom prompt editor
+    st.divider()
+    st.header("✨ Custom Synthesis Prompt")
+    
+    # Initialize custom prompt in session state if not exists
+    if 'custom_prompt' not in st.session_state:
+        st.session_state.custom_prompt = ""
+    
+    # Default prompts for quick selection
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        default_prompts = {
+            "Custom": "",
+            "Tarot Reading": "Provide a comprehensive tarot reading based on the uploaded materials. Include card meanings, positions, and their relationships to create a cohesive narrative.",
+            "Hermetic Synthesis": "Create a hermetic synthesis that weaves together the esoteric principles and wisdom found in the materials. Focus on hidden connections and deeper meanings.",
+            "Astrological Analysis": "Analyze the astrological content in the materials, providing insights into planetary influences, aspects, and their practical implications.",
+            "Alchemical Interpretation": "Interpret the materials through an alchemical lens, identifying the stages of transformation and their symbolic significance.",
+            "Structured Analysis (with placeholders)": "Analyze the following materials using this structured approach:\n\n1. Primary Source Analysis:\n{material1}\n\n2. Supporting Context:\n{material2}\n\n3. Cross-Reference Analysis:\nCompare and contrast the themes found in both sources.\n\n4. Synthesis:\nProvide unified insights and practical applications.\n\nNote: Replace {material1}, {material2} with your actual placeholder names."
+        }
+        
+        selected_prompt_type = st.selectbox(
+            "Quick Prompt Templates",
+            list(default_prompts.keys()),
+            help="Select a template to start with, or choose 'Custom' to write your own"
+        )
+        
+        if selected_prompt_type != "Custom" and st.session_state.custom_prompt != default_prompts[selected_prompt_type]:
+            if st.button("Load Template", key="load_template"):
+                st.session_state.custom_prompt = default_prompts[selected_prompt_type]
+                st.rerun()
+    
+    with col2:
+        st.info("💡 **Tip:** Your custom prompt will guide how the AI synthesizes your materials.")
+    
+    # Show available material placeholders
+    if st.session_state.materials:
+        st.divider()
+        st.subheader("📋 Available Material Placeholders")
+        st.markdown("**Use these placeholders in your custom prompt below:**")
+        
+        # Create placeholder names from material names
+        placeholders = {}
+        for material_name in st.session_state.materials.keys():
+            # Convert filename to placeholder format
+            placeholder_name = material_name.lower().replace(" ", "_").replace(".", "_").replace("-", "_")
+            # Remove file extensions and clean up
+            placeholder_name = placeholder_name.split("_")[0] if "_" in placeholder_name else placeholder_name[:20]
+            placeholders[material_name] = placeholder_name
+        
+        # Display placeholders in a more prominent way
+        for material_name, placeholder in placeholders.items():
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                st.code(f"{{{placeholder}}}", language=None)
+            with col2:
+                st.write(f"📄 **{material_name}**")
+                st.caption(f"Original file: {material_name}")
+        
+        # Show a summary
+        st.success(f"✅ **{len(placeholders)} placeholders available:** " + ", ".join([f"`{{{p}}}`" for p in placeholders.values()]))
+        
+        # Quick placeholder insertion helper
+        with st.expander("🔧 Placeholder Helper", expanded=False):
+            st.markdown("**Quick insertion templates:**")
+            
+            # Generate some common template patterns
+            placeholder_list = list(placeholders.values())
+            if len(placeholder_list) >= 2:
+                comparison_template = f"Compare and analyze {{{placeholder_list[0]}}} with {{{placeholder_list[1]}}}.\n\nProvide insights on their similarities and differences."
+                st.code(comparison_template, language=None)
+                
+            if len(placeholder_list) >= 1:
+                analysis_template = f"Analyze the following {{{placeholder_list[0]}}} and provide a comprehensive interpretation:\n\n1. Key themes and concepts\n2. Practical applications\n3. Deeper meanings"
+                st.code(analysis_template, language=None)
+            
+            # Show all placeholders as a list for easy copying
+            all_placeholders = ", ".join([f"{{{p}}}" for p in placeholders.values()])
+            st.markdown(f"**All placeholders:** `{all_placeholders}`")
+        
+        st.info("💡 **Tip:** Use these placeholders in your prompt (e.g., `{placeholder_name}`) to insert specific materials at exact locations. If you don't use placeholders, all materials will be appended at the end.")
+        
+        # Store placeholders in session state for later use
+        st.session_state.material_placeholders = placeholders
+    
+    # Custom prompt text area
+    st.session_state.custom_prompt = st.text_area(
+        "Enter your custom synthesis prompt:",
+        value=st.session_state.custom_prompt,
+        height=200,
+        placeholder="Example with placeholders:\n\nAnalyze the {material1} and compare it with {material2}.\n\nProvide insights on...\n\nOr write a general prompt without placeholders and all materials will be added at the end.",
+        help="Use placeholders like {material_name} to insert specific materials at exact locations, or write a general prompt to have all materials appended automatically."
+    )
 
 def _handle_file_upload(uploaded_file, file_key: str):
     """Handle file upload and show processing options."""

@@ -14,7 +14,7 @@ class SessionService:
         self.sessions_dir.mkdir(exist_ok=True)
     
     def save_session(self, materials: Dict[str, str], synthesis: str, 
-                    artifact_type: str, metadata: Optional[Dict[str, Any]] = None) -> Path:
+                    custom_prompt_preview: str, metadata: Optional[Dict[str, Any]] = None) -> Path:
         """Save session data for future reference."""
         timestamp = datetime.now().isoformat()
         session_id = timestamp.replace(":", "-").replace(".", "-")
@@ -25,7 +25,7 @@ class SessionService:
         # Save session data
         session_data = {
             "timestamp": timestamp,
-            "artifact_type": artifact_type,
+            "custom_prompt_preview": custom_prompt_preview,
             "materials": materials,
             "synthesis": synthesis,
             "metadata": metadata or {}
@@ -66,7 +66,7 @@ class SessionService:
                             sessions.append({
                                 "id": session_dir.name,
                                 "timestamp": session_data.get("timestamp"),
-                                "artifact_type": session_data.get("artifact_type"),
+                                "custom_prompt_preview": session_data.get("custom_prompt_preview", session_data.get("artifact_type", "Custom Prompt")),
                                 "materials_count": len(session_data.get("materials", {}))
                             })
             
