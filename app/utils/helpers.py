@@ -44,6 +44,9 @@ def initialize_session_state():
             'material_placeholders': {}
         }
     
+    if 'synthesis_results' not in st.session_state:
+        st.session_state.synthesis_results = []
+    
     # Legacy support (will be migrated)
     if 'materials' not in st.session_state:
         st.session_state.materials = {}
@@ -76,6 +79,7 @@ def get_project_state() -> dict:
         'extracted_content': st.session_state.extracted_content,
         'synthesis_config': st.session_state.synthesis_config,
         'synthesis': st.session_state.synthesis,
+        'synthesis_results': st.session_state.get('synthesis_results', []),
         'temperature': st.session_state.temperature,
         'model_vision': st.session_state.model_vision,
         'model_synthesis': st.session_state.model_synthesis,

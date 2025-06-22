@@ -49,6 +49,7 @@ class ProjectService:
                     "material_placeholders": {}
                 },
                 "synthesis": "",
+                "synthesis_results": [],
                 "temperature": 0.7,
                 "model_vision": MODEL_VISION,
                 "model_synthesis": MODEL_SYNTHESIS,
@@ -95,6 +96,19 @@ class ProjectService:
                 project_data['state']['model_vision'] = MODEL_VISION
             if 'model_synthesis' not in project_data.get('state', {}):
                 project_data['state']['model_synthesis'] = MODEL_SYNTHESIS
+            if 'synthesis_results' not in project_data.get('state', {}):
+                project_data['state']['synthesis_results'] = []
+            
+            # Handle datetime deserialization in synthesis_results
+            if 'synthesis_results' in project_data['state']:
+                for result in project_data['state']['synthesis_results']:
+                    if 'timestamp' in result and isinstance(result['timestamp'], str):
+                        try:
+                            from datetime import datetime
+                            result['timestamp'] = datetime.fromisoformat(result['timestamp'])
+                        except ValueError:
+                            # If conversion fails, use current time
+                            result['timestamp'] = datetime.now()
             
             # Load materials data if they exist
             materials_dir = self.base_dir / project_id / "materials"
@@ -145,6 +159,12 @@ class ProjectService:
             
             # Make a deep copy of the state to avoid modifying the original
             state_copy = copy.deepcopy(state)
+            
+            # Handle datetime serialization in synthesis_results
+            if 'synthesis_results' in state_copy:
+                for result in state_copy['synthesis_results']:
+                    if 'timestamp' in result and hasattr(result['timestamp'], 'isoformat'):
+                        result['timestamp'] = result['timestamp'].isoformat()
             
             # Update state and timestamp
             project_data["state"] = state_copy
@@ -233,6 +253,8 @@ class ProjectService:
             New project data or None if failed
         """
         try:
+            import copy
+            
             # Load source project
             source_project = self.load_project(project_id)
             if not source_project:
@@ -244,8 +266,17 @@ class ProjectService:
                 description=f"Copy of {source_project['name']}"
             )
             
+            # Make a deep copy of the source state to avoid modifying the original
+            source_state = copy.deepcopy(source_project["state"])
+            
+            # Handle datetime serialization in synthesis_results before copying
+            if 'synthesis_results' in source_state:
+                for result in source_state['synthesis_results']:
+                    if 'timestamp' in result and hasattr(result['timestamp'], 'isoformat'):
+                        result['timestamp'] = result['timestamp'].isoformat()
+            
             # Copy state
-            new_project["state"] = source_project["state"].copy()
+            new_project["state"] = source_state
             
             # Save the duplicated project
             self._save_project_data(new_project["id"], new_project)

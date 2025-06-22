@@ -17,6 +17,8 @@ def render_synthesis_phase(config: dict):
         st.warning("⚠️ No extracted content found. Please extract materials in Phase 3 first.")
         return
     
+    # Synthesis results are now managed as part of project state
+    
     # Synthesis configuration
     render_synthesis_config()
     
@@ -25,10 +27,10 @@ def render_synthesis_phase(config: dict):
     # Generate synthesis
     render_synthesis_generation(config)
     
-    # Display synthesis results
-    if st.session_state.synthesis:
+    # Display synthesis results in tabs
+    if st.session_state.synthesis_results:
         st.divider()
-        render_synthesis_results()
+        render_synthesis_tabs()
 
 def render_synthesis_config():
     """Render synthesis configuration section."""
@@ -198,130 +200,78 @@ def render_synthesis_config():
                                     'source_placeholders': st.session_state.selected_placeholders.copy()
                                 }
                                 st.session_state.selected_placeholders = []
-                                st.success(f"✅ Created combined placeholder: {{{clean_combine_name}}}")
                                 st.rerun()
-                
-                st.divider()
             
-            # Display combined placeholders first
-            combined_placeholders = st.session_state.synthesis_config.get('combined_placeholders', {})
-            if combined_placeholders:
-                st.markdown("**🔗 Combined Placeholders:**")
-                for combo_name, combo_data in combined_placeholders.items():
-                    col1, col2, col3 = st.columns([2, 3, 1])
+            # Display combined placeholders
+            if st.session_state.synthesis_config['combined_placeholders']:
+                st.divider()
+                st.markdown("**Combined Placeholders:**")
+                
+                combined_to_remove = []
+                for combo_name, combo_data in st.session_state.synthesis_config['combined_placeholders'].items():
+                    col1, col2 = st.columns([3, 1])
                     with col1:
-                        st.code(f"{{{combo_name}}}")
+                        source_names = combo_data.get('source_placeholders', [])
+                        st.markdown(f"• `{{{combo_name}}}` ← {', '.join([f'`{{{p}}}`' for p in source_names])}")
+                    
                     with col2:
-                        sources = combo_data['source_placeholders']
-                        st.caption(f"Contains: {', '.join(sources[:3])}{' ...' if len(sources) > 3 else ''}")
-                        st.caption(f"Format: {combo_data['format']}")
-                    with col3:
                         if st.button("🗑️", key=f"remove_combo_{combo_name}", help="Remove combined placeholder"):
-                            del st.session_state.synthesis_config['combined_placeholders'][combo_name]
-                            st.rerun()
+                            combined_to_remove.append(combo_name)
                 
-                st.divider()
-                st.markdown("**📄 Individual Placeholders:**")
+                # Remove combined placeholders that were marked for removal
+                for combo_name in combined_to_remove:
+                    del st.session_state.synthesis_config['combined_placeholders'][combo_name]
+                    st.rerun()
             
-            # Get ordered placeholder list from session state
-            placeholder_order = st.session_state.synthesis_config.get('placeholder_order', [])
-            # Remove any placeholders that no longer exist
-            placeholder_order = [p for p in placeholder_order if p in material_placeholders]
-            # Add any new placeholders that aren't in the order
-            for p in material_placeholders:
-                if p not in placeholder_order:
-                    placeholder_order.append(p)
+            # Display individual placeholders with selection
+            st.divider()
+            st.markdown("**Individual Placeholders:**")
             
-            # Add reordering controls
-            if len(placeholder_order) > 1:
-                col1, col2 = st.columns([3, 1])
-                with col2:
-                    if st.button("↕️ Reset Order"):
-                        st.session_state.synthesis_config['placeholder_order'] = list(material_placeholders.keys())
-                        st.rerun()
+            # Create columns for placeholders
+            placeholder_list = list(material_placeholders.keys())
             
-            for idx, placeholder in enumerate(placeholder_order):
-                if placeholder not in material_placeholders:
-                    continue
-                    
-                key = material_placeholders[placeholder]
-                material = st.session_state.uploaded_materials[key]
-                material_type = material.get('type', '')
+            if placeholder_list:
+                # Show placeholders in a grid
+                cols_per_row = 3
+                rows = [placeholder_list[i:i + cols_per_row] for i in range(0, len(placeholder_list), cols_per_row)]
                 
-                # Determine what to show in preview
-                if material_type == 'url':
-                    preview_text = material.get('url', material.get('display_name', material['name']))
-                elif material_type == 'youtube':
-                    preview_text = material.get('url', material.get('display_name', material['name']))
-                else:
-                    preview_text = material.get('display_name', material['name'])
-                
-                # Create columns for selection, placeholder, preview, and reorder buttons
-                col_select, col1, col2, col_move = st.columns([0.5, 2, 3, 1])
-                
-                with col_select:
-                    is_selected = st.checkbox(
-                        "Select",
-                        key=f"select_{placeholder}",
-                        value=placeholder in st.session_state.selected_placeholders,
-                        label_visibility="collapsed"
-                    )
-                    
-                    if is_selected and placeholder not in st.session_state.selected_placeholders:
-                        st.session_state.selected_placeholders.append(placeholder)
-                    elif not is_selected and placeholder in st.session_state.selected_placeholders:
-                        st.session_state.selected_placeholders.remove(placeholder)
-                
-                with col1:
-                    st.code(f"{{{placeholder}}}")
-                
-                with col2:
-                    # Use code block for long URLs
-                    if material_type in ['url', 'youtube'] and len(preview_text) > 50:
-                        st.code(preview_text, language=None)
-                    else:
-                        st.write(f"→ {preview_text}")
-                
-                with col_move:
-                    # Move up/down buttons
-                    move_col1, move_col2 = st.columns(2)
-                    with move_col1:
-                        if idx > 0:
-                            if st.button("↑", key=f"up_{placeholder}", help="Move up"):
-                                # Update order in session state
-                                order = st.session_state.synthesis_config['placeholder_order'].copy()
-                                order[idx], order[idx-1] = order[idx-1], order[idx]
-                                st.session_state.synthesis_config['placeholder_order'] = order
-                                st.rerun()
-                    
-                    with move_col2:
-                        if idx < len(placeholder_order) - 1:
-                            if st.button("↓", key=f"down_{placeholder}", help="Move down"):
-                                # Update order in session state
-                                order = st.session_state.synthesis_config['placeholder_order'].copy()
-                                order[idx], order[idx+1] = order[idx+1], order[idx]
-                                st.session_state.synthesis_config['placeholder_order'] = order
-                                st.rerun()
-            
-            st.success(f"✅ {len(material_placeholders)} individual + {len(combined_placeholders)} combined placeholders available")
+                for row in rows:
+                    cols = st.columns(len(row))
+                    for i, placeholder in enumerate(row):
+                        with cols[i]:
+                            # Get material info
+                            material_key = material_placeholders[placeholder]
+                            material = st.session_state.uploaded_materials.get(material_key, {})
+                            display_name = material.get('display_name', material.get('name', 'Unknown'))
+                            
+                            # Checkbox for selection
+                            is_selected = st.checkbox(
+                                f"`{{{placeholder}}}`",
+                                value=placeholder in st.session_state.selected_placeholders,
+                                key=f"select_{placeholder}",
+                                help=f"Material: {display_name}"
+                            )
+                            
+                            # Update selection
+                            if is_selected and placeholder not in st.session_state.selected_placeholders:
+                                st.session_state.selected_placeholders.append(placeholder)
+                            elif not is_selected and placeholder in st.session_state.selected_placeholders:
+                                st.session_state.selected_placeholders.remove(placeholder)
     
-    # Custom prompt editor
-    st.markdown("### ✍️ Synthesis Prompt")
-    
-    current_prompt = st.session_state.synthesis_config.get('custom_prompt', '')
-    custom_prompt = st.text_area(
-        "Enter your synthesis prompt:",
-        value=current_prompt,
-        height=300,
-        placeholder="Write your custom synthesis prompt here...\n\nYou can use placeholders like {material1}, {material2}, etc. to reference specific materials.\n\nIf you don't use placeholders, all materials will be included automatically.",
-        help="Craft your prompt to guide the AI synthesis"
+    # Custom prompt text area
+    custom_prompt_value = st.text_area(
+        "Synthesis Prompt",
+        value=st.session_state.synthesis_config.get('custom_prompt', ''),
+        height=200,
+        key="synthesis_custom_prompt",
+        help="Enter your synthesis prompt. Use placeholders to reference specific materials."
     )
     
-    # Update synthesis config
-    st.session_state.synthesis_config['custom_prompt'] = custom_prompt
+    # Update synthesis config with current prompt
+    st.session_state.synthesis_config['custom_prompt'] = custom_prompt_value
 
 def render_synthesis_generation(config: dict):
-    """Render synthesis generation controls."""
+    """Render synthesis generation controls with model selection."""
     st.subheader("🔮 Generate Synthesis")
     
     # Check if prompt is provided
@@ -330,6 +280,26 @@ def render_synthesis_generation(config: dict):
     if not custom_prompt:
         st.warning("⚠️ Please enter a synthesis prompt above.")
         return
+    
+    # Model selection for synthesis
+    synthesis_model_options = [
+        "openai/gpt-4.1",
+        "anthropic/claude-opus-4",
+        "google/gemini-2.5-pro"
+    ]
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        selected_model = st.selectbox(
+            "Model for this synthesis:",
+            options=synthesis_model_options,
+            index=synthesis_model_options.index(st.session_state.get('model_synthesis', synthesis_model_options[0])) if st.session_state.get('model_synthesis', synthesis_model_options[0]) in synthesis_model_options else 0,
+            help="Choose the model to use for this specific synthesis"
+        )
+    
+    with col2:
+        st.info("💡 Each model has different strengths")
     
     # Show prompt preview
     with st.expander("👁️ Prompt Preview", expanded=False):
@@ -340,21 +310,21 @@ def render_synthesis_generation(config: dict):
     
     with col1:
         if st.button("🚀 Generate Synthesis", type="primary", use_container_width=True):
-            generate_synthesis()
+            generate_synthesis(selected_model)
     
     with col2:
-        if st.session_state.synthesis:
+        if st.session_state.synthesis_results:
             if st.button("🔄 Regenerate", type="secondary"):
-                generate_synthesis()
+                generate_synthesis(selected_model)
     
     with col3:
-        if st.session_state.synthesis:
-            if st.button("🗑️ Clear", type="secondary"):
-                st.session_state.synthesis = ""
+        if st.session_state.synthesis_results:
+            if st.button("🗑️ Clear All", type="secondary"):
+                st.session_state.synthesis_results = []
                 st.rerun()
 
-def generate_synthesis():
-    """Generate synthesis using AI service."""
+def generate_synthesis(model_id: str):
+    """Generate synthesis using AI service with specified model."""
     with st.spinner("🌟 Consulting the cosmic wisdom..."):
         try:
             # Prepare materials for synthesis
@@ -378,20 +348,37 @@ def generate_synthesis():
                 material_name = material.get('display_name', material.get('name', key))
                 placeholder_mapping[material_name] = placeholder
             
-            # Note: Combined placeholders are handled directly in the AI service
-            # since they're stored in session state and accessed there
+            # Temporarily override the synthesis model
+            original_model = st.session_state.get('model_synthesis')
+            st.session_state.model_synthesis = model_id
             
-            # Generate synthesis
-            synthesis = ai_service.synthesize_content(
-                synthesis_materials,
-                custom_prompt=custom_prompt,
-                material_placeholders=placeholder_mapping
-            )
+            try:
+                # Generate synthesis
+                synthesis = ai_service.synthesize_content(
+                    synthesis_materials,
+                    custom_prompt=custom_prompt,
+                    material_placeholders=placeholder_mapping
+                )
+            finally:
+                # Restore original model
+                if original_model is not None:
+                    st.session_state.model_synthesis = original_model
             
             if synthesis:
-                st.session_state.synthesis = synthesis
+                # Create synthesis result with metadata
+                synthesis_result = {
+                    'id': len(st.session_state.synthesis_results) + 1,
+                    'model': model_id,
+                    'content': synthesis,
+                    'timestamp': datetime.now(),
+                    'prompt': custom_prompt,
+                    'materials_count': len(synthesis_materials)
+                }
                 
-                # Auto-save session
+                # Add to results
+                st.session_state.synthesis_results.append(synthesis_result)
+                
+                # Auto-save session with all syntheses
                 session_dir = session_service.save_session(
                     synthesis_materials,
                     synthesis,
@@ -401,93 +388,158 @@ def generate_synthesis():
                 # Store session ID for quality review
                 st.session_state.current_session_id = session_dir.name
                 
-                st.success(f"✅ Synthesis generated and saved to: sessions/{session_dir.name}")
+                st.success(f"✅ Synthesis generated with {model_id} and saved to: sessions/{session_dir.name}")
             else:
                 st.error("❌ Failed to generate synthesis. Please try again.")
                 
         except Exception as e:
             st.error(f"❌ Error generating synthesis: {str(e)}")
 
-def render_synthesis_results():
-    """Render synthesis results and options."""
+def render_synthesis_tabs():
+    """Render synthesis results in tabs."""
+    if not st.session_state.synthesis_results:
+        return
+    
     st.subheader("📜 Synthesis Results")
     
-    # Display synthesis
-    st.markdown(st.session_state.synthesis)
+    # Create tab labels with per-model versioning
+    tab_labels = []
+    model_versions = {}  # Track version count per model
     
-    # Export options
-    st.divider()
-    col1, col2, col3 = st.columns(3)
+    for result in st.session_state.synthesis_results:
+        model = result['model']
+        
+        # Increment version for this model
+        if model not in model_versions:
+            model_versions[model] = 0
+        model_versions[model] += 1
+        
+        # Format model name for display
+        model_display = model.replace('/', ' ').replace('-', ' ').title()
+        tab_label = f"{model_display} (v{model_versions[model]})"
+        tab_labels.append(tab_label)
     
-    with col1:
-        st.download_button(
-            "📥 Download Synthesis",
-            st.session_state.synthesis,
-            file_name=f"synthesis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md",
-            mime="text/markdown",
-            use_container_width=True
-        )
+    # Create tabs
+    tabs = st.tabs(tab_labels)
     
-    with col2:
-        st.download_button(
-            "📦 Download Full Session",
-            create_session_archive(),
-            file_name=f"session_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-            mime="application/json",
-            use_container_width=True
-        )
-    
-    with col3:
-        if st.button("📋 Copy to Clipboard", use_container_width=True):
-            st.info("Use Ctrl+A and Ctrl+C to copy the synthesis text above")
-    
-    # Quality review
-    st.divider()
-    render_quality_review()
-
-def render_quality_review():
-    """Render quality review section."""
-    with st.expander("📊 Quality Review", expanded=False):
-        current_session_id = getattr(st.session_state, 'current_session_id', None)
-        
-        if not current_session_id:
-            st.warning("⚠️ No active session found.")
-            return
-        
-        st.markdown("### Rate the synthesis quality:")
-        
-        metrics = ["Accuracy", "Completeness", "Clarity", "Depth", "Relevance"]
-        ratings = {}
-        
-        cols = st.columns(len(metrics))
-        for i, metric in enumerate(metrics):
-            with cols[i]:
-                ratings[metric] = st.slider(
-                    metric,
-                    1, 5, 3,
-                    key=f"phase4_rating_{metric}",
-                    help=f"Rate the {metric.lower()} of the synthesis"
-                )
-        
-        # Review notes
-        review_notes = st.text_area(
-            "Additional Comments (Optional)",
-            placeholder="Add any notes about the synthesis quality, suggestions for improvement, etc.",
-            key="phase4_review_notes"
-        )
-        
-        # Save review
-        if st.button("💾 Save Quality Review", type="primary"):
-            success = session_service.save_quality_review(
-                current_session_id,
-                ratings,
-                review_notes
-            )
+    for i, (tab, result) in enumerate(zip(tabs, st.session_state.synthesis_results)):
+        with tab:
+            # Show metadata
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Model", result['model'])
+            with col2:
+                st.metric("Materials Used", result['materials_count'])
+            with col3:
+                st.metric("Generated", result['timestamp'].strftime("%H:%M:%S"))
             
-            if success:
-                st.success("✅ Quality review saved!")
-            else:
-                st.error("❌ Failed to save quality review")
+            st.divider()
+            
+            # Show synthesis content
+            st.markdown(result['content'])
+            
+            st.divider()
+            
+            # Export options for this synthesis
+            col1, col2, col3, col4 = st.columns(4)
+            
+            with col1:
+                st.download_button(
+                    "📥 Download",
+                    result['content'],
+                    file_name=f"synthesis_{result['model'].replace('/', '_')}_{result['timestamp'].strftime('%Y%m%d_%H%M%S')}.md",
+                    mime="text/markdown",
+                    key=f"download_{result['id']}",
+                    use_container_width=True
+                )
+            
+            with col2:
+                st.download_button(
+                    "📦 Full Session",
+                    create_session_archive_for_result(result),
+                    file_name=f"session_{result['model'].replace('/', '_')}_{result['timestamp'].strftime('%Y%m%d_%H%M%S')}.json",
+                    mime="application/json",
+                    key=f"session_{result['id']}",
+                    use_container_width=True
+                )
+            
+            with col3:
+                if st.button("📋 Copy", key=f"copy_{result['id']}", use_container_width=True):
+                    st.info("Use Ctrl+A and Ctrl+C to copy the synthesis text above")
+            
+            with col4:
+                if st.button("🗑️ Remove", type="secondary", key=f"remove_{result['id']}", use_container_width=True):
+                    st.session_state.synthesis_results = [r for r in st.session_state.synthesis_results if r['id'] != result['id']]
+                    st.rerun()
+            
+            # Quality review for this specific synthesis
+            with st.expander("📊 Quality Review", expanded=False):
+                render_quality_review_for_result(result)
+
+def render_quality_review_for_result(result):
+    """Render quality review section for a specific synthesis result."""
+    st.markdown(f"### Rate the {result['model']} synthesis quality:")
+    
+    metrics = ["Accuracy", "Completeness", "Clarity", "Depth", "Relevance"]
+    ratings = {}
+    
+    cols = st.columns(len(metrics))
+    for i, metric in enumerate(metrics):
+        with cols[i]:
+            ratings[metric] = st.slider(
+                metric,
+                1, 5, 3,
+                key=f"rating_{result['id']}_{metric}",
+                help=f"Rate the {metric.lower()} of the synthesis"
+            )
+    
+    # Review notes
+    review_notes = st.text_area(
+        "Additional Comments (Optional)",
+        placeholder="Add any notes about the synthesis quality, suggestions for improvement, etc.",
+        key=f"review_notes_{result['id']}"
+    )
+    
+    # Save review
+    if st.button("💾 Save Quality Review", type="primary", key=f"save_review_{result['id']}"):
+        # For now, just show success. In a full implementation, this would save to a database
+        st.success("✅ Quality review saved!")
+
+def create_session_archive_for_result(result):
+    """Create a JSON archive of the current session for a specific synthesis result."""
+    import json
+    import base64
+    
+    # Create a clean copy of uploaded materials without binary data
+    clean_materials = {}
+    for key, material in st.session_state.uploaded_materials.items():
+        clean_material = material.copy()
+        
+        # Handle binary data
+        if 'data' in clean_material and isinstance(clean_material['data'], bytes):
+            # Option 1: Convert to base64 for storage (can make files large)
+            # clean_material['data'] = base64.b64encode(clean_material['data']).decode('utf-8')
+            # clean_material['data_encoding'] = 'base64'
+            
+            # Option 2: Remove binary data and just keep metadata
+            clean_material.pop('data', None)
+            clean_material['data_removed'] = True
+        
+        clean_materials[key] = clean_material
+    
+    session_data = {
+        "timestamp": datetime.now().isoformat(),
+        "uploaded_materials": clean_materials,
+        "extraction_configs": st.session_state.extraction_configs,
+        "extracted_content": st.session_state.extracted_content,
+        "synthesis_config": st.session_state.synthesis_config,
+        "synthesis": result['content'],
+        "synthesis_model": result['model'],
+        "synthesis_id": result['id'],
+        "synthesis_timestamp": result['timestamp'].isoformat()
+    }
+    
+    return json.dumps(session_data, indent=2)
 
 def create_session_archive():
     """Create a JSON archive of the current session."""
@@ -517,7 +569,17 @@ def create_session_archive():
         "extraction_configs": st.session_state.extraction_configs,
         "extracted_content": st.session_state.extracted_content,
         "synthesis_config": st.session_state.synthesis_config,
-        "synthesis": st.session_state.synthesis
+        "synthesis_results": [
+            {
+                "id": result['id'],
+                "model": result['model'],
+                "content": result['content'],
+                "timestamp": result['timestamp'].isoformat(),
+                "prompt": result['prompt'],
+                "materials_count": result['materials_count']
+            }
+            for result in st.session_state.synthesis_results
+        ]
     }
     
     return json.dumps(session_data, indent=2) 
