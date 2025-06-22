@@ -135,15 +135,33 @@ def render_input_panel():
             else:
                 st.error("Please enter a valid YouTube URL")
 
-    # Display current materials
+    # Display current materials using the new card grid
     if st.session_state.materials:
-        st.subheader("📚 Loaded Materials")
-        for name, content in st.session_state.materials.items():
-            with st.expander(name):
-                st.text(content[:500] + "..." if len(content) > 500 else content)
-                if st.button(f"Remove {name}", key=f"remove_{name}"):
-                    del st.session_state.materials[name]
-                    st.rerun()
+        st.divider()
+        
+        # View toggle
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.subheader("📚 Material Library")
+        with col2:
+            view_mode = st.selectbox(
+                "View",
+                ["Card Grid", "List View"],
+                key="material_view_mode",
+                label_visibility="collapsed"
+            )
+        
+        if view_mode == "Card Grid":
+            from ui.material_card import render_material_grid
+            render_material_grid()
+        else:
+            # Legacy list view
+            for name, content in st.session_state.materials.items():
+                with st.expander(name):
+                    st.text(content[:500] + "..." if len(content) > 500 else content)
+                    if st.button(f"Remove {name}", key=f"remove_{name}"):
+                        del st.session_state.materials[name]
+                        st.rerun()
     
     # Custom prompt editor
     st.divider()

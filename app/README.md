@@ -124,6 +124,8 @@ beautifulsoup4>=4.12.0
 youtube-transcript-api>=0.6.0
 ```
 
+We use uv to manage dependencies.
+
 ## 🔧 Configuration
 
 ### Environment Variables
