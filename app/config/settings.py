@@ -20,7 +20,7 @@ TEMPERATURE_STEP = 0.1
 
 # File Processing Configuration
 SUPPORTED_FILE_TYPES = ['pdf', 'jpg', 'jpeg', 'png', 'txt']
-MAX_TEXT_LENGTH = 4000
+MAX_TEXT_LENGTH = 100000
 MAX_SYNTHESIS_LENGTH = 100000
 
 # UI Configuration

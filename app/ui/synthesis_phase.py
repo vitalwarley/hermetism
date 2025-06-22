@@ -142,7 +142,7 @@ def render_synthesis_config():
     if material_placeholders:
         with st.expander("📋 Available Placeholders", expanded=True):
             # Add controls for combining placeholders
-            col1, col2, col3 = st.columns([2, 2, 1])
+            col1, col2, col3, col4 = st.columns([2, 1.5, 1, 1])
             
             with col1:
                 st.markdown("**Use these in your prompt:**")
@@ -152,7 +152,15 @@ def render_synthesis_config():
                     st.info(f"Selected: {len(st.session_state.selected_placeholders)}")
             
             with col3:
-                if st.button("Clear Selection", disabled=not st.session_state.selected_placeholders):
+                # Select All button
+                all_selected = len(st.session_state.selected_placeholders) == len(material_placeholders)
+                if st.button("Select All", disabled=all_selected, key="select_all_placeholders"):
+                    st.session_state.selected_placeholders = list(material_placeholders.keys())
+                    st.rerun()
+            
+            with col4:
+                # Clear Selection button
+                if st.button("Clear Selection", disabled=not st.session_state.selected_placeholders, key="clear_selection"):
                     st.session_state.selected_placeholders = []
                     st.rerun()
             

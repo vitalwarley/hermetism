@@ -6,6 +6,11 @@ A modular Streamlit application for transforming esoteric materials into hermeti
 
 ### 📥 Multi-Source Content Extraction
 - **Multi-format File Processing**: Support for PDF, images (JPG/PNG), and text files
+- **Folder Upload with Path Preservation**: 
+  - Upload multiple files while preserving folder structure in filenames
+  - Automatic path-to-underscore conversion (e.g., `signs/taurus/1.jpg` → `signs_taurus_1.jpg`)
+  - Import files recursively from local `data/` folder
+  - Preview file naming transformations before import
 - **Web Content Scraping**: Extract content from any web page with multiple extraction methods:
   - Main content extraction (smart content detection)
   - Full page extraction
@@ -50,6 +55,7 @@ A modular Streamlit application for transforming esoteric materials into hermeti
   - File uploads with drag-and-drop support
   - URL scraping with validation and options
   - YouTube transcription with language preferences
+  - Material Library for cross-project resource reuse
 - **Real-time Material Management**: 
   - Live preview of extracted content
   - Individual material removal
@@ -58,6 +64,13 @@ A modular Streamlit application for transforming esoteric materials into hermeti
   - PDF page range selection
   - Image extraction prompt customization
   - AI cleaning toggle options
+
+### 📚 Material Library (New!)
+- **Cross-Project Material Reuse**: Access materials from all your projects in one place
+- **Smart Import**: Choose whether to reuse existing extractions or reprocess materials
+- **Search & Filter**: Find materials by name, URL, or even within extracted content
+- **Efficiency**: Save time by avoiding duplicate uploads and processing
+- **Material Status**: See at a glance which materials have been extracted
 
 ## 🏗️ Architecture
 
@@ -71,7 +84,9 @@ app/
 ├── services/
 │   ├── ai_service.py          # AI interactions (OpenAI/OpenRouter)
 │   ├── extraction.py          # Multi-source content extraction
-│   └── session.py             # Enhanced session management
+│   ├── session.py             # Enhanced session management
+│   ├── material_library.py    # Cross-project material management
+│   └── project.py             # Project management service
 ├── ui/
 │   ├── sidebar.py             # Configuration sidebar
 │   ├── input_panel.py         # Multi-tab input interface
