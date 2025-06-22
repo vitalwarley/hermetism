@@ -11,6 +11,16 @@ def setup_logging():
 
 def initialize_session_state():
     """Initialize session state variables with phase-based structure."""
+    # Project management
+    if 'current_project_id' not in st.session_state:
+        st.session_state.current_project_id = None
+    
+    if 'current_project' not in st.session_state:
+        st.session_state.current_project = None
+    
+    if 'view_mode' not in st.session_state:
+        st.session_state.view_mode = 'dashboard'  # 'dashboard' or 'workbench'
+    
     # Phase management
     if 'current_phase' not in st.session_state:
         st.session_state.current_phase = 0
@@ -41,12 +51,52 @@ def initialize_session_state():
     if 'synthesis' not in st.session_state:
         st.session_state.synthesis = ""
     
-    # Model configuration
+    # Model configuration - separate models for different tasks
     if 'temperature' not in st.session_state:
         st.session_state.temperature = 0.7
     
+    if 'model_vision' not in st.session_state:
+        from config.settings import MODEL_VISION
+        st.session_state.model_vision = MODEL_VISION
+    
+    if 'model_synthesis' not in st.session_state:
+        from config.settings import MODEL_SYNTHESIS
+        st.session_state.model_synthesis = MODEL_SYNTHESIS
+    
+    # Legacy single model for backward compatibility
     if 'model' not in st.session_state:
-        st.session_state.model = "gpt-4-turbo-preview"
+        st.session_state.model = st.session_state.model_synthesis
+
+def get_project_state() -> dict:
+    """Get the current project state from session state."""
+    return {
+        'current_phase': st.session_state.current_phase,
+        'uploaded_materials': st.session_state.uploaded_materials,
+        'extraction_configs': st.session_state.extraction_configs,
+        'extracted_content': st.session_state.extracted_content,
+        'synthesis_config': st.session_state.synthesis_config,
+        'synthesis': st.session_state.synthesis,
+        'temperature': st.session_state.temperature,
+        'model_vision': st.session_state.model_vision,
+        'model_synthesis': st.session_state.model_synthesis,
+        'model': st.session_state.model,  # Legacy support
+        'materials': st.session_state.materials  # Legacy support
+    }
+
+def load_project_state(state: dict):
+    """Load project state into session state."""
+    for key, value in state.items():
+        if key in st.session_state:
+            st.session_state[key] = value
+    
+    # Ensure model settings are loaded with defaults if not present
+    if 'model_vision' not in state:
+        from config.settings import MODEL_VISION
+        st.session_state.model_vision = MODEL_VISION
+    
+    if 'model_synthesis' not in state:
+        from config.settings import MODEL_SYNTHESIS
+        st.session_state.model_synthesis = MODEL_SYNTHESIS
 
 def format_file_size(size_bytes: Union[int, float]) -> str:
     """
@@ -79,5 +129,4 @@ def configure_page():
         layout="wide"
     )
     
-    st.title(f"{PAGE_ICON} Hermetic Workbench - MVP")
-    st.markdown("Transform esoteric materials into hermetic syntheses") 
+    # Don't show title here anymore - will be shown conditionally in app.py 

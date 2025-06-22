@@ -1,6 +1,7 @@
 from openai import OpenAI
 import logging
 from typing import Optional
+import streamlit as st
 from config.settings import (
     OPENROUTER_API_KEY, 
     OPENROUTER_BASE_URL, 
@@ -21,11 +22,19 @@ class AIService:
         )
         self.logger = logging.getLogger(__name__)
     
+    def _get_vision_model(self) -> str:
+        """Get the vision model from session state or fall back to config."""
+        return st.session_state.get('model_vision', MODEL_VISION)
+    
+    def _get_synthesis_model(self) -> str:
+        """Get the synthesis model from session state or fall back to config."""
+        return st.session_state.get('model_synthesis', MODEL_SYNTHESIS)
+    
     def extract_from_image(self, base64_image: str, prompt: str) -> Optional[str]:
         """Extract content from base64 encoded image using Vision API."""
         try:
             response = self.client.chat.completions.create(
-                model=MODEL_VISION,
+                model=self._get_vision_model(),
                 messages=[{
                     "role": "user",
                     "content": [
@@ -49,8 +58,9 @@ class AIService:
             Text: {text[:MAX_TEXT_LENGTH]}"""
             
             response = self.client.chat.completions.create(
-                model=MODEL_SYNTHESIS,
-                messages=[{"role": "user", "content": prompt}]
+                model=self._get_synthesis_model(),
+                messages=[{"role": "user", "content": prompt}],
+                temperature=st.session_state.get('temperature', 0.7)
             )
             
             return response.choices[0].message.content
@@ -68,8 +78,9 @@ class AIService:
             Content: {text[:MAX_SYNTHESIS_LENGTH]}"""
             
             response = self.client.chat.completions.create(
-                model=MODEL_SYNTHESIS,
-                messages=[{"role": "user", "content": prompt}]
+                model=self._get_synthesis_model(),
+                messages=[{"role": "user", "content": prompt}],
+                temperature=st.session_state.get('temperature', 0.7)
             )
             
             return response.choices[0].message.content
@@ -77,15 +88,43 @@ class AIService:
             self.logger.error(f"LLM summarization error: {str(e)}")
             return text  # Return original if summarization fails
     
+    def apply_custom_prompt(self, text: str, prompt: str) -> str:
+        """Apply a custom extraction prompt to text using LLM."""
+        try:
+            # Combine the custom prompt with the text
+            full_prompt = f"""{prompt}
+
+Text to process:
+{text[:MAX_TEXT_LENGTH]}"""
+            
+            response = self.client.chat.completions.create(
+                model=self._get_synthesis_model(),
+                messages=[{"role": "user", "content": full_prompt}],
+                temperature=st.session_state.get('temperature', 0.7)
+            )
+            
+            return response.choices[0].message.content
+        except Exception as e:
+            self.logger.error(f"Custom prompt processing error: {str(e)}")
+            return text  # Return original if processing fails
+    
     def synthesize_content(self, materials: dict, custom_prompt: str, material_placeholders: Optional[dict] = None) -> Optional[str]:
         """Generate synthesis from combined materials using custom prompt with placeholder support."""
         try:
-            # Check if prompt contains placeholders
-            has_placeholders = material_placeholders and any(f"{{{placeholder}}}" in custom_prompt for placeholder in material_placeholders.values())
+            # Get combined placeholders from session state
+            combined_placeholders = st.session_state.synthesis_config.get('combined_placeholders', {})
+            
+            # Check if prompt contains placeholders (individual or combined)
+            all_placeholders = []
+            if material_placeholders:
+                all_placeholders.extend(material_placeholders.values())
+            all_placeholders.extend(combined_placeholders.keys())
+            
+            has_placeholders = any(f"{{{placeholder}}}" in custom_prompt for placeholder in all_placeholders)
             
             if has_placeholders:
                 # Use placeholder substitution
-                full_prompt = self._substitute_placeholders(custom_prompt, materials, material_placeholders)
+                full_prompt = self._substitute_placeholders(custom_prompt, materials, material_placeholders, combined_placeholders)
             else:
                 # Fallback to original behavior - append all materials at the end
                 combined = "\n\n---\n\n".join([
@@ -95,8 +134,9 @@ class AIService:
                 full_prompt = f"{custom_prompt}\n\nMaterials:\n{combined[:MAX_SYNTHESIS_LENGTH]}"
             
             response = self.client.chat.completions.create(
-                model=MODEL_SYNTHESIS,
-                messages=[{"role": "user", "content": full_prompt}]
+                model=self._get_synthesis_model(),
+                messages=[{"role": "user", "content": full_prompt}],
+                temperature=st.session_state.get('temperature', 0.7)
             )
             
             return response.choices[0].message.content
@@ -104,12 +144,12 @@ class AIService:
             self.logger.error(f"Synthesis error: {str(e)}")
             return None
     
-    def _substitute_placeholders(self, prompt: str, materials: dict, material_placeholders: dict) -> str:
+    def _substitute_placeholders(self, prompt: str, materials: dict, material_placeholders: dict, combined_placeholders: dict = None) -> str:
         """Substitute material placeholders in the prompt with actual content."""
         full_prompt = prompt
         
         # Create reverse mapping from placeholder to material name
-        placeholder_to_material = {placeholder: material_name for material_name, placeholder in material_placeholders.items()}
+        placeholder_to_material = {placeholder: material_name for material_name, placeholder in material_placeholders.items()} if material_placeholders else {}
         
         # Find all placeholders in the prompt and substitute them
         import re
@@ -119,7 +159,44 @@ class AIService:
         placeholders_in_prompt = re.findall(placeholder_pattern, prompt)
         
         for placeholder in placeholders_in_prompt:
-            if placeholder in placeholder_to_material:
+            # Check if it's a combined placeholder
+            if combined_placeholders and placeholder in combined_placeholders:
+                combo_data = combined_placeholders[placeholder]
+                # Get the material keys for this combined placeholder
+                material_keys = combo_data['keys']
+                format_type = combo_data.get('format', 'Name + Content')
+                
+                # Build combined content
+                combined_parts = []
+                for key in material_keys:
+                    # Find material name by key
+                    material_name = None
+                    for name, content in materials.items():
+                        # Match by key pattern in material name
+                        if key in str(name) or any(key == k for k, v in st.session_state.uploaded_materials.items() if v.get('display_name') == name):
+                            material_name = name
+                            break
+                    
+                    if material_name and material_name in materials:
+                        content = materials[material_name]
+                        
+                        if format_type == "Name + Content":
+                            combined_parts.append(f"### {material_name}\n\n{content}")
+                        elif format_type == "Content Only":
+                            combined_parts.append(content)
+                        elif format_type == "Name as Header":
+                            combined_parts.append(f"# {material_name}\n\n{content}")
+                
+                # Join all parts with line breaks
+                combined_content = "\n\n---\n\n".join(combined_parts)
+                
+                # Limit content length
+                content_limit = MAX_SYNTHESIS_LENGTH // len(placeholders_in_prompt) if len(placeholders_in_prompt) > 1 else MAX_SYNTHESIS_LENGTH
+                limited_content = combined_content[:content_limit]
+                full_prompt = full_prompt.replace(f"{{{placeholder}}}", limited_content)
+                
+            elif placeholder in placeholder_to_material:
+                # Handle individual placeholder
                 material_name = placeholder_to_material[placeholder]
                 material_content = materials.get(material_name, f"[Material '{material_name}' not found]")
                 # Limit content length per placeholder to avoid token overflow

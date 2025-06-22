@@ -65,39 +65,237 @@ def render_synthesis_config():
     
     # Generate material placeholders
     material_placeholders = {}
+    url_counters = {}  # Track URLs per site
+    
     for i, (key, material) in enumerate(st.session_state.uploaded_materials.items()):
         if key in st.session_state.extracted_content:
-            # Use display_name for more readable placeholders
-            display_name = material.get('display_name', material['name'])
-            # Create clean placeholder from display name
-            clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in display_name)
-            clean_name = clean_name.replace(' ', '_').lower()[:30]  # Limit length
-            placeholder = f"{clean_name}"
+            material_type = material.get('type', '')
+            
+            if material_type == 'url':
+                # Extract domain from URL
+                from urllib.parse import urlparse
+                parsed = urlparse(material.get('url', ''))
+                domain = parsed.netloc or 'unknown'
+                
+                # Clean domain (remove www., convert . to _)
+                clean_domain = domain.replace('www.', '').replace('.', '_')
+                
+                # Track URLs per site
+                if clean_domain not in url_counters:
+                    url_counters[clean_domain] = 0
+                url_counters[clean_domain] += 1
+                
+                # Create placeholder with site name and ID
+                placeholder = f"{clean_domain}_{url_counters[clean_domain]}"
+                
+            elif material_type == 'file':
+                # Get filename without extension
+                display_name = material.get('display_name', material['name'])
+                # Remove file extension
+                import os
+                name_without_ext = os.path.splitext(display_name)[0]
+                
+                # Clean name for placeholder
+                clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in name_without_ext)
+                clean_name = clean_name.replace(' ', '_').lower()[:30]
+                placeholder = clean_name
+                
+            elif material_type == 'youtube':
+                # Extract video ID for placeholder
+                display_name = material.get('display_name', 'youtube')
+                clean_name = display_name.replace('YouTube: ', '').replace('-', '_').lower()
+                placeholder = f"youtube_{clean_name}"
+                
+            else:
+                # Default handling for other types
+                display_name = material.get('display_name', material['name'])
+                clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in display_name)
+                clean_name = clean_name.replace(' ', '_').lower()[:30]
+                placeholder = clean_name
             
             # Ensure unique placeholders
-            if placeholder in material_placeholders.values():
-                placeholder = f"{clean_name}_{i+1}"
+            base_placeholder = placeholder
+            counter = 1
+            while placeholder in material_placeholders.values():
+                placeholder = f"{base_placeholder}_{counter}"
+                counter += 1
             
             material_placeholders[placeholder] = key
     
     # Store placeholders
     st.session_state.synthesis_config['material_placeholders'] = material_placeholders
     
+    # Initialize placeholder order if not exists or if placeholders changed
+    if 'placeholder_order' not in st.session_state.synthesis_config or \
+       set(st.session_state.synthesis_config.get('placeholder_order', [])) != set(material_placeholders.keys()):
+        st.session_state.synthesis_config['placeholder_order'] = list(material_placeholders.keys())
+    
+    # Initialize selected placeholders if not exists
+    if 'selected_placeholders' not in st.session_state:
+        st.session_state.selected_placeholders = []
+    
+    # Initialize combined placeholders if not exists
+    if 'combined_placeholders' not in st.session_state.synthesis_config:
+        st.session_state.synthesis_config['combined_placeholders'] = {}
+    
     # Show available placeholders
     if material_placeholders:
         with st.expander("📋 Available Placeholders", expanded=True):
-            st.markdown("**Use these in your prompt:**")
+            # Add controls for combining placeholders
+            col1, col2, col3 = st.columns([2, 2, 1])
             
-            for placeholder, key in material_placeholders.items():
+            with col1:
+                st.markdown("**Use these in your prompt:**")
+            
+            with col2:
+                if st.session_state.selected_placeholders:
+                    st.info(f"Selected: {len(st.session_state.selected_placeholders)}")
+            
+            with col3:
+                if st.button("Clear Selection", disabled=not st.session_state.selected_placeholders):
+                    st.session_state.selected_placeholders = []
+                    st.rerun()
+            
+            # Combine selected placeholders section
+            if len(st.session_state.selected_placeholders) > 1:
+                st.divider()
+                col1, col2, col3 = st.columns([2, 2, 1])
+                
+                with col1:
+                    combine_name = st.text_input(
+                        "Combined placeholder name:",
+                        value="combined_content",
+                        key="combine_placeholder_name",
+                        help="Name for the combined placeholder"
+                    )
+                
+                with col2:
+                    combine_format = st.selectbox(
+                        "Format:",
+                        ["Name + Content", "Content Only", "Name as Header"],
+                        key="combine_format",
+                        help="How to format each material in the combined placeholder"
+                    )
+                
+                with col3:
+                    if st.button("🔗 Combine", type="primary"):
+                        if combine_name:
+                            # Create combined placeholder
+                            clean_combine_name = ''.join(c if c.isalnum() or c in '_' else '' for c in combine_name)
+                            if clean_combine_name:
+                                combined_keys = [material_placeholders[p] for p in st.session_state.selected_placeholders]
+                                st.session_state.synthesis_config['combined_placeholders'][clean_combine_name] = {
+                                    'keys': combined_keys,
+                                    'format': combine_format,
+                                    'source_placeholders': st.session_state.selected_placeholders.copy()
+                                }
+                                st.session_state.selected_placeholders = []
+                                st.success(f"✅ Created combined placeholder: {{{clean_combine_name}}}")
+                                st.rerun()
+                
+                st.divider()
+            
+            # Display combined placeholders first
+            combined_placeholders = st.session_state.synthesis_config.get('combined_placeholders', {})
+            if combined_placeholders:
+                st.markdown("**🔗 Combined Placeholders:**")
+                for combo_name, combo_data in combined_placeholders.items():
+                    col1, col2, col3 = st.columns([2, 3, 1])
+                    with col1:
+                        st.code(f"{{{combo_name}}}")
+                    with col2:
+                        sources = combo_data['source_placeholders']
+                        st.caption(f"Contains: {', '.join(sources[:3])}{' ...' if len(sources) > 3 else ''}")
+                        st.caption(f"Format: {combo_data['format']}")
+                    with col3:
+                        if st.button("🗑️", key=f"remove_combo_{combo_name}", help="Remove combined placeholder"):
+                            del st.session_state.synthesis_config['combined_placeholders'][combo_name]
+                            st.rerun()
+                
+                st.divider()
+                st.markdown("**📄 Individual Placeholders:**")
+            
+            # Get ordered placeholder list from session state
+            placeholder_order = st.session_state.synthesis_config.get('placeholder_order', [])
+            # Remove any placeholders that no longer exist
+            placeholder_order = [p for p in placeholder_order if p in material_placeholders]
+            # Add any new placeholders that aren't in the order
+            for p in material_placeholders:
+                if p not in placeholder_order:
+                    placeholder_order.append(p)
+            
+            # Add reordering controls
+            if len(placeholder_order) > 1:
+                col1, col2 = st.columns([3, 1])
+                with col2:
+                    if st.button("↕️ Reset Order"):
+                        st.session_state.synthesis_config['placeholder_order'] = list(material_placeholders.keys())
+                        st.rerun()
+            
+            for idx, placeholder in enumerate(placeholder_order):
+                if placeholder not in material_placeholders:
+                    continue
+                    
+                key = material_placeholders[placeholder]
                 material = st.session_state.uploaded_materials[key]
-                display_name = material.get('display_name', material['name'])
-                col1, col2 = st.columns([2, 3])
+                material_type = material.get('type', '')
+                
+                # Determine what to show in preview
+                if material_type == 'url':
+                    preview_text = material.get('url', material.get('display_name', material['name']))
+                elif material_type == 'youtube':
+                    preview_text = material.get('url', material.get('display_name', material['name']))
+                else:
+                    preview_text = material.get('display_name', material['name'])
+                
+                # Create columns for selection, placeholder, preview, and reorder buttons
+                col_select, col1, col2, col_move = st.columns([0.5, 2, 3, 1])
+                
+                with col_select:
+                    is_selected = st.checkbox(
+                        "Select",
+                        key=f"select_{placeholder}",
+                        value=placeholder in st.session_state.selected_placeholders,
+                        label_visibility="collapsed"
+                    )
+                    
+                    if is_selected and placeholder not in st.session_state.selected_placeholders:
+                        st.session_state.selected_placeholders.append(placeholder)
+                    elif not is_selected and placeholder in st.session_state.selected_placeholders:
+                        st.session_state.selected_placeholders.remove(placeholder)
+                
                 with col1:
                     st.code(f"{{{placeholder}}}")
+                
                 with col2:
-                    st.write(f"→ {display_name}")
+                    # Use code block for long URLs
+                    if material_type in ['url', 'youtube'] and len(preview_text) > 50:
+                        st.code(preview_text, language=None)
+                    else:
+                        st.write(f"→ {preview_text}")
+                
+                with col_move:
+                    # Move up/down buttons
+                    move_col1, move_col2 = st.columns(2)
+                    with move_col1:
+                        if idx > 0:
+                            if st.button("↑", key=f"up_{placeholder}", help="Move up"):
+                                # Update order in session state
+                                order = st.session_state.synthesis_config['placeholder_order'].copy()
+                                order[idx], order[idx-1] = order[idx-1], order[idx]
+                                st.session_state.synthesis_config['placeholder_order'] = order
+                                st.rerun()
+                    
+                    with move_col2:
+                        if idx < len(placeholder_order) - 1:
+                            if st.button("↓", key=f"down_{placeholder}", help="Move down"):
+                                # Update order in session state
+                                order = st.session_state.synthesis_config['placeholder_order'].copy()
+                                order[idx], order[idx+1] = order[idx+1], order[idx]
+                                st.session_state.synthesis_config['placeholder_order'] = order
+                                st.rerun()
             
-            st.success(f"✅ {len(material_placeholders)} placeholders available")
+            st.success(f"✅ {len(material_placeholders)} individual + {len(combined_placeholders)} combined placeholders available")
     
     # Custom prompt editor
     st.markdown("### ✍️ Synthesis Prompt")
@@ -171,6 +369,9 @@ def generate_synthesis():
                 material = st.session_state.uploaded_materials.get(key, {})
                 material_name = material.get('display_name', material.get('name', key))
                 placeholder_mapping[material_name] = placeholder
+            
+            # Note: Combined placeholders are handled directly in the AI service
+            # since they're stored in session state and accessed there
             
             # Generate synthesis
             synthesis = ai_service.synthesize_content(
@@ -283,10 +484,28 @@ def render_quality_review():
 def create_session_archive():
     """Create a JSON archive of the current session."""
     import json
+    import base64
+    
+    # Create a clean copy of uploaded materials without binary data
+    clean_materials = {}
+    for key, material in st.session_state.uploaded_materials.items():
+        clean_material = material.copy()
+        
+        # Handle binary data
+        if 'data' in clean_material and isinstance(clean_material['data'], bytes):
+            # Option 1: Convert to base64 for storage (can make files large)
+            # clean_material['data'] = base64.b64encode(clean_material['data']).decode('utf-8')
+            # clean_material['data_encoding'] = 'base64'
+            
+            # Option 2: Remove binary data and just keep metadata
+            clean_material.pop('data', None)
+            clean_material['data_removed'] = True
+        
+        clean_materials[key] = clean_material
     
     session_data = {
         "timestamp": datetime.now().isoformat(),
-        "uploaded_materials": st.session_state.uploaded_materials,
+        "uploaded_materials": clean_materials,
         "extraction_configs": st.session_state.extraction_configs,
         "extracted_content": st.session_state.extracted_content,
         "synthesis_config": st.session_state.synthesis_config,

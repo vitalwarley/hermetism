@@ -2,7 +2,6 @@ import PyPDF2
 import base64
 import logging
 from typing import Optional, Tuple
-import streamlit as st
 from services.ai_service import ai_service
 import requests
 from bs4 import BeautifulSoup
@@ -57,7 +56,7 @@ class ExtractionService:
                 if start > total_pages:
                     raise ValueError(f"Start page {start} exceeds total pages ({total_pages})")
                 if end > total_pages:
-                    st.warning(f"End page {end} exceeds total pages ({total_pages}). Using page {total_pages} as end.")
+                    self.logger.warning(f"End page {end} exceeds total pages ({total_pages}). Using page {total_pages} as end.")
                     end = total_pages
                 if start > end:
                     raise ValueError(f"Start page ({start}) cannot be greater than end page ({end})")
@@ -75,9 +74,9 @@ class ExtractionService:
                         continue
                 
                 if extracted_pages == 0:
-                    st.warning("No text content found in the selected page range.")
+                    self.logger.warning("No text content found in the selected page range.")
                 else:
-                    st.info(f"Successfully extracted text from {extracted_pages} pages (range: {start}-{min(end, total_pages)})")
+                    self.logger.info(f"Successfully extracted text from {extracted_pages} pages (range: {start}-{min(end, total_pages)})")
                     
             else:
                 # Extract all pages
@@ -93,19 +92,18 @@ class ExtractionService:
                         continue
                 
                 if extracted_pages == 0:
-                    st.warning("No text content found in the PDF.")
+                    self.logger.warning("No text content found in the PDF.")
                 else:
-                    st.info(f"Successfully extracted text from {extracted_pages} out of {total_pages} pages")
+                    self.logger.info(f"Successfully extracted text from {extracted_pages} out of {total_pages} pages")
             
             return text.strip() if text.strip() else None
             
         except ValueError as e:
-            st.error(f"Page range error: {str(e)}")
-            return None
+            self.logger.error(f"Page range error: {str(e)}")
+            raise ValueError(f"Page range error: {str(e)}")
         except Exception as e:
             self.logger.error(f"PDF extraction error: {str(e)}")
-            st.error(f"PDF extraction error: {str(e)}")
-            return None
+            raise Exception(f"PDF extraction error: {str(e)}")
     
     def extract_from_image(self, image_file, prompt: str) -> Optional[str]:
         """Extract content from image using Vision API."""
@@ -120,15 +118,14 @@ class ExtractionService:
             return ai_service.extract_from_image(base64_image, prompt)
         except Exception as e:
             self.logger.error(f"Image processing error: {str(e)}")
-            st.error(f"Image processing error: {str(e)}")
-            return None
+            raise Exception(f"Image processing error: {str(e)}")
     
     def extract_from_text_file(self, text_file) -> Optional[str]:
         """Extract content from text file."""
         try:
             content = text_file.read().decode('utf-8')
             if not content.strip():
-                st.warning("Text file appears to be empty")
+                self.logger.warning("Text file appears to be empty")
                 return None
             return content
         except UnicodeDecodeError:
@@ -136,16 +133,14 @@ class ExtractionService:
             try:
                 text_file.seek(0)
                 content = text_file.read().decode('latin-1')
-                st.warning("File encoding detected as Latin-1 instead of UTF-8")
+                self.logger.warning("File encoding detected as Latin-1 instead of UTF-8")
                 return content
             except Exception as e:
                 self.logger.error(f"Text file encoding error: {str(e)}")
-                st.error(f"Could not decode text file. Please ensure it's a valid text file.")
-                return None
+                raise Exception("Could not decode text file. Please ensure it's a valid text file.")
         except Exception as e:
             self.logger.error(f"Text file extraction error: {str(e)}")
-            st.error(f"Text file extraction error: {str(e)}")
-            return None
+            raise Exception(f"Text file extraction error: {str(e)}")
     
     def clean_extracted_text(self, text: str, context: str) -> str:
         """Clean and structure extracted text using LLM."""
@@ -153,8 +148,7 @@ class ExtractionService:
             return ai_service.clean_text(text, context)
         except Exception as e:
             self.logger.error(f"Text cleaning error: {str(e)}")
-            st.error(f"Text cleaning failed: {str(e)}")
-            return text  # Return original text if cleaning fails
+            raise Exception(f"Text cleaning failed: {str(e)}")
     
     def extract_from_url(self, url: str, extract_option: str = "main_content", css_selector: str = None) -> Optional[str]:
         """Extract content from a web URL."""
@@ -183,7 +177,7 @@ class ExtractionService:
                 else:
                     # Fallback to main content if selector doesn't match
                     content = self._extract_main_content(soup)
-                    st.warning(f"CSS selector '{css_selector}' didn't match any elements. Using main content extraction.")
+                    self.logger.warning(f"CSS selector '{css_selector}' didn't match any elements. Using main content extraction.")
             
             elif extract_option == "full_page":
                 content = soup.get_text(separator='\n', strip=True)
@@ -417,8 +411,20 @@ class ExtractionService:
             return ai_service.summarize_text(content, context)
         except Exception as e:
             self.logger.error(f"Content summarization error: {str(e)}")
-            st.error(f"Content summarization failed: {str(e)}")
-            return content  # Return original content if summarization fails
+            raise Exception(f"Content summarization failed: {str(e)}")
+
+    def apply_extraction_prompt(self, text: str, prompt: str) -> str:
+        """Apply a custom extraction prompt to the text using AI."""
+        try:
+            if not text or not prompt:
+                return text
+            
+            # Use AI service to process the text with the custom prompt
+            return ai_service.apply_custom_prompt(text, prompt)
+        except Exception as e:
+            self.logger.error(f"Failed to apply extraction prompt: {str(e)}")
+            # Return original text if processing fails
+            return text
 
 # Global instance
 extraction_service = ExtractionService() 

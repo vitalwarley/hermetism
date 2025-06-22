@@ -153,10 +153,34 @@ def extract_all_materials_parallel():
         successful_extractions = 0
         failed_extractions = 0
         
+        # Prepare data for threads (avoiding session state access in threads)
+        extraction_configs = {key: st.session_state.extraction_configs.get(key, {}) 
+                            for key, _ in materials_to_extract}
+        
+        # Define a wrapper function that doesn't use Streamlit or session state
+        def extract_material_wrapper(key: str, material: dict, config: dict) -> tuple:
+            """Wrapper that returns result without using Streamlit."""
+            try:
+                material_type = material['type']
+                
+                # Extract based on type (without using st.error)
+                if material_type == 'file':
+                    result = extract_file_content(material, config)
+                elif material_type == 'url':
+                    result = extract_url_content(material, config)
+                elif material_type == 'youtube':
+                    result = extract_youtube_content(material, config)
+                else:
+                    result = None
+                
+                return (key, result, None)
+            except Exception as e:
+                return (key, None, str(e))
+        
         with ThreadPoolExecutor(max_workers=4) as executor:
-            # Submit all extraction tasks
+            # Submit all extraction tasks with configs
             future_to_key = {
-                executor.submit(extract_single_material, key, material): (key, material)
+                executor.submit(extract_material_wrapper, key, material, extraction_configs[key]): (key, material)
                 for key, material in materials_to_extract
             }
             
@@ -166,13 +190,13 @@ def extract_all_materials_parallel():
                 display_name = material.get('display_name', material['name'])
                 
                 try:
-                    extracted_text = future.result()
+                    key, extracted_text, error = future.result()
                     if extracted_text:
                         st.session_state.extracted_content[key] = extracted_text
                         extraction_status[key] = "✅ Complete"
                         successful_extractions += 1
                     else:
-                        extraction_status[key] = "❌ Failed"
+                        extraction_status[key] = f"❌ Failed{': ' + error[:30] + '...' if error else ''}"
                         failed_extractions += 1
                 except Exception as e:
                     extraction_status[key] = f"❌ Error: {str(e)[:30]}..."
@@ -203,15 +227,13 @@ def extract_single_material(key: str, material: dict) -> str:
     config = st.session_state.extraction_configs.get(key, {})
     material_type = material['type']
     
-    try:
-        if material_type == 'file':
-            return extract_file_content(material, config)
-        elif material_type == 'url':
-            return extract_url_content(material, config)
-        elif material_type == 'youtube':
-            return extract_youtube_content(material, config)
-    except Exception as e:
-        st.error(f"Extraction error: {str(e)}")
+    if material_type == 'file':
+        return extract_file_content(material, config)
+    elif material_type == 'url':
+        return extract_url_content(material, config)
+    elif material_type == 'youtube':
+        return extract_youtube_content(material, config)
+    else:
         return None
 
 def extract_file_content(material: dict, config: dict) -> str:

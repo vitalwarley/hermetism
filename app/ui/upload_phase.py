@@ -171,7 +171,9 @@ def render_saved_materials_tab():
                 if material_meta.get('size'):
                     st.write(f"**Size:** {format_file_size(material_meta['size'])}")
                 if material_meta.get('url'):
-                    st.write(f"**URL:** {material_meta['url']}")
+                    st.write(f"**URL:**")
+                    # Display full URL in a code block for better formatting
+                    st.code(material_meta['url'], language=None)
                 
                 saved_date = datetime.fromisoformat(material_meta['saved_at'])
                 st.write(f"**Saved:** {saved_date.strftime('%Y-%m-%d %H:%M')}")
@@ -264,10 +266,12 @@ def render_material_card(key: str, material: dict):
             st.caption(f"Size: {format_file_size(material['size'])}")
         elif material['type'] == 'url':
             st.markdown(f"### 🌐 {material.get('display_name', 'Web Page')}")
-            st.caption(material['url'][:50] + "..." if len(material['url']) > 50 else material['url'])
+            # Display full URL in a code block for better formatting
+            st.code(material['url'], language=None)
         elif material['type'] == 'youtube':
             st.markdown(f"### 📺 {material.get('display_name', 'YouTube')}")
-            st.caption(material['url'][:50] + "..." if len(material['url']) > 50 else material['url'])
+            # Display full URL in a code block for better formatting
+            st.code(material['url'], language=None)
         
         # Action buttons in columns
         col1, col2 = st.columns(2)
@@ -319,8 +323,12 @@ def render_material_list_item(key: str, material: dict):
             st.write(f"📄 {display_name}")
         elif material['type'] == 'url':
             st.write(f"🌐 {display_name}")
+            # Show full URL below the display name
+            st.caption(material['url'])
         elif material['type'] == 'youtube':
             st.write(f"📺 {display_name}")
+            # Show full URL below the display name
+            st.caption(material['url'])
     
     with col2:
         if material['type'] == 'file':
