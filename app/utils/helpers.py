@@ -10,11 +10,43 @@ def setup_logging():
     )
 
 def initialize_session_state():
-    """Initialize session state variables."""
+    """Initialize session state variables with phase-based structure."""
+    # Phase management
+    if 'current_phase' not in st.session_state:
+        st.session_state.current_phase = 0
+    
+    # Phase 1: Upload state
+    if 'uploaded_materials' not in st.session_state:
+        st.session_state.uploaded_materials = {}  # {file_key: file_object}
+    
+    # Phase 2: Extraction configuration state
+    if 'extraction_configs' not in st.session_state:
+        st.session_state.extraction_configs = {}  # {file_key: config_dict}
+    
+    # Phase 3: Extracted content state
+    if 'extracted_content' not in st.session_state:
+        st.session_state.extracted_content = {}  # {file_key: extracted_text}
+    
+    # Phase 4: Synthesis state
+    if 'synthesis_config' not in st.session_state:
+        st.session_state.synthesis_config = {
+            'custom_prompt': '',
+            'material_placeholders': {}
+        }
+    
+    # Legacy support (will be migrated)
     if 'materials' not in st.session_state:
         st.session_state.materials = {}
+    
     if 'synthesis' not in st.session_state:
-        st.session_state.synthesis = None
+        st.session_state.synthesis = ""
+    
+    # Model configuration
+    if 'temperature' not in st.session_state:
+        st.session_state.temperature = 0.7
+    
+    if 'model' not in st.session_state:
+        st.session_state.model = "gpt-4-turbo-preview"
 
 def format_file_size(size_bytes: Union[int, float]) -> str:
     """

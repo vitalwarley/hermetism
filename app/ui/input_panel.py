@@ -357,15 +357,8 @@ def _handle_pdf_upload(uploaded_file, file_key: str):
                 help="Use AI to clean and structure the extracted text"
             )
             
-            cleaning_context = None
-            if use_cleaning:
-                cleaning_context = st.text_input(
-                    "Context for cleaning",
-                    value="hermetic text",
-                    key=f"context_{file_key}",
-                    help="Provide context to help the AI understand the type of content",
-                    placeholder="e.g., hermetic text, tarot cards, astrological charts"
-                )
+            # Hard-coded context for hermetic text
+            cleaning_context = "hermetic and esoteric text" if use_cleaning else None
             
             # Process button
             st.markdown("---")
@@ -450,7 +443,7 @@ def _handle_url_scraping(url: str, url_key: str, extract_option: str, css_select
             if raw_content:
                 if clean_with_ai:
                     # Clean the content with AI
-                    cleaned_content = extraction_service.clean_extracted_text(raw_content, "web content")
+                    cleaned_content = extraction_service.clean_extracted_text(raw_content, "hermetic and esoteric text")
                     st.session_state.materials[url_key] = cleaned_content
                     st.success(f"✅ URL content extracted and cleaned successfully!")
                 else:
