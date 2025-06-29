@@ -13,6 +13,13 @@ def render_project_dashboard():
     st.title("🔮 Hermetic Workbench - Projects")
     st.markdown("Manage your hermetic synthesis projects")
     
+    # Navigation row
+    col1, col2, col3 = st.columns([3, 1, 1])
+    with col2:
+        if st.button("📝 Prompt Workspace", use_container_width=True):
+            st.session_state.view_mode = 'prompts'
+            st.rerun()
+    
     # New project section
     with st.container():
         col1, col2, col3, col4 = st.columns([2, 1, 1, 1])

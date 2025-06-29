@@ -8,6 +8,7 @@ import io
 from services.extraction import extraction_service
 from PIL import Image
 from config.extraction_prompts import get_prompt_categories, get_prompts_for_category
+from services.prompt_management import prompt_workspace_service
 
 def render_extraction_config_phase():
     """Render the extraction configuration phase interface."""
@@ -279,25 +280,51 @@ def render_extraction_prompt_options(key: str, config: dict):
     """Render extraction prompt selection options."""
     prompt_mode = st.radio(
         "Prompt mode",
-        ["Predefined", "Custom"],
+        ["Workspace Prompts", "Custom"],
         key=f"prompt_mode_{key}",
         horizontal=True,
-        help="Choose between predefined prompts or write your own"
+        help="Choose prompts from your workspace or write your own"
     )
     
-    if prompt_mode == "Predefined":
+    if prompt_mode == "Workspace Prompts":
+        # Get active workspace
+        active_workspace = prompt_workspace_service.get_active_workspace()
+        
+        if not active_workspace:
+            st.warning("No active prompt workspace. Please create or activate a workspace first.")
+            if st.button("Go to Prompt Workspace", key=f"goto_prompts_{key}"):
+                st.session_state.view_mode = 'prompts'
+                st.rerun()
+            return
+        
+        # Get extraction prompts from workspace
+        extraction_prompts = active_workspace["prompts"].get("extraction", {})
+        active_prompts = {pid: p for pid, p in extraction_prompts.items() if p.get("active", True)}
+        
+        if not active_prompts:
+            st.info("No extraction prompts in the active workspace. Add some in the Prompt Workspace.")
+            return
+        
+        # Group prompts by category
+        prompts_by_category = {}
+        for pid, prompt in active_prompts.items():
+            category = prompt.get("category", "Uncategorized")
+            if category not in prompts_by_category:
+                prompts_by_category[category] = []
+            prompts_by_category[category].append((pid, prompt))
+        
         # Category selection
-        categories = get_prompt_categories()
+        categories = list(prompts_by_category.keys())
         material = st.session_state.uploaded_materials[key]
         
         # Auto-select category based on material type
         default_category = "General"
         if material['type'] == 'file' and 'image' in material.get('file_type', ''):
-            default_category = "Images"
+            default_category = "Images" if "Images" in categories else default_category
         elif material['type'] == 'url':
-            default_category = "Web Content"
+            default_category = "Web Content" if "Web Content" in categories else default_category
         elif material['type'] == 'youtube':
-            default_category = "Video/Audio"
+            default_category = "Video/Audio" if "Video/Audio" in categories else default_category
         
         category = st.selectbox(
             "Category",
@@ -307,23 +334,43 @@ def render_extraction_prompt_options(key: str, config: dict):
         )
         
         # Prompt selection within category
-        prompts = get_prompts_for_category(category)
-        if prompts:
-            prompt_names = list(prompts.keys())
-            selected_prompt_name = st.selectbox(
+        prompts_in_category = prompts_by_category[category]
+        if prompts_in_category:
+            prompt_names = [p[1]['name'] for p in prompts_in_category]
+            prompt_ids = [p[0] for p in prompts_in_category]
+            
+            selected_idx = st.selectbox(
                 "Select prompt",
-                prompt_names,
+                range(len(prompt_names)),
+                format_func=lambda x: prompt_names[x],
                 key=f"prompt_select_{key}"
             )
             
+            selected_prompt_id = prompt_ids[selected_idx]
+            selected_prompt = prompts_in_category[selected_idx][1]
+            
             # Show the actual prompt
-            selected_prompt = prompts[selected_prompt_name]
-            st.info(f"**Prompt:** {selected_prompt}")
+            st.info(f"**Prompt:** {selected_prompt['content']}")
+            
+            # Show metadata if available
+            if selected_prompt.get('metadata'):
+                metadata = selected_prompt['metadata']
+                if metadata.get('author') or metadata.get('tags'):
+                    with st.expander("Prompt Details", expanded=False):
+                        if metadata.get('author'):
+                            st.write(f"**Author:** {metadata['author']}")
+                        if metadata.get('tags'):
+                            tags = metadata['tags'] if isinstance(metadata['tags'], list) else [metadata['tags']]
+                            st.write(f"**Tags:** {', '.join(tags)}")
+                        if metadata.get('version_notes'):
+                            st.write(f"**Notes:** {metadata['version_notes']}")
             
             # Store the prompt
-            config['extraction_prompt'] = selected_prompt
+            config['extraction_prompt'] = selected_prompt['content']
             config['prompt_category'] = category
-            config['prompt_name'] = selected_prompt_name
+            config['prompt_name'] = selected_prompt['name']
+            config['prompt_id'] = selected_prompt_id
+            config['prompt_workspace_id'] = active_workspace['id']
     else:
         # Custom prompt
         custom_prompt = st.text_area(
@@ -336,6 +383,8 @@ def render_extraction_prompt_options(key: str, config: dict):
         config['extraction_prompt'] = custom_prompt
         config.pop('prompt_category', None)
         config.pop('prompt_name', None)
+        config.pop('prompt_id', None)
+        config.pop('prompt_workspace_id', None)
 
 def render_ai_cleaning_options(key: str, config: dict):
     """Render AI cleaning options."""

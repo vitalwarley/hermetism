@@ -13,6 +13,7 @@ from ui.extraction_config_phase import render_extraction_config_phase
 from ui.extraction_phase import render_extraction_phase
 from ui.synthesis_phase import render_synthesis_phase
 from ui.project_dashboard import render_project_dashboard
+from ui.prompt_workspace import render_prompt_workspace
 from services.project import project_service
 
 def render_workbench(config):
@@ -120,6 +121,9 @@ def main():
     if st.session_state.view_mode == 'dashboard':
         # Project Dashboard View
         render_project_dashboard()
+    elif st.session_state.view_mode == 'prompts':
+        # Prompt Workspace View
+        render_prompt_workspace()
     else:
         # Workbench View
         # Render sidebar and get configuration

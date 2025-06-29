@@ -7,6 +7,7 @@ import streamlit as st
 from datetime import datetime
 from services.ai_service import ai_service
 from services.session import session_service
+from services.prompt_management import prompt_workspace_service
 
 def render_synthesis_phase(config: dict):
     """Render the synthesis phase interface."""
@@ -40,29 +41,67 @@ def render_synthesis_config():
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        template_options = {
-            "Custom": "",
-            "Hermetic Synthesis": "Create a hermetic synthesis that weaves together the esoteric principles and wisdom found in the materials. Focus on:\n1. Hidden connections between materials\n2. Deeper symbolic meanings\n3. Practical applications of the wisdom\n4. Universal principles that emerge",
-            "Tarot Reading": "Provide a comprehensive tarot reading based on the materials:\n1. Card meanings and positions\n2. Relationships between cards\n3. Overall narrative and message\n4. Guidance for the querent",
-            "Astrological Analysis": "Analyze the astrological content:\n1. Planetary influences and aspects\n2. House placements and their meanings\n3. Timing and cycles\n4. Practical life applications",
-            "Alchemical Interpretation": "Interpret through an alchemical lens:\n1. Stages of transformation present\n2. Symbolic elements and their meanings\n3. The Great Work as reflected in the materials\n4. Personal transformation insights",
-            "Comparative Analysis": "Compare and contrast the materials:\n{material1} - Primary source\n{material2} - Secondary source\n\nAnalyze:\n1. Common themes\n2. Contrasting viewpoints\n3. Synthesis of ideas\n4. Unified insights"
-        }
+        # Get active workspace
+        active_workspace = prompt_workspace_service.get_active_workspace()
         
+        template_options = {"Custom": ""}
+        
+        if active_workspace:
+            # Get synthesis prompts from workspace
+            synthesis_prompts = active_workspace["prompts"].get("synthesis", {})
+            active_prompts = {pid: p for pid, p in synthesis_prompts.items() if p.get("active", True)}
+            
+            # Group prompts by category
+            prompts_by_category = {}
+            for pid, prompt in active_prompts.items():
+                category = prompt.get("category", "Uncategorized") 
+                prompt_name = f"[{category}] {prompt['name']}"
+                template_options[prompt_name] = {
+                    "content": prompt['content'],
+                    "id": pid,
+                    "metadata": prompt.get('metadata', {})
+                }
+        
+        template_names = list(template_options.keys())
         selected_template = st.selectbox(
             "Prompt Template",
-            list(template_options.keys()),
-            help="Select a template or choose 'Custom' to write your own"
+            template_names,
+            help="Select a template from your workspace or choose 'Custom' to write your own"
         )
     
     with col2:
         st.info("💡 Use placeholders to reference specific materials")
+        if not active_workspace:
+            if st.button("Go to Prompts", key="goto_prompts_synthesis"):
+                st.session_state.view_mode = 'prompts'
+                st.rerun()
     
     # Load template if selected
     if selected_template != "Custom":
-        template_text = template_options[selected_template]
+        template_data = template_options[selected_template]
+        if isinstance(template_data, dict):
+            template_text = template_data["content"]
+            
+            # Show metadata if available
+            if template_data.get('metadata'):
+                metadata = template_data['metadata']
+                if metadata.get('author') or metadata.get('tags'):
+                    with st.expander("Template Details", expanded=False):
+                        if metadata.get('author'):
+                            st.write(f"**Author:** {metadata['author']}")
+                        if metadata.get('tags'):
+                            tags = metadata['tags'] if isinstance(metadata['tags'], list) else [metadata['tags']]
+                            st.write(f"**Tags:** {', '.join(tags)}")
+                        if metadata.get('version_notes'):
+                            st.write(f"**Notes:** {metadata['version_notes']}")
+        else:
+            template_text = template_data
+            
         if st.button("Load Template", key="load_synthesis_template"):
             st.session_state.synthesis_config['custom_prompt'] = template_text
+            if isinstance(template_data, dict):
+                st.session_state.synthesis_config['prompt_id'] = template_data["id"]
+                st.session_state.synthesis_config['prompt_workspace_id'] = active_workspace['id']
             st.rerun()
     
     # Generate material placeholders
