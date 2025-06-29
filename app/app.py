@@ -14,6 +14,7 @@ from ui.extraction_phase import render_extraction_phase
 from ui.synthesis_phase import render_synthesis_phase
 from ui.project_dashboard import render_project_dashboard
 from ui.prompt_workspace import render_prompt_workspace
+from ui.materials_workspace import render_materials_workspace
 from services.project import project_service
 
 def render_workbench(config):
@@ -106,6 +107,9 @@ def main():
     configure_page()
     initialize_session_state()
     
+    # Always render sidebar for navigation
+    config = render_sidebar()
+    
     # Validate current project if in workbench mode
     if st.session_state.view_mode == 'workbench' and st.session_state.current_project_id:
         # Check if project still exists
@@ -124,11 +128,11 @@ def main():
     elif st.session_state.view_mode == 'prompts':
         # Prompt Workspace View
         render_prompt_workspace()
+    elif st.session_state.view_mode == 'materials_workspace':
+        # Materials Workspace View
+        render_materials_workspace()
     else:
         # Workbench View
-        # Render sidebar and get configuration
-        config = render_sidebar()
-        
         # Main content area
         render_workbench(config)
         

@@ -165,35 +165,40 @@ Text to process:
                 # Get the material keys for this combined placeholder
                 material_keys = combo_data['keys']
                 format_type = combo_data.get('format', 'Name + Content')
+                source_placeholders = combo_data.get('source_placeholders', [])
                 
-                # Build combined content
+                # Build combined content using the source placeholders
                 combined_parts = []
-                for key in material_keys:
-                    # Find material name by key
-                    material_name = None
-                    for name, content in materials.items():
-                        # Match by key pattern in material name
-                        if key in str(name) or any(key == k for k, v in st.session_state.uploaded_materials.items() if v.get('display_name') == name):
-                            material_name = name
-                            break
-                    
-                    if material_name and material_name in materials:
-                        content = materials[material_name]
-                        
-                        if format_type == "Name + Content":
-                            combined_parts.append(f"### {material_name}\n\n{content}")
-                        elif format_type == "Content Only":
-                            combined_parts.append(content)
-                        elif format_type == "Name as Header":
-                            combined_parts.append(f"# {material_name}\n\n{content}")
+                
+                # Use the source placeholders to get the correct material names
+                for source_placeholder in source_placeholders:
+                    if source_placeholder in placeholder_to_material:
+                        material_name = placeholder_to_material[source_placeholder]
+                        if material_name in materials:
+                            content = materials[material_name]
+                            
+                            if format_type == "Name + Content":
+                                combined_parts.append(f"### {material_name}\n\n{content}")
+                            elif format_type == "Content Only":
+                                combined_parts.append(content)
+                            elif format_type == "Name as Header":
+                                combined_parts.append(f"# {material_name}\n\n{content}")
+                        else:
+                            self.logger.warning(f"Material '{material_name}' not found in materials dict")
+                    else:
+                        self.logger.warning(f"Source placeholder '{source_placeholder}' not found in placeholder mapping")
                 
                 # Join all parts with line breaks
-                combined_content = "\n\n---\n\n".join(combined_parts)
-                
-                # Limit content length
-                content_limit = MAX_SYNTHESIS_LENGTH // len(placeholders_in_prompt) if len(placeholders_in_prompt) > 1 else MAX_SYNTHESIS_LENGTH
-                limited_content = combined_content[:content_limit]
-                full_prompt = full_prompt.replace(f"{{{placeholder}}}", limited_content)
+                if combined_parts:
+                    combined_content = "\n\n---\n\n".join(combined_parts)
+                    
+                    # Limit content length
+                    content_limit = MAX_SYNTHESIS_LENGTH // len(placeholders_in_prompt) if len(placeholders_in_prompt) > 1 else MAX_SYNTHESIS_LENGTH
+                    limited_content = combined_content[:content_limit]
+                    full_prompt = full_prompt.replace(f"{{{placeholder}}}", limited_content)
+                else:
+                    self.logger.warning(f"No content found for combined placeholder: {{{placeholder}}}")
+                    full_prompt = full_prompt.replace(f"{{{placeholder}}}", f"[Combined placeholder '{placeholder}' has no content]")
                 
             elif placeholder in placeholder_to_material:
                 # Handle individual placeholder

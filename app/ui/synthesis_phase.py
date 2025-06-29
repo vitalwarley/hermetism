@@ -5,20 +5,41 @@ Handles prompt creation, synthesis generation, and quality review
 
 import streamlit as st
 from datetime import datetime
+from urllib.parse import urlparse
 from services.ai_service import ai_service
 from services.session import session_service
 from services.prompt_management import prompt_workspace_service
+from services.materials_workspace import materials_workspace_service
 
 def render_synthesis_phase(config: dict):
     """Render the synthesis phase interface."""
     st.header("✨ Phase 4: Synthesize")
     st.markdown("Create a hermetic synthesis from your extracted materials.")
     
-    if not st.session_state.extracted_content:
-        st.warning("⚠️ No extracted content found. Please extract materials in Phase 3 first.")
+    # Initialize synthesis state
+    if 'workspace_extractions' not in st.session_state:
+        st.session_state.workspace_extractions = {}
+    
+    # Tab selection for content source
+    tab1, tab2 = st.tabs(["📚 Project Materials", "🔍 Materials Workspace"])
+    
+    with tab1:
+        if not st.session_state.extracted_content:
+            st.warning("⚠️ No extracted content found. Please extract materials in Phase 3 first.")
+            return
+        else:
+            st.info(f"Using {len(st.session_state.extracted_content)} extractions from current project")
+    
+    with tab2:
+        render_workspace_extraction_selector()
+    
+    # Check if we have any content to synthesize
+    total_content = len(st.session_state.extracted_content) + len(st.session_state.workspace_extractions)
+    if total_content == 0:
+        st.warning("⚠️ No content selected for synthesis. Please select materials from either the current project or the Materials Workspace.")
         return
     
-    # Synthesis results are now managed as part of project state
+    st.divider()
     
     # Synthesis configuration
     render_synthesis_config()
@@ -32,6 +53,106 @@ def render_synthesis_phase(config: dict):
     if st.session_state.synthesis_results:
         st.divider()
         render_synthesis_tabs()
+
+def render_workspace_extraction_selector():
+    """Render extraction selector from Materials Workspace."""
+    st.subheader("Select Extractions from Materials Workspace")
+    
+    # Get all extractions from workspace
+    all_extractions = materials_workspace_service.list_extractions()
+    
+    if not all_extractions:
+        st.info("No extractions available in the Materials Workspace. Add and extract materials there first.")
+        return
+    
+    # Search and filter
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        search_query = st.text_input("🔍 Search extractions...", placeholder="Search by material name or content")
+    
+    with col2:
+        if st.button("🔄 Refresh", use_container_width=True):
+            st.rerun()
+    
+    # Filter extractions based on search
+    if search_query:
+        filtered_extractions = []
+        for ext in all_extractions:
+            # Search in material name and content
+            if (search_query.lower() in ext.get('material_name', '').lower() or
+                search_query.lower() in ext.get('config_summary', '').lower()):
+                filtered_extractions.append(ext)
+            else:
+                # Check content
+                full_extraction = materials_workspace_service.get_extraction(ext['id'])
+                if full_extraction and search_query.lower() in full_extraction.get('content', '').lower():
+                    filtered_extractions.append(ext)
+    else:
+        filtered_extractions = all_extractions
+    
+    st.caption(f"Found {len(filtered_extractions)} extractions")
+    
+    # Display extractions with selection
+    selected_count = len(st.session_state.workspace_extractions)
+    if selected_count > 0:
+        st.success(f"✅ {selected_count} extractions selected")
+    
+    # Bulk actions
+    col1, col2, col3 = st.columns([1, 1, 2])
+    with col1:
+        if st.button("Select All", disabled=len(filtered_extractions) == 0):
+            for ext in filtered_extractions:
+                from ui.materials_workspace import get_extraction_for_synthesis
+                extraction_data = get_extraction_for_synthesis(ext['id'])
+                if extraction_data:
+                    key = f"workspace_{ext['id']}"
+                    st.session_state.workspace_extractions[key] = extraction_data
+            st.rerun()
+    
+    with col2:
+        if st.button("Clear Selection", disabled=selected_count == 0):
+            st.session_state.workspace_extractions = {}
+            st.rerun()
+    
+    # Display extractions
+    for ext in filtered_extractions:
+        with st.container():
+            col1, col2, col3, col4 = st.columns([0.5, 3, 2, 1])
+            
+            key = f"workspace_{ext['id']}"
+            is_selected = key in st.session_state.workspace_extractions
+            
+            with col1:
+                # Checkbox for selection
+                if st.checkbox("", value=is_selected, key=f"select_ext_{ext['id']}"):
+                    if not is_selected:
+                        # Add to selection
+                        from ui.materials_workspace import get_extraction_for_synthesis
+                        extraction_data = get_extraction_for_synthesis(ext['id'])
+                        if extraction_data:
+                            st.session_state.workspace_extractions[key] = extraction_data
+                else:
+                    if is_selected:
+                        # Remove from selection
+                        del st.session_state.workspace_extractions[key]
+            
+            with col2:
+                st.markdown(f"**{ext.get('material_name', 'Unknown')}**")
+                st.caption(f"{ext.get('config_summary', 'Default extraction')}")
+            
+            with col3:
+                st.caption(f"{ext.get('word_count', 0):,} words")
+                st.caption(f"Created: {ext.get('created_at', '')[:10]}")
+            
+            with col4:
+                if st.button("👁️ Preview", key=f"preview_ext_{ext['id']}"):
+                    with st.expander("Extraction Preview", expanded=True):
+                        full_extraction = materials_workspace_service.get_extraction(ext['id'])
+                        if full_extraction:
+                            st.text_area("", full_extraction['content'][:1000] + "...", height=200, disabled=True)
+                        else:
+                            st.error("Could not load extraction")
 
 def render_synthesis_config():
     """Render synthesis configuration section."""
@@ -104,64 +225,26 @@ def render_synthesis_config():
                 st.session_state.synthesis_config['prompt_workspace_id'] = active_workspace['id']
             st.rerun()
     
-    # Generate material placeholders
+    # Generate material placeholders for both project and workspace materials
     material_placeholders = {}
     url_counters = {}  # Track URLs per site
     
+    # Process project materials
     for i, (key, material) in enumerate(st.session_state.uploaded_materials.items()):
         if key in st.session_state.extracted_content:
-            material_type = material.get('type', '')
-            
-            if material_type == 'url':
-                # Extract domain from URL
-                from urllib.parse import urlparse
-                parsed = urlparse(material.get('url', ''))
-                domain = parsed.netloc or 'unknown'
-                
-                # Clean domain (remove www., convert . to _)
-                clean_domain = domain.replace('www.', '').replace('.', '_')
-                
-                # Track URLs per site
-                if clean_domain not in url_counters:
-                    url_counters[clean_domain] = 0
-                url_counters[clean_domain] += 1
-                
-                # Create placeholder with site name and ID
-                placeholder = f"{clean_domain}_{url_counters[clean_domain]}"
-                
-            elif material_type == 'file':
-                # Get filename without extension
-                display_name = material.get('display_name', material['name'])
-                # Remove file extension
-                import os
-                name_without_ext = os.path.splitext(display_name)[0]
-                
-                # Clean name for placeholder
-                clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in name_without_ext)
-                clean_name = clean_name.replace(' ', '_').lower()[:30]
-                placeholder = clean_name
-                
-            elif material_type == 'youtube':
-                # Extract video ID for placeholder
-                display_name = material.get('display_name', 'youtube')
-                clean_name = display_name.replace('YouTube: ', '').replace('-', '_').lower()
-                placeholder = f"youtube_{clean_name}"
-                
-            else:
-                # Default handling for other types
-                display_name = material.get('display_name', material['name'])
-                clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in display_name)
-                clean_name = clean_name.replace(' ', '_').lower()[:30]
-                placeholder = clean_name
-            
-            # Ensure unique placeholders
-            base_placeholder = placeholder
-            counter = 1
-            while placeholder in material_placeholders.values():
-                placeholder = f"{base_placeholder}_{counter}"
-                counter += 1
-            
+            placeholder = _generate_placeholder_for_material(material, url_counters, material_placeholders)
             material_placeholders[placeholder] = key
+    
+    # Process workspace extractions
+    for key, extraction_data in st.session_state.workspace_extractions.items():
+        # Create a material-like structure for placeholder generation
+        material = {
+            'type': 'workspace',
+            'name': extraction_data['material_name'],
+            'display_name': extraction_data['material_name']
+        }
+        placeholder = _generate_placeholder_for_material(material, url_counters, material_placeholders)
+        material_placeholders[placeholder] = key
     
     # Store placeholders
     st.session_state.synthesis_config['material_placeholders'] = material_placeholders
@@ -248,14 +331,40 @@ def render_synthesis_config():
                 
                 combined_to_remove = []
                 for combo_name, combo_data in st.session_state.synthesis_config['combined_placeholders'].items():
-                    col1, col2 = st.columns([3, 1])
-                    with col1:
-                        source_names = combo_data.get('source_placeholders', [])
-                        st.markdown(f"• `{{{combo_name}}}` ← {', '.join([f'`{{{p}}}`' for p in source_names])}")
+                    source_names = combo_data.get('source_placeholders', [])
                     
-                    with col2:
-                        if st.button("🗑️", key=f"remove_combo_{combo_name}", help="Remove combined placeholder"):
-                            combined_to_remove.append(combo_name)
+                    # Create an expander for each combined placeholder
+                    with st.expander(f"`{{{combo_name}}}` ({len(source_names)} placeholders)", expanded=True):
+                        col1, col2 = st.columns([5, 1])
+                        
+                        with col1:
+                            # Display format info
+                            format_type = combo_data.get('format', 'Name + Content')
+                            st.info(f"📋 Format: {format_type}")
+                            
+                            # Display source placeholders in a more readable format
+                            st.markdown("**Source placeholders:**")
+                            
+                            # Show placeholders in a grid for better visibility
+                            if len(source_names) <= 10:
+                                # For smaller lists, show all in columns
+                                cols_per_row = min(3, len(source_names))
+                                rows = [source_names[i:i + cols_per_row] for i in range(0, len(source_names), cols_per_row)]
+                                
+                                for row in rows:
+                                    cols = st.columns(len(row))
+                                    for i, placeholder in enumerate(row):
+                                        with cols[i]:
+                                            st.code(f"{{{placeholder}}}", language=None)
+                            else:
+                                # For larger lists, show in a scrollable container
+                                placeholder_display = "  \n".join([f"• `{{{p}}}`" for p in source_names])
+                                st.markdown(placeholder_display, unsafe_allow_html=True)
+                        
+                        with col2:
+                            if st.button("🗑️ Remove", key=f"remove_combo_{combo_name}", 
+                                       help="Remove this combined placeholder", use_container_width=True):
+                                combined_to_remove.append(combo_name)
                 
                 # Remove combined placeholders that were marked for removal
                 for combo_name in combined_to_remove:
@@ -379,13 +488,70 @@ def generate_synthesis(model_id: str):
         try:
             # Prepare materials for synthesis
             synthesis_materials = {}
+            name_counters = {}  # Track duplicate names to ensure uniqueness
             
-            # Map extracted content to material display names
+            # Map extracted content from project to material display names
             for key, content in st.session_state.extracted_content.items():
                 material = st.session_state.uploaded_materials.get(key, {})
                 # Use display_name for consistency
-                material_name = material.get('display_name', material.get('name', key))
+                base_name = material.get('display_name', material.get('name', key))
+                
+                # For URLs, include more context in the name if it's just a domain
+                if material.get('type') == 'url' and material.get('url'):
+                    # If display_name is just a domain, append path info
+                    parsed_url = urlparse(material['url'])
+                    
+                    # Check if display_name is just the domain
+                    if base_name == parsed_url.netloc:
+                        # Extract meaningful path or query info
+                        path_parts = parsed_url.path.strip('/').split('/')
+                        if path_parts and path_parts[0]:
+                            # For very long paths, include more segments to ensure uniqueness
+                            if len(path_parts) >= 3:
+                                # Include at least 2 path segments for deep URLs
+                                base_name = f"{base_name}/{path_parts[0]}/{path_parts[1]}"
+                                if len(path_parts) > 2:
+                                    # Add the last segment if it's different from the second
+                                    if path_parts[-1] != path_parts[1]:
+                                        base_name += f"/.../{path_parts[-1]}"
+                                    else:
+                                        base_name += "/..."
+                            else:
+                                # Use the first meaningful path segment
+                                base_name = f"{base_name}/{path_parts[0]}"
+                                if len(path_parts) > 1:
+                                    base_name += "/..."
+                        elif parsed_url.query:
+                            # Use query parameter if no path
+                            base_name = f"{base_name}?{parsed_url.query[:30]}..."
+                
+                # Ensure unique names
+                material_name = base_name
+                if material_name in synthesis_materials:
+                    # Track how many times we've seen this name
+                    if material_name not in name_counters:
+                        name_counters[material_name] = 1
+                    name_counters[material_name] += 1
+                    # Append counter to make it unique
+                    material_name = f"{base_name} ({name_counters[material_name]})"
+                
                 synthesis_materials[material_name] = content
+            
+            # Add workspace extractions
+            for key, extraction_data in st.session_state.workspace_extractions.items():
+                base_name = extraction_data['material_name']
+                
+                # Ensure unique names
+                material_name = base_name
+                if material_name in synthesis_materials:
+                    # Track how many times we've seen this name
+                    if material_name not in name_counters:
+                        name_counters[material_name] = 1
+                    name_counters[material_name] += 1
+                    # Append identifier to make it unique
+                    material_name = f"{base_name} (Workspace {name_counters[material_name]})"
+                
+                synthesis_materials[material_name] = extraction_data['content']
             
             # Get synthesis configuration
             custom_prompt = st.session_state.synthesis_config.get('custom_prompt', '')
@@ -393,10 +559,64 @@ def generate_synthesis(model_id: str):
             
             # Create placeholder mapping for AI service
             placeholder_mapping = {}
+            name_counters_for_placeholders = {}  # Track duplicate names for placeholder mapping
+            
             for placeholder, key in material_placeholders.items():
-                material = st.session_state.uploaded_materials.get(key, {})
-                material_name = material.get('display_name', material.get('name', key))
-                placeholder_mapping[material_name] = placeholder
+                if key.startswith('workspace_'):
+                    # Handle workspace extractions
+                    extraction_data = st.session_state.workspace_extractions.get(key, {})
+                    base_name = extraction_data.get('material_name', key)
+                else:
+                    # Handle project materials
+                    material = st.session_state.uploaded_materials.get(key, {})
+                    base_name = material.get('display_name', material.get('name', key))
+                    
+                    # For URLs, include more context in the name if it's just a domain
+                    if material.get('type') == 'url' and material.get('url'):
+                        parsed_url = urlparse(material['url'])
+                        
+                        # Check if display_name is just the domain
+                        if base_name == parsed_url.netloc:
+                            # Extract meaningful path or query info
+                            path_parts = parsed_url.path.strip('/').split('/')
+                            if path_parts and path_parts[0]:
+                                # For very long paths, include more segments to ensure uniqueness
+                                if len(path_parts) >= 3:
+                                    # Include at least 2 path segments for deep URLs
+                                    base_name = f"{base_name}/{path_parts[0]}/{path_parts[1]}"
+                                    if len(path_parts) > 2:
+                                        # Add the last segment if it's different from the second
+                                        if path_parts[-1] != path_parts[1]:
+                                            base_name += f"/.../{path_parts[-1]}"
+                                        else:
+                                            base_name += "/..."
+                                else:
+                                    # Use the first meaningful path segment
+                                    base_name = f"{base_name}/{path_parts[0]}"
+                                    if len(path_parts) > 1:
+                                        base_name += "/..."
+                            elif parsed_url.query:
+                                # Use query parameter if no path
+                                base_name = f"{base_name}?{parsed_url.query[:30]}..."
+                
+                # Find the actual unique name used in synthesis_materials
+                material_name = None
+                for name in synthesis_materials.keys():
+                    # Check if this is the material we're looking for
+                    if name == base_name or name.startswith(f"{base_name} ("):
+                        # Additional check to ensure it's the right material
+                        if key.startswith('workspace_'):
+                            if 'Workspace' in name:
+                                material_name = name
+                                break
+                        else:
+                            material_name = name
+                            # Don't break here, keep looking for exact match
+                            if name == base_name:
+                                break
+                
+                if material_name:
+                    placeholder_mapping[material_name] = placeholder
             
             # Temporarily override the synthesis model
             original_model = st.session_state.get('model_synthesis')
@@ -422,7 +642,8 @@ def generate_synthesis(model_id: str):
                     'content': synthesis,
                     'timestamp': datetime.now(),
                     'prompt': custom_prompt,
-                    'materials_count': len(synthesis_materials)
+                    'materials_count': len(synthesis_materials),
+                    'workspace_extractions_count': len(st.session_state.workspace_extractions)
                 }
                 
                 # Add to results
@@ -653,4 +874,69 @@ def create_session_archive():
         ]
     }
     
-    return json.dumps(session_data, indent=2) 
+    return json.dumps(session_data, indent=2)
+
+def _generate_placeholder_for_material(material, url_counters, existing_placeholders):
+    """Generate a unique placeholder for a material."""
+    material_type = material.get('type', '')
+    
+    if material_type == 'url':
+        # Extract domain from URL
+        parsed = urlparse(material.get('url', ''))
+        domain = parsed.netloc or 'unknown'
+        
+        # Clean domain (remove www., convert . to _)
+        clean_domain = domain.replace('www.', '').replace('.', '_')
+        
+        # Track URLs per site
+        if clean_domain not in url_counters:
+            url_counters[clean_domain] = 0
+        url_counters[clean_domain] += 1
+        
+        # Create placeholder with site name and ID
+        placeholder = f"{clean_domain}_{url_counters[clean_domain]}"
+        
+    elif material_type == 'file':
+        # Get filename without extension
+        display_name = material.get('display_name', material['name'])
+        # Remove file extension
+        import os
+        name_without_ext = os.path.splitext(display_name)[0]
+        
+        # Clean name for placeholder
+        clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in name_without_ext)
+        # Remove the 30 character limit to preserve uniqueness
+        clean_name = clean_name.replace(' ', '_').lower()
+        placeholder = clean_name
+        
+    elif material_type == 'youtube':
+        # Extract video ID for placeholder
+        display_name = material.get('display_name', 'youtube')
+        clean_name = display_name.replace('YouTube: ', '').replace('-', '_').lower()
+        # Clean name for placeholder consistency
+        clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in clean_name)
+        clean_name = clean_name.replace(' ', '_')
+        placeholder = f"youtube_{clean_name}"
+        
+    elif material_type == 'workspace':
+        # Handle workspace extractions
+        display_name = material.get('display_name', material.get('name', 'workspace'))
+        clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in display_name)
+        clean_name = clean_name.replace(' ', '_').lower()
+        placeholder = f"ws_{clean_name}"
+        
+    else:
+        # Default handling for other types
+        display_name = material.get('display_name', material['name'])
+        clean_name = ''.join(c if c.isalnum() or c in ' -_' else '' for c in display_name)
+        clean_name = clean_name.replace(' ', '_').lower()
+        placeholder = clean_name
+    
+    # Ensure unique placeholders
+    base_placeholder = placeholder
+    counter = 1
+    while placeholder in existing_placeholders:
+        placeholder = f"{base_placeholder}_{counter}"
+        counter += 1
+    
+    return placeholder 

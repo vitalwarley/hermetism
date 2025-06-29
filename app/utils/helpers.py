@@ -19,7 +19,7 @@ def initialize_session_state():
         st.session_state.current_project = None
     
     if 'view_mode' not in st.session_state:
-        st.session_state.view_mode = 'dashboard'  # 'dashboard' or 'workbench'
+        st.session_state.view_mode = 'dashboard'  # 'dashboard', 'workbench', 'prompts', 'materials_workspace'
     
     # Phase management
     if 'current_phase' not in st.session_state:
@@ -46,6 +46,25 @@ def initialize_session_state():
     
     if 'synthesis_results' not in st.session_state:
         st.session_state.synthesis_results = []
+    
+    # Materials Workspace specific state
+    if 'workspace_mode' not in st.session_state:
+        st.session_state.workspace_mode = 'overview'  # 'overview', 'materials', 'extractions', 'import'
+    
+    if 'selected_material' not in st.session_state:
+        st.session_state.selected_material = None
+    
+    if 'selected_extraction' not in st.session_state:
+        st.session_state.selected_extraction = None
+    
+    if 'show_extraction_form' not in st.session_state:
+        st.session_state.show_extraction_form = False
+    
+    if 'workspace_extractions' not in st.session_state:
+        st.session_state.workspace_extractions = {}  # For synthesis phase
+    
+    if 'selected_placeholders' not in st.session_state:
+        st.session_state.selected_placeholders = []  # For placeholder selection
     
     # Legacy support (will be migrated)
     if 'materials' not in st.session_state:

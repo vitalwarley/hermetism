@@ -12,6 +12,7 @@ from utils.helpers import format_file_size
 from config.settings import SUPPORTED_FILE_TYPES
 from services.persistence import persistence_service
 from services.material_library import material_library_service
+from urllib.parse import urlparse
 
 def render_upload_phase():
     """Render the upload phase interface."""
@@ -325,18 +326,46 @@ def render_url_input_tab():
                 added_count = 0
                 duplicate_count = 0
                 
-                from urllib.parse import urlparse
-                
                 for url in valid_urls:
                     url_key = f"url_{hash(url) % 10000}"
                     
                     if url_key not in st.session_state.uploaded_materials:
-                        # Extract domain name for display
-                        domain = urlparse(url).netloc or 'Web Page'
+                        # Extract domain and path for display
+                        parsed_url = urlparse(url)
+                        domain = parsed_url.netloc or 'Web Page'
+                        
+                        # Create a more descriptive display name
+                        if parsed_url.path and parsed_url.path != '/':
+                            # Include first meaningful path segment
+                            path_parts = parsed_url.path.strip('/').split('/')
+                            if path_parts and path_parts[0]:
+                                # For very long paths, include more segments to ensure uniqueness
+                                if len(path_parts) >= 3:
+                                    # Include at least 2 path segments for deep URLs
+                                    display_name = f"{domain}/{path_parts[0]}/{path_parts[1]}"
+                                    if len(path_parts) > 2:
+                                        # Add the last segment if it's different from the second
+                                        if path_parts[-1] != path_parts[1]:
+                                            display_name += f"/.../{path_parts[-1]}"
+                                        else:
+                                            display_name += "/..."
+                                else:
+                                    display_name = f"{domain}/{path_parts[0]}"
+                                    # If there are more path parts, indicate it
+                                    if len(path_parts) > 1:
+                                        display_name += "/..."
+                            else:
+                                display_name = domain
+                        elif parsed_url.query:
+                            # Include query hint if no meaningful path
+                            display_name = f"{domain}?..."
+                        else:
+                            display_name = domain
+                        
                         st.session_state.uploaded_materials[url_key] = {
                             'type': 'url',
                             'name': url,
-                            'display_name': domain,
+                            'display_name': display_name,
                             'url': url,
                             'data': None
                         }

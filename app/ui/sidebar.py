@@ -6,6 +6,70 @@ def render_sidebar():
     with st.sidebar:
         st.header("⚙️ Configuration")
         
+        # Navigation section
+        st.markdown("### 🧭 Navigation")
+        
+        # Materials Workspace button (always visible)
+        if st.button("📚 Materials Workspace", use_container_width=True, 
+                     type="primary" if st.session_state.get('view_mode') == 'materials_workspace' else "secondary"):
+            # Save current project state if in workbench mode
+            if st.session_state.get('view_mode') == 'workbench' and st.session_state.get('current_project_id'):
+                from services.project import project_service
+                from utils.helpers import get_project_state
+                
+                if project_service.load_project(st.session_state.current_project_id):
+                    project_service.save_project_state(
+                        st.session_state.current_project_id,
+                        get_project_state()
+                    )
+            
+            # Clear workspace-specific state
+            if hasattr(st.session_state, 'selected_material'):
+                del st.session_state.selected_material
+            if hasattr(st.session_state, 'selected_extraction'):
+                del st.session_state.selected_extraction
+            if hasattr(st.session_state, 'show_extraction_form'):
+                del st.session_state.show_extraction_form
+            
+            st.session_state.view_mode = 'materials_workspace'
+            st.rerun()
+        
+        # Prompt Workspace button
+        if st.button("📝 Prompt Workspace", use_container_width=True,
+                     type="primary" if st.session_state.get('view_mode') == 'prompts' else "secondary"):
+            # Save current project state if in workbench mode
+            if st.session_state.get('view_mode') == 'workbench' and st.session_state.get('current_project_id'):
+                from services.project import project_service
+                from utils.helpers import get_project_state
+                
+                if project_service.load_project(st.session_state.current_project_id):
+                    project_service.save_project_state(
+                        st.session_state.current_project_id,
+                        get_project_state()
+                    )
+            
+            st.session_state.view_mode = 'prompts'
+            st.rerun()
+        
+        # Project Dashboard button
+        if st.button("🏠 Project Dashboard", use_container_width=True,
+                     type="primary" if st.session_state.get('view_mode') == 'dashboard' else "secondary"):
+            # Save current project state if in workbench mode
+            if st.session_state.get('view_mode') == 'workbench' and st.session_state.get('current_project_id'):
+                from services.project import project_service
+                from utils.helpers import get_project_state
+                
+                if project_service.load_project(st.session_state.current_project_id):
+                    project_service.save_project_state(
+                        st.session_state.current_project_id,
+                        get_project_state()
+                    )
+            
+            st.session_state.view_mode = 'dashboard'
+            st.rerun()
+        
+        st.divider()
+        
         # Project info section (only in workbench mode)
         if st.session_state.get('view_mode') == 'workbench' and st.session_state.get('current_project'):
             project = st.session_state.current_project
@@ -83,20 +147,21 @@ def render_sidebar():
         
         st.divider()
         
-        # Session management
-        st.subheader("💾 Session Management")
-        
-        # Save current session
-        if st.button("📥 Save Session", use_container_width=True, 
-                    disabled=not st.session_state.get('synthesis', '')):
-            # Implementation will be in the main app
-            st.session_state['save_session_clicked'] = True
-        
-        # Load previous session
-        if st.button("📤 Load Session", use_container_width=True):
-            st.session_state['load_session_clicked'] = True
-        
-        st.divider()
+        # Session management (only in workbench mode)
+        if st.session_state.get('view_mode') == 'workbench':
+            st.subheader("💾 Session Management")
+            
+            # Save current session
+            if st.button("📥 Save Session", use_container_width=True, 
+                        disabled=not st.session_state.get('synthesis', '')):
+                # Implementation will be in the main app
+                st.session_state['save_session_clicked'] = True
+            
+            # Load previous session
+            if st.button("📤 Load Session", use_container_width=True):
+                st.session_state['load_session_clicked'] = True
+            
+            st.divider()
         
         # Info section
         st.caption("🔮 Hermetic Workbench MVP")

@@ -4,6 +4,14 @@ A modular Streamlit application for transforming esoteric materials into hermeti
 
 ## ✨ Features
 
+### 📚 Materials Workspace (New!)
+- **Centralized Material Management**: Manage all your materials and extractions in one place
+- **Multiple Extractions per Material**: Create different extractions with various configurations
+- **Cross-Project Reuse**: Use workspace extractions in any project's synthesis phase
+- **Automatic Import**: One-click import of all materials from existing projects
+- **Advanced Search**: Find materials by name, tags, or content
+- **Tag Organization**: Organize materials with custom tags for easy retrieval
+
 ### 📥 Multi-Source Content Extraction
 - **Multi-format File Processing**: Support for PDF, images (JPG/PNG), and text files
 - **Folder Upload with Path Preservation**: 
@@ -28,6 +36,7 @@ A modular Streamlit application for transforming esoteric materials into hermeti
   - Material placeholder substitution (e.g., `{material1}`, `{pdf_content}`)
   - Pre-built template library (Tarot, Hermetic, Astrological, Alchemical)
   - Dynamic placeholder generation from uploaded materials
+  - **Workspace extraction selection**: Mix project materials with workspace extractions
 - **Multiple Synthesis Types**:
   - Tarot Readings with harmonic/disharmonic interpretations
   - Hermetic Synthesis exploring esoteric connections
@@ -65,7 +74,7 @@ A modular Streamlit application for transforming esoteric materials into hermeti
   - Image extraction prompt customization
   - AI cleaning toggle options
 
-### 📚 Material Library (New!)
+### 📚 Material Library
 - **Cross-Project Material Reuse**: Access materials from all your projects in one place
 - **Smart Import**: Choose whether to reuse existing extractions or reprocess materials
 - **Search & Filter**: Find materials by name, URL, or even within extracted content
