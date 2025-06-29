@@ -321,6 +321,17 @@ def render_synthesis_generation(config: dict):
         if st.session_state.synthesis_results:
             if st.button("🗑️ Clear All", type="secondary"):
                 st.session_state.synthesis_results = []
+                
+                # Save project state after clearing results
+                if st.session_state.current_project_id:
+                    from services.project import project_service
+                    from utils.helpers import get_project_state
+                    
+                    project_service.save_project_state(
+                        st.session_state.current_project_id,
+                        get_project_state()
+                    )
+                
                 st.rerun()
 
 def generate_synthesis(model_id: str):
@@ -387,6 +398,16 @@ def generate_synthesis(model_id: str):
                 
                 # Store session ID for quality review
                 st.session_state.current_session_id = session_dir.name
+                
+                # Save project state to persist synthesis results
+                if st.session_state.current_project_id:
+                    from services.project import project_service
+                    from utils.helpers import get_project_state
+                    
+                    project_service.save_project_state(
+                        st.session_state.current_project_id,
+                        get_project_state()
+                    )
                 
                 st.success(f"✅ Synthesis generated with {model_id} and saved to: sessions/{session_dir.name}")
             else:
@@ -470,6 +491,17 @@ def render_synthesis_tabs():
             with col4:
                 if st.button("🗑️ Remove", type="secondary", key=f"remove_{result['id']}", use_container_width=True):
                     st.session_state.synthesis_results = [r for r in st.session_state.synthesis_results if r['id'] != result['id']]
+                    
+                    # Save project state after removing a result
+                    if st.session_state.current_project_id:
+                        from services.project import project_service
+                        from utils.helpers import get_project_state
+                        
+                        project_service.save_project_state(
+                            st.session_state.current_project_id,
+                            get_project_state()
+                        )
+                    
                     st.rerun()
             
             # Quality review for this specific synthesis

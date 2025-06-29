@@ -89,6 +89,9 @@ def get_project_state() -> dict:
 
 def load_project_state(state: dict):
     """Load project state into session state."""
+    # Clear synthesis results first to prevent cross-project contamination
+    st.session_state.synthesis_results = []
+    
     for key, value in state.items():
         if key in st.session_state:
             st.session_state[key] = value
