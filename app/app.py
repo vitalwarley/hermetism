@@ -80,7 +80,14 @@ def render_workbench(config):
         elif current_phase == 1:  # Config phase
             can_proceed = len(st.session_state.get('extraction_configs', {})) > 0
         elif current_phase == 2:  # Extract phase
-            can_proceed = len(st.session_state.get('extracted_content', {})) > 0
+            # Check if there are any enabled materials that have been extracted
+            enabled_materials = [
+                key for key in st.session_state.get('uploaded_materials', {})
+                if key in st.session_state.get('extraction_configs', {})
+                and not st.session_state.get('extraction_configs', {}).get(key, {}).get('disabled', False)
+            ]
+            extracted_count = len(st.session_state.get('extracted_content', {}))
+            can_proceed = extracted_count > 0 and len(enabled_materials) > 0
         
         if current_phase < len(phases) - 1:
             if st.button("Next →", use_container_width=True, disabled=not can_proceed):

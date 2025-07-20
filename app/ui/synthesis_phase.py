@@ -433,7 +433,8 @@ def render_synthesis_generation(config: dict):
     synthesis_model_options = [
         "openai/gpt-4.1",
         "anthropic/claude-opus-4",
-        "google/gemini-2.5-pro"
+        "google/gemini-2.5-pro",
+        "x-ai/grok-4"
     ]
     
     col1, col2 = st.columns([2, 1])

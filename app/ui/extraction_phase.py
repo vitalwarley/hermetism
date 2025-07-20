@@ -36,16 +36,24 @@ def render_extraction_controls():
     
     with col1:
         # Count materials ready for extraction
-        ready_count = len([
+        total_configured = len([
             key for key in st.session_state.uploaded_materials
             if key in st.session_state.extraction_configs
         ])
+        
+        disabled_count = len([
+            key for key in st.session_state.uploaded_materials
+            if key in st.session_state.extraction_configs
+            and st.session_state.extraction_configs[key].get('disabled', False)
+        ])
+        
+        ready_count = total_configured - disabled_count
         extracted_count = len(st.session_state.extracted_content)
         
         st.metric(
             "Ready for Extraction",
             f"{ready_count - extracted_count} materials",
-            f"{extracted_count} already extracted"
+            f"{extracted_count} extracted, {disabled_count} disabled"
         )
     
     with col2:
@@ -53,7 +61,7 @@ def render_extraction_controls():
             "🚀 Extract All",
             type="primary",
             disabled=(ready_count == extracted_count),
-            help="Extract content from all configured materials"
+            help="Extract content from all configured materials (excluding disabled ones)"
         )
     
     with col3:
@@ -83,11 +91,13 @@ def extract_all_materials():
     with progress_container:
         materials_to_extract = [
             (key, material) for key, material in st.session_state.uploaded_materials.items()
-            if key in st.session_state.extraction_configs and key not in st.session_state.extracted_content
+            if key in st.session_state.extraction_configs 
+            and key not in st.session_state.extracted_content
+            and not st.session_state.extraction_configs[key].get('disabled', False)
         ]
         
         if not materials_to_extract:
-            st.info("All materials have already been extracted.")
+            st.info("All materials have already been extracted or are disabled.")
             return
         
         progress_bar = st.progress(0)
@@ -121,11 +131,13 @@ def extract_all_materials_parallel():
     with progress_container:
         materials_to_extract = [
             (key, material) for key, material in st.session_state.uploaded_materials.items()
-            if key in st.session_state.extraction_configs and key not in st.session_state.extracted_content
+            if key in st.session_state.extraction_configs 
+            and key not in st.session_state.extracted_content
+            and not st.session_state.extraction_configs[key].get('disabled', False)
         ]
         
         if not materials_to_extract:
-            st.info("All materials have already been extracted.")
+            st.info("All materials have already been extracted or are disabled.")
             return
         
         progress_bar = st.progress(0)
@@ -327,6 +339,19 @@ def render_extraction_results():
     """Render extraction results and previews."""
     st.subheader("📋 Extracted Content")
     
+    # Check for disabled materials
+    disabled_materials = [
+        (key, material) for key, material in st.session_state.uploaded_materials.items()
+        if key in st.session_state.extraction_configs
+        and st.session_state.extraction_configs[key].get('disabled', False)
+    ]
+    
+    if disabled_materials:
+        with st.expander(f"🚫 Disabled Materials ({len(disabled_materials)})", expanded=False):
+            for key, material in disabled_materials:
+                display_name = material.get('display_name', material.get('name', 'Unknown'))
+                st.info(f"**{display_name}** - Extraction disabled")
+    
     if not st.session_state.extracted_content:
         st.info("No content extracted yet. Click 'Extract All' to begin.")
         return
@@ -394,23 +419,51 @@ def render_extraction_summary():
     """Render extraction summary statistics."""
     st.subheader("📊 Extraction Summary")
     
-    total_content = len(st.session_state.extracted_content)
+    total_materials = len(st.session_state.uploaded_materials)
+    total_configured = len([
+        key for key in st.session_state.uploaded_materials
+        if key in st.session_state.extraction_configs
+    ])
+    disabled_count = len([
+        key for key in st.session_state.uploaded_materials
+        if key in st.session_state.extraction_configs
+        and st.session_state.extraction_configs[key].get('disabled', False)
+    ])
+    extracted_count = len(st.session_state.extracted_content)
+    
+    total_content = extracted_count
     total_chars = sum(len(content) for content in st.session_state.extracted_content.values())
     total_words = sum(len(content.split()) for content in st.session_state.extracted_content.values())
     
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Total Materials", total_materials)
+    
+    with col2:
+        st.metric("Configured", total_configured)
+    
+    with col3:
+        st.metric("Disabled", disabled_count)
+    
+    with col4:
+        st.metric("Extracted", extracted_count)
+    
+    # Additional stats
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.metric("Total Materials", total_content)
-    
-    with col2:
         st.metric("Total Characters", f"{total_chars:,}")
     
-    with col3:
+    with col2:
         st.metric("Total Words", f"{total_words:,}")
     
-    if total_content > 0:
-        st.success(f"✅ Ready for synthesis! All {total_content} materials have been extracted.")
+    with col3:
+        avg_words = total_words // extracted_count if extracted_count > 0 else 0
+        st.metric("Avg Words/Material", f"{avg_words:,}")
+    
+    if extracted_count > 0:
+        st.success(f"✅ Ready for synthesis! {extracted_count} materials have been extracted.")
     
     # Migrate to legacy format button (for backward compatibility)
     if st.button("🔄 Migrate to Legacy Format", help="Copy extracted content to legacy materials format"):

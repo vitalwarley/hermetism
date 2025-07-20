@@ -167,6 +167,12 @@ MODEL_VISION = "openai/gpt-4o-mini"      # For image processing
 MODEL_SYNTHESIS = "openai/gpt-4.1"       # For text synthesis
 ```
 
+**Available Synthesis Models:**
+- `openai/gpt-4.1` - OpenAI's latest GPT-4 model
+- `anthropic/claude-opus-4` - Anthropic's Claude Opus 4
+- `google/gemini-2.5-pro` - Google's Gemini 2.5 Pro
+- `x-ai/grok-4` - xAI's Grok 4 model
+
 ### Supported Content Sources
 
 - **PDF Files**: Text extraction with optional page range selection

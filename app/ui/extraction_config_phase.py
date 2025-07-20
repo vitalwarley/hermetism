@@ -67,6 +67,21 @@ def render_material_config(key: str, material: dict):
     
     config = st.session_state.extraction_configs[key]
     
+    # Add disable toggle at the top
+    st.markdown("**🔧 Extraction Settings**")
+    disabled = st.checkbox(
+        "🚫 Skip extraction for this material",
+        value=config.get('disabled', False),
+        key=f"disable_{key}",
+        help="When enabled, this material will be skipped during extraction"
+    )
+    config['disabled'] = disabled
+    
+    if disabled:
+        st.info("⚠️ This material will be skipped during extraction. You can still include it in synthesis.")
+        st.divider()
+        return
+    
     # Check if this is an image file
     is_image = (material_type == 'file' and 
                 'image' in material.get('file_type', ''))
@@ -422,19 +437,27 @@ def render_config_summary():
     
     configured = len(st.session_state.extraction_configs)
     total = len(st.session_state.uploaded_materials)
+    disabled_count = sum(
+        1 for config in st.session_state.extraction_configs.values()
+        if config.get('disabled', False)
+    )
+    enabled_count = configured - disabled_count
     
     if configured == total:
-        st.success(f"✅ All {total} materials configured")
+        if disabled_count == 0:
+            st.success(f"✅ All {total} materials configured and enabled")
+        else:
+            st.success(f"✅ All {total} materials configured ({enabled_count} enabled, {disabled_count} disabled)")
     else:
-        st.warning(f"⚠️ {configured}/{total} materials configured")
+        st.warning(f"⚠️ {configured}/{total} materials configured ({enabled_count} enabled, {disabled_count} disabled)")
     
     # Quick stats
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         ai_cleaning_count = sum(
             1 for config in st.session_state.extraction_configs.values()
-            if config.get('use_ai_cleaning', False)
+            if config.get('use_ai_cleaning', False) and not config.get('disabled', False)
         )
         st.metric("AI Cleaning", f"{ai_cleaning_count} materials")
     
@@ -442,12 +465,19 @@ def render_config_summary():
         pdf_count = sum(
             1 for key, material in st.session_state.uploaded_materials.items()
             if material['type'] == 'file' and 'pdf' in material.get('file_type', '')
+            and key in st.session_state.extraction_configs
+            and not st.session_state.extraction_configs[key].get('disabled', False)
         )
         st.metric("PDFs", f"{pdf_count} files")
     
     with col3:
         web_count = sum(
-            1 for material in st.session_state.uploaded_materials.values()
+            1 for key, material in st.session_state.uploaded_materials.items()
             if material['type'] in ['url', 'youtube']
+            and key in st.session_state.extraction_configs
+            and not st.session_state.extraction_configs[key].get('disabled', False)
         )
-        st.metric("Web Sources", f"{web_count} sources") 
+        st.metric("Web Sources", f"{web_count} sources")
+    
+    with col4:
+        st.metric("Disabled", f"{disabled_count} materials") 
