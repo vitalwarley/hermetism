@@ -20,6 +20,20 @@ def render_synthesis_phase(config: dict):
     if 'workspace_extractions' not in st.session_state:
         st.session_state.workspace_extractions = {}
     
+    # Initialize synthesis generation state
+    if 'synthesis_generating' not in st.session_state:
+        st.session_state.synthesis_generating = False
+    if 'synthesis_stop_requested' not in st.session_state:
+        st.session_state.synthesis_stop_requested = False
+    
+    # Reset generation state if user navigated away and came back
+    # (This prevents stuck states when user navigates during generation)
+    if st.session_state.synthesis_generating and not st.session_state.synthesis_stop_requested:
+        # Check if we're still in the synthesis phase
+        if 'current_phase' in st.session_state and st.session_state.current_phase != 'synthesis':
+            st.session_state.synthesis_generating = False
+            st.session_state.synthesis_stop_requested = False
+    
     # Tab selection for content source
     tab1, tab2 = st.tabs(["📚 Project Materials", "🔍 Materials Workspace"])
     
@@ -454,45 +468,96 @@ def render_synthesis_generation(config: dict):
     with st.expander("👁️ Prompt Preview", expanded=False):
         st.text(custom_prompt[:500] + "..." if len(custom_prompt) > 500 else custom_prompt)
     
+    # Initialize synthesis generation state
+    if 'synthesis_generating' not in st.session_state:
+        st.session_state.synthesis_generating = False
+    if 'synthesis_stop_requested' not in st.session_state:
+        st.session_state.synthesis_stop_requested = False
+    
     # Generation controls
-    col1, col2, col3 = st.columns([2, 1, 1])
-    
-    with col1:
-        if st.button("🚀 Generate Synthesis", type="primary", use_container_width=True):
-            generate_synthesis(selected_model)
-    
-    with col2:
-        if st.session_state.synthesis_results:
-            if st.button("🔄 Regenerate", type="secondary"):
-                generate_synthesis(selected_model)
-    
-    with col3:
-        if st.session_state.synthesis_results:
-            if st.button("🗑️ Clear All", type="secondary"):
-                st.session_state.synthesis_results = []
-                
-                # Save project state after clearing results
-                if st.session_state.current_project_id:
-                    from services.project import project_service
-                    from utils.helpers import get_project_state
-                    
-                    project_service.save_project_state(
-                        st.session_state.current_project_id,
-                        get_project_state()
-                    )
-                
+    if st.session_state.synthesis_generating:
+        # Show prominent stop button when generating
+        st.warning("🔄 Synthesis generation in progress...")
+        
+        # Create a more prominent stop button
+        st.markdown("---")
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("⏹️ STOP GENERATION", type="secondary", use_container_width=True, help="Click to stop the current synthesis generation"):
+                st.session_state.synthesis_stop_requested = True
+                st.session_state.synthesis_generating = False
                 st.rerun()
+        st.markdown("---")
+        
+        # Show helpful message
+        st.info("💡 The generation will stop at the next safe point. This may take a few seconds.")
+    else:
+        # Normal generation controls when not generating
+        col1, col2, col3 = st.columns([2, 1, 1])
+        
+        with col1:
+            if st.button("🚀 Generate Synthesis", type="primary", use_container_width=True):
+                st.session_state.synthesis_generating = True
+                st.session_state.synthesis_stop_requested = False
+                generate_synthesis(selected_model)
+        
+        with col2:
+            if st.session_state.synthesis_results:
+                if st.button("🔄 Regenerate", type="secondary"):
+                    generate_synthesis(selected_model)
+        
+        with col3:
+            if st.session_state.synthesis_results:
+                if st.button("🗑️ Clear All", type="secondary"):
+                    st.session_state.synthesis_results = []
+                    
+                    # Save project state after clearing results
+                    if st.session_state.current_project_id:
+                        from services.project import project_service
+                        from utils.helpers import get_project_state
+                        
+                        project_service.save_project_state(
+                            st.session_state.current_project_id,
+                            get_project_state()
+                        )
+                    
+                    st.rerun()
+    
+    # Show status message
+    if st.session_state.synthesis_stop_requested:
+        st.warning("⏹️ Synthesis generation was stopped by user.")
 
 def generate_synthesis(model_id: str):
     """Generate synthesis using AI service with specified model."""
-    with st.spinner("🌟 Consulting the cosmic wisdom..."):
-        try:
+    try:
+        # Check if stop was requested
+        if st.session_state.synthesis_stop_requested:
+            st.session_state.synthesis_generating = False
+            st.session_state.synthesis_stop_requested = False
+            st.warning("⏹️ Synthesis generation was stopped.")
+            return
+        
+        with st.spinner("🌟 Consulting the cosmic wisdom..."):
+            # Check for stop request during generation
+            if st.session_state.synthesis_stop_requested:
+                st.session_state.synthesis_generating = False
+                st.session_state.synthesis_stop_requested = False
+                st.warning("⏹️ Synthesis generation was stopped.")
+                return
+            
             # Prepare materials for synthesis
             synthesis_materials = {}
             name_counters = {}  # Track duplicate names to ensure uniqueness
             
             # Map extracted content from project to material display names
             for key, content in st.session_state.extracted_content.items():
+                # Check for stop request
+                if st.session_state.synthesis_stop_requested:
+                    st.session_state.synthesis_generating = False
+                    st.session_state.synthesis_stop_requested = False
+                    st.warning("⏹️ Synthesis generation was stopped.")
+                    return
+                
                 material = st.session_state.uploaded_materials.get(key, {})
                 # Use display_name for consistency
                 base_name = material.get('display_name', material.get('name', key))
@@ -540,6 +605,13 @@ def generate_synthesis(model_id: str):
             
             # Add workspace extractions
             for key, extraction_data in st.session_state.workspace_extractions.items():
+                # Check for stop request
+                if st.session_state.synthesis_stop_requested:
+                    st.session_state.synthesis_generating = False
+                    st.session_state.synthesis_stop_requested = False
+                    st.warning("⏹️ Synthesis generation was stopped.")
+                    return
+                
                 base_name = extraction_data['material_name']
                 
                 # Ensure unique names
@@ -554,6 +626,13 @@ def generate_synthesis(model_id: str):
                 
                 synthesis_materials[material_name] = extraction_data['content']
             
+            # Check for stop request before AI call
+            if st.session_state.synthesis_stop_requested:
+                st.session_state.synthesis_generating = False
+                st.session_state.synthesis_stop_requested = False
+                st.warning("⏹️ Synthesis generation was stopped.")
+                return
+            
             # Get synthesis configuration
             custom_prompt = st.session_state.synthesis_config.get('custom_prompt', '')
             material_placeholders = st.session_state.synthesis_config.get('material_placeholders', {})
@@ -563,6 +642,13 @@ def generate_synthesis(model_id: str):
             name_counters_for_placeholders = {}  # Track duplicate names for placeholder mapping
             
             for placeholder, key in material_placeholders.items():
+                # Check for stop request
+                if st.session_state.synthesis_stop_requested:
+                    st.session_state.synthesis_generating = False
+                    st.session_state.synthesis_stop_requested = False
+                    st.warning("⏹️ Synthesis generation was stopped.")
+                    return
+                
                 if key.startswith('workspace_'):
                     # Handle workspace extractions
                     extraction_data = st.session_state.workspace_extractions.get(key, {})
@@ -619,6 +705,13 @@ def generate_synthesis(model_id: str):
                 if material_name:
                     placeholder_mapping[material_name] = placeholder
             
+            # Check for stop request before AI call
+            if st.session_state.synthesis_stop_requested:
+                st.session_state.synthesis_generating = False
+                st.session_state.synthesis_stop_requested = False
+                st.warning("⏹️ Synthesis generation was stopped.")
+                return
+            
             # Temporarily override the synthesis model
             original_model = st.session_state.get('model_synthesis')
             st.session_state.model_synthesis = model_id
@@ -634,6 +727,13 @@ def generate_synthesis(model_id: str):
                 # Restore original model
                 if original_model is not None:
                     st.session_state.model_synthesis = original_model
+            
+            # Check for stop request after AI call
+            if st.session_state.synthesis_stop_requested:
+                st.session_state.synthesis_generating = False
+                st.session_state.synthesis_stop_requested = False
+                st.warning("⏹️ Synthesis generation was stopped.")
+                return
             
             if synthesis:
                 # Create synthesis result with metadata
@@ -674,8 +774,12 @@ def generate_synthesis(model_id: str):
             else:
                 st.error("❌ Failed to generate synthesis. Please try again.")
                 
-        except Exception as e:
-            st.error(f"❌ Error generating synthesis: {str(e)}")
+    except Exception as e:
+        st.error(f"❌ Error generating synthesis: {str(e)}")
+    finally:
+        # Always reset generation state
+        st.session_state.synthesis_generating = False
+        st.session_state.synthesis_stop_requested = False
 
 def render_synthesis_tabs():
     """Render synthesis results in tabs."""

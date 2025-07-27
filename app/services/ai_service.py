@@ -111,6 +111,10 @@ Text to process:
     def synthesize_content(self, materials: dict, custom_prompt: str, material_placeholders: Optional[dict] = None) -> Optional[str]:
         """Generate synthesis from combined materials using custom prompt with placeholder support."""
         try:
+            # Check for stop request before starting
+            if st.session_state.get('synthesis_stop_requested', False):
+                return None
+            
             # Get combined placeholders from session state
             combined_placeholders = st.session_state.synthesis_config.get('combined_placeholders', {})
             
@@ -133,16 +137,40 @@ Text to process:
                 ])
                 full_prompt = f"{custom_prompt}\n\nMaterials:\n{combined[:MAX_SYNTHESIS_LENGTH]}"
             
-            response = self.client.chat.completions.create(
-                model=self._get_synthesis_model(),
-                messages=[{"role": "user", "content": full_prompt}],
-                temperature=st.session_state.get('temperature', 0.7)
-            )
+            # Check for stop request before making API call
+            if st.session_state.get('synthesis_stop_requested', False):
+                return None
+            
+            # Add timeout to the API call to make it more responsive to stop requests
+            try:
+                response = self.client.chat.completions.create(
+                    model=self._get_synthesis_model(),
+                    messages=[{"role": "user", "content": full_prompt}],
+                    temperature=st.session_state.get('temperature', 0.7),
+                    timeout=300  # 5 minute timeout
+                )
+            except Exception as api_error:
+                # Check if this was due to a stop request
+                if st.session_state.get('synthesis_stop_requested', False):
+                    self.logger.info("Synthesis stopped by user request")
+                    return None
+                else:
+                    # Re-raise the error if it wasn't a stop request
+                    raise api_error
+            
+            # Check for stop request after API call
+            if st.session_state.get('synthesis_stop_requested', False):
+                return None
             
             return response.choices[0].message.content
         except Exception as e:
-            self.logger.error(f"Synthesis error: {str(e)}")
-            return None
+            # Check if this was due to a stop request
+            if st.session_state.get('synthesis_stop_requested', False):
+                self.logger.info("Synthesis stopped by user request")
+                return None
+            else:
+                self.logger.error(f"Synthesis error: {str(e)}")
+                return None
     
     def _substitute_placeholders(self, prompt: str, materials: dict, material_placeholders: dict, combined_placeholders: dict = None) -> str:
         """Substitute material placeholders in the prompt with actual content."""

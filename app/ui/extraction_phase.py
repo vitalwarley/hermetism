@@ -32,6 +32,19 @@ def render_extraction_phase():
 
 def render_extraction_controls():
     """Render extraction control panel."""
+    # Show global prompt info if active
+    global_settings = st.session_state.get('global_extraction_settings', {})
+    use_global_prompt = global_settings.get('use_global_prompt', False)
+    
+    if use_global_prompt:
+        global_prompt_name = global_settings.get('global_prompt_name', 'Custom Global Prompt')
+        global_prompt_count = sum(
+            1 for key, config in st.session_state.extraction_configs.items()
+            if config.get('is_global_prompt', False) and not config.get('disabled', False)
+        )
+        
+        st.info(f"🌐 **Global Prompt Active:** {global_prompt_name} will be applied to {global_prompt_count} materials")
+    
     col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
     
     with col1:
@@ -370,8 +383,28 @@ def render_extraction_results():
     for key, content in st.session_state.extracted_content.items():
         material = st.session_state.uploaded_materials.get(key, {})
         display_name = material.get('display_name', material.get('name', 'Unknown'))
+        config = st.session_state.extraction_configs.get(key, {})
         
         with st.expander(f"📄 {display_name}", expanded=(view_mode == "Expanded")):
+            # Show extraction method info
+            extraction_info = []
+            
+            # Check if global prompt was used
+            if config.get('is_global_prompt', False):
+                global_settings = st.session_state.get('global_extraction_settings', {})
+                global_prompt_name = global_settings.get('global_prompt_name', 'Custom Global Prompt')
+                extraction_info.append(f"🌐 Global Prompt: {global_prompt_name}")
+            elif config.get('extraction_prompt'):
+                prompt_name = config.get('prompt_name', 'Custom Prompt')
+                extraction_info.append(f"📝 Prompt: {prompt_name}")
+            
+            # Show AI cleaning status
+            if config.get('use_ai_cleaning', False):
+                extraction_info.append("🧹 AI Cleaning Applied")
+            
+            if extraction_info:
+                st.info(" | ".join(extraction_info))
+            
             # Content preview
             preview_length = 1000 if view_mode == "Expanded" else 500
             preview_text = content[:preview_length] + "..." if len(content) > preview_length else content
@@ -461,6 +494,22 @@ def render_extraction_summary():
     with col3:
         avg_words = total_words // extracted_count if extracted_count > 0 else 0
         st.metric("Avg Words/Material", f"{avg_words:,}")
+    
+    # Global prompt statistics
+    global_settings = st.session_state.get('global_extraction_settings', {})
+    use_global_prompt = global_settings.get('use_global_prompt', False)
+    
+    if use_global_prompt:
+        global_prompt_count = sum(
+            1 for key, config in st.session_state.extraction_configs.items()
+            if config.get('is_global_prompt', False) and key in st.session_state.extracted_content
+        )
+        override_count = sum(
+            1 for key, config in st.session_state.extraction_configs.items()
+            if config.get('override_global_prompt', False) and key in st.session_state.extracted_content
+        )
+        
+        st.info(f"🌐 **Global Prompt Statistics:** {global_prompt_count} materials used global prompt, {override_count} overridden")
     
     if extracted_count > 0:
         st.success(f"✅ Ready for synthesis! {extracted_count} materials have been extracted.")

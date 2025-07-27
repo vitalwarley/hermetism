@@ -49,13 +49,138 @@ def render_global_settings():
             help="Apply AI cleaning to improve text quality"
         )
     
+    with col2:
+        use_global_prompt = st.checkbox(
+            "🌐 Apply global prompt to all materials",
+            value=False,
+            help="Apply a single prompt to all materials during extraction"
+        )
+    
+    # Global prompt configuration
+    if use_global_prompt:
+        st.markdown("**🌐 Global Extraction Prompt**")
+        
+        prompt_mode = st.radio(
+            "Prompt source",
+            ["Workspace Prompts", "Custom"],
+            key="global_prompt_mode",
+            horizontal=True,
+            help="Choose a prompt from your workspace or write your own"
+        )
+        
+        if prompt_mode == "Workspace Prompts":
+            # Get active workspace
+            active_workspace = prompt_workspace_service.get_active_workspace()
+            
+            if not active_workspace:
+                st.warning("No active prompt workspace. Please create or activate a workspace first.")
+                if st.button("Go to Prompt Workspace", key="goto_prompts_global"):
+                    st.session_state.view_mode = 'prompts'
+                    st.rerun()
+                return
+            
+            # Get extraction prompts from workspace
+            extraction_prompts = active_workspace["prompts"].get("extraction", {})
+            active_prompts = {pid: p for pid, p in extraction_prompts.items() if p.get("active", True)}
+            
+            if not active_prompts:
+                st.info("No extraction prompts in the active workspace. Add some in the Prompt Workspace.")
+                return
+            
+            # Group prompts by category
+            prompts_by_category = {}
+            for pid, prompt in active_prompts.items():
+                category = prompt.get("category", "Uncategorized")
+                if category not in prompts_by_category:
+                    prompts_by_category[category] = []
+                prompts_by_category[category].append((pid, prompt))
+            
+            # Category selection
+            categories = list(prompts_by_category.keys())
+            category = st.selectbox(
+                "Category",
+                categories,
+                index=0,
+                key="global_prompt_category"
+            )
+            
+            # Prompt selection within category
+            prompts_in_category = prompts_by_category[category]
+            if prompts_in_category:
+                prompt_names = [p[1]['name'] for p in prompts_in_category]
+                prompt_ids = [p[0] for p in prompts_in_category]
+                
+                selected_idx = st.selectbox(
+                    "Select prompt",
+                    range(len(prompt_names)),
+                    format_func=lambda x: prompt_names[x],
+                    key="global_prompt_select"
+                )
+                
+                selected_prompt_id = prompt_ids[selected_idx]
+                selected_prompt = prompts_in_category[selected_idx][1]
+                
+                # Show the actual prompt
+                st.info(f"**Global Prompt:** {selected_prompt['content']}")
+                
+                # Show metadata if available
+                if selected_prompt.get('metadata'):
+                    metadata = selected_prompt['metadata']
+                    if metadata.get('author') or metadata.get('tags'):
+                        with st.expander("Prompt Details", expanded=False):
+                            if metadata.get('author'):
+                                st.write(f"**Author:** {metadata['author']}")
+                            if metadata.get('tags'):
+                                tags = metadata['tags'] if isinstance(metadata['tags'], list) else [metadata['tags']]
+                                st.write(f"**Tags:** {', '.join(tags)}")
+                            if metadata.get('version_notes'):
+                                st.write(f"**Notes:** {metadata['version_notes']}")
+                
+                # Store the global prompt
+                global_prompt = selected_prompt['content']
+                global_prompt_category = category
+                global_prompt_name = selected_prompt['name']
+                global_prompt_id = selected_prompt_id
+                global_prompt_workspace_id = active_workspace['id']
+        else:
+            # Custom global prompt
+            global_prompt = st.text_area(
+                "Custom global extraction prompt",
+                value="Extract all relevant content from this material.",
+                key="global_custom_prompt",
+                help="Write your own extraction instructions that will be applied to all materials",
+                height=100
+            )
+            global_prompt_category = None
+            global_prompt_name = None
+            global_prompt_id = None
+            global_prompt_workspace_id = None
+    
     # Store global settings
     if 'global_extraction_settings' not in st.session_state:
         st.session_state.global_extraction_settings = {}
     
     st.session_state.global_extraction_settings.update({
-        'use_ai_cleaning': use_ai_cleaning
+        'use_ai_cleaning': use_ai_cleaning,
+        'use_global_prompt': use_global_prompt
     })
+    
+    # Store global prompt details if enabled
+    if use_global_prompt and 'global_prompt' in locals():
+        st.session_state.global_extraction_settings.update({
+            'global_prompt': global_prompt,
+            'global_prompt_category': global_prompt_category,
+            'global_prompt_name': global_prompt_name,
+            'global_prompt_id': global_prompt_id,
+            'global_prompt_workspace_id': global_prompt_workspace_id
+        })
+    elif not use_global_prompt:
+        # Clear global prompt settings if disabled
+        st.session_state.global_extraction_settings.pop('global_prompt', None)
+        st.session_state.global_extraction_settings.pop('global_prompt_category', None)
+        st.session_state.global_extraction_settings.pop('global_prompt_name', None)
+        st.session_state.global_extraction_settings.pop('global_prompt_id', None)
+        st.session_state.global_extraction_settings.pop('global_prompt_workspace_id', None)
 
 def render_material_config(key: str, material: dict):
     """Render configuration options for a specific material."""
@@ -293,6 +418,39 @@ def render_youtube_config(key: str, material: dict, config: dict):
 
 def render_extraction_prompt_options(key: str, config: dict):
     """Render extraction prompt selection options."""
+    global_settings = st.session_state.get('global_extraction_settings', {})
+    use_global_prompt = global_settings.get('use_global_prompt', False)
+    
+    if use_global_prompt:
+        global_prompt = global_settings.get('global_prompt', '')
+        global_prompt_name = global_settings.get('global_prompt_name', 'Custom Global Prompt')
+        
+        st.info(f"🌐 **Global Prompt Active:** {global_prompt_name}")
+        st.info(f"*{global_prompt[:100]}{'...' if len(global_prompt) > 100 else ''}*")
+        
+        # Option to override global prompt
+        override_global = st.checkbox(
+            "Override global prompt for this material",
+            value=config.get('override_global_prompt', False),
+            key=f"override_global_{key}",
+            help="Use a different prompt for this specific material"
+        )
+        config['override_global_prompt'] = override_global
+        
+        if not override_global:
+            # Store the global prompt in this material's config
+            config['extraction_prompt'] = global_prompt
+            config['prompt_category'] = global_settings.get('global_prompt_category')
+            config['prompt_name'] = global_prompt_name
+            config['prompt_id'] = global_settings.get('global_prompt_id')
+            config['prompt_workspace_id'] = global_settings.get('global_prompt_workspace_id')
+            config['is_global_prompt'] = True
+            return
+    
+    # Clear global prompt flag if not using global prompt or overriding
+    config.pop('is_global_prompt', None)
+    config.pop('override_global_prompt', None)
+    
     prompt_mode = st.radio(
         "Prompt mode",
         ["Workspace Prompts", "Custom"],
@@ -450,6 +608,23 @@ def render_config_summary():
             st.success(f"✅ All {total} materials configured ({enabled_count} enabled, {disabled_count} disabled)")
     else:
         st.warning(f"⚠️ {configured}/{total} materials configured ({enabled_count} enabled, {disabled_count} disabled)")
+    
+    # Global settings info
+    global_settings = st.session_state.get('global_extraction_settings', {})
+    use_global_prompt = global_settings.get('use_global_prompt', False)
+    
+    if use_global_prompt:
+        global_prompt_name = global_settings.get('global_prompt_name', 'Custom Global Prompt')
+        global_prompt_count = sum(
+            1 for config in st.session_state.extraction_configs.values()
+            if config.get('is_global_prompt', False) and not config.get('disabled', False)
+        )
+        override_count = sum(
+            1 for config in st.session_state.extraction_configs.values()
+            if config.get('override_global_prompt', False) and not config.get('disabled', False)
+        )
+        
+        st.info(f"🌐 **Global Prompt:** {global_prompt_name} (applied to {global_prompt_count} materials, {override_count} overridden)")
     
     # Quick stats
     col1, col2, col3, col4 = st.columns(4)
